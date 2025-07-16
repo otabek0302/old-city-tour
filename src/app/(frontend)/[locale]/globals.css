@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: unset;
+    font-weight: unset;
+  }
+
+  :root {
+    --background: #FFFFFF;
+    --foreground: #1C1C1E;
+
+    --card: #EEEEEE;
+    --card-foreground: #1C1C1E;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #1C1C1E;
+
+    --primary: #07689F;
+    --primary-light: #5CA9D8;
+    --primary-dark: #05476D;
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #FFD427;
+    --secondary-light: #FFE88D;
+    --secondary-dark: #FFB300;
+    --secondary-foreground: #1C1C1E;
+
+    --muted: #6C757D;
+    --muted-foreground: #EEEEEE;
+
+    --accent: #FFD427;
+    --accent-foreground: #1C1C1E;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: #CED4DA;
+    --input: #1C1C1E;
+    --ring: #5CA9D8;
+
+    --radius: 0.2rem;
+
+    --success: #4CAF50;
+    --warning: #E1A100;
+    --error: #D64545;
+  }
+
+  [data-theme='dark'] {
+    --background: #1C1C1E;
+    --foreground: #FFFFFF;
+
+    --card: #1C1C1E;
+    --card-foreground: #FFFFFF;
+
+    --popover: #1C1C1E;
+    --popover-foreground: #FFFFFF;
+
+    --primary: #5CA9D8;
+    --primary-light: #5CA9D8;
+    --primary-dark: #05476D;
+    --primary-foreground: #1C1C1E;
+
+    --secondary: #FFB300;
+    --secondary-light: #FFE88D;
+    --secondary-dark: #FFB300;
+    --secondary-foreground: #1C1C1E;
+
+    --muted: #6C757D;
+    --muted-foreground: #EEEEEE;
+
+    --accent: #FFD427;
+    --accent-foreground: #1C1C1E;
+
+    --destructive: #D64545;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #CED4DA;
+    --input: #1C1C1E;
+    --ring: #5CA9D8;
+
+    --success: #4CAF50;
+    --warning: #E1A100;
+    --error: #D64545;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+  }
+}
+
+html {
+  opacity: 0;
+}
+
+html[data-theme='dark'],
+html[data-theme='light'] {
+  opacity: initial;
+}
+
+.container {
+  @apply w-full max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8;
+}
