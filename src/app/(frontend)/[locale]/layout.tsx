@@ -12,8 +12,16 @@ import { Providers } from "@/providers";
 import Header from "@/components/globals/header";
 import Footer from "@/components/globals/footer";
 
-export default async function Layout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+// ✅ Define proper interface for layout props
+interface LayoutProps {
+  children: React.ReactNode;
+  params: { locale: string };
+}
+
+// ✅ Use that interface in the async function
+export default async function Layout({ children, params }: LayoutProps) {
   const { locale } = params;
+
   return (
     <html lang={locale} className={cn(GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
       <head>
