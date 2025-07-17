@@ -17,7 +17,9 @@ async function getSections(locale: string) {
 const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
   const sections = await getSections(locale || "en");
-  if (!sections) return null;
+  if (!sections || !sections.length || !sections[0]?.sections) {
+    return <p>Translation or content missing for this locale.</p>;
+  }
   return <PageClient sections={sections[0].sections} />
 };
 

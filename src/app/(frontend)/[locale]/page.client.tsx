@@ -13,11 +13,15 @@ const PageClient = ({ sections }: { sections: Page[] }) => {
 
   return (
     <>
-      {sections?.map((section: any, idx: number) => {
-        const BlockComponent = blocks[section.blockType];
-        if (!BlockComponent) return null;
-        return <BlockComponent key={section.id || idx} {...section} />;
-      })}
+      {sections && sections.length > 0 ? (
+        sections.map((section: any, idx: number) => {
+          const BlockComponent = blocks[section.blockType];
+          if (!BlockComponent) return <p key={idx}>Unknown block type</p>;
+          return <BlockComponent key={section.id || idx} {...section} />;
+        })
+      ) : (
+        <p>Translation or content missing for this locale.</p>
+      )}
     </>
   );
 };
