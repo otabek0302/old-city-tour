@@ -14,11 +14,9 @@ async function getSections(locale: string) {
   }
 }
 
-const AboutUsPage = async ({ params }: { params: { locale: string } }) => {
-  const { locale } = await params;
+export default async function Page({ params }: { params: { locale: string } }) {
+  const { locale } = params;
   const sections = await getSections(locale || "en");
   if (!sections) return null;
   return <AboutUsPageClient sections={sections[0].sections} />;
-};
-
-export default AboutUsPage;
+}
