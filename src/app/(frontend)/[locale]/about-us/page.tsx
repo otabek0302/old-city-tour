@@ -14,10 +14,15 @@ async function getAboutUsContent(locale: string) {
 }
 
 const AboutUsPage = async ({ params }: { params: { locale: string } }) => {
-  const { locale } = await params;
+  const { locale } = params; // FIXED: removed await
   const content = await getAboutUsContent(locale || "en");
   
   return <AboutUsClient content={content} locale={locale} />;
 };
 
 export default AboutUsPage;
+
+// Optional: add this if you want static generation
+export async function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'ru' }, { locale: 'uz' }];
+}
