@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import type { Locale } from "@/utilities/i18n/config";
 
@@ -12,15 +12,18 @@ import { Providers } from "@/providers";
 import Header from "@/components/globals/header";
 import Footer from "@/components/globals/footer";
 
-// ✅ Define proper interface for layout props
-interface LayoutProps {
-  children: React.ReactNode;
-  params: { locale: string };
-}
+type Props = {
+  children: ReactNode;
+  params: Promise<{ locale: string }>;
+};
 
-// ✅ Use that interface in the async function
-export default async function Layout({ children, params }: LayoutProps) {
-  const { locale } = params;
+export const metadata: Metadata = {
+  title: "Old City",
+  description: "A simple Payload CMS website",
+};
+
+export default async function Layout({ children, params }: Props) {
+  const { locale } = await params;
 
   return (
     <html lang={locale} className={cn(GeistSans.variable, GeistMono.variable)} suppressHydrationWarning>
@@ -38,8 +41,3 @@ export default async function Layout({ children, params }: LayoutProps) {
     </html>
   );
 }
-
-export const metadata: Metadata = {
-  title: "Old City",
-  description: "A simple Payload CMS website",
-};
