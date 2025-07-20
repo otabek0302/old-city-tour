@@ -33,6 +33,11 @@ export const Cities: CollectionConfig = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'link',
+      type: 'text',
+      localized: true,
+    },
     ...slugField(),
   ],
   timestamps: true,

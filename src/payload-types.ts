@@ -75,6 +75,7 @@ export interface Config {
     media: Media;
     posts: Post;
     types: Type;
+    hotels: Hotel;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +90,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     types: TypesSelect<false> | TypesSelect<true>;
+    hotels: HotelsSelect<false> | HotelsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -163,72 +165,68 @@ export interface User {
 export interface Tour {
   id: number;
   title: string;
-  description: string;
   duration: string;
+  price: number;
+  description: string;
   type: number | Type;
-  steps?:
+  cities: (number | City)[];
+  locations?:
     | {
-        title: string;
-        sections?:
-          | (
-              | {
-                  itinerary?:
-                    | {
-                        day: string;
-                        city: number | City;
-                        features?:
-                          | {
-                              title: string;
-                              id?: string | null;
-                            }[]
-                          | null;
-                        id?: string | null;
-                      }[]
-                    | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'tour-itinerary';
-                }
-              | {
-                  title: string;
-                  type: number | Tour;
-                  dates_prices?:
-                    | {
-                        start_date: string;
-                        end_date: string;
-                        price: number;
-                        link_to_booking: string;
-                        id?: string | null;
-                      }[]
-                    | null;
-                  description: string;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'dates-prices-tour';
-                }
-              | {
-                  title?:
-                    | {
-                        name: string;
-                        email: string;
-                        phone: string;
-                        message: string;
-                        tour: number | Tour;
-                        id?: string | null;
-                      }[]
-                    | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'tour-enquiry';
-                }
-            )[]
+        from: number | City;
+        to: number | City;
+        transport?: string | null;
+        date?: string | null;
+        time?: string | null;
+        duration?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  accommodation?:
+    | {
+        city: number | City;
+        nights: number;
+        hotel?: (number | Hotel)[] | null;
+        id?: string | null;
+      }[]
+    | null;
+  services?: {
+    included?:
+      | {
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+    notIncluded?:
+      | {
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  itinerary?:
+    | {
+        day: string;
+        activities?:
+          | {
+              activity?: string | null;
+              id?: string | null;
+            }[]
           | null;
+        id?: string | null;
+      }[]
+    | null;
+  booking_pricing?:
+    | {
+        dateStart?: string | null;
+        dateEnd?: string | null;
+        pricePerAdult?: number | null;
+        pricePerChild?: number | null;
         id?: string | null;
       }[]
     | null;
   images?:
     | {
-        image?: (number | null) | Media;
+        image: number | Media;
         id?: string | null;
       }[]
     | null;
@@ -265,6 +263,7 @@ export interface City {
   name: string;
   description?: string | null;
   image: number | Media;
+  link?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -325,6 +324,43 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotels".
+ */
+export interface Hotel {
+  id: number;
+  name: string;
+  city: number | City;
+  description: string;
+  address?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  rating?: ('1' | '2' | '3' | '4' | '5') | null;
+  images?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  policies: {
+    checkIn: string;
+    checkOut: string;
+    cancellation?: string | null;
+    pet?: string | null;
+    smoking?: string | null;
+  };
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "reviews".
  */
 export interface Review {
@@ -333,7 +369,6 @@ export interface Review {
   rating: number;
   comment: string;
   tour: number | Tour;
-  publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -359,9 +394,32 @@ export interface Page {
                   id?: string | null;
                 }[]
               | null;
+            static_content?:
+              | {
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            action_type: 'buttons' | 'date';
+            button?:
+              | {
+                  label?: string | null;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            date?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'special-offer-section';
           }
         | {
             heading: string;
@@ -395,7 +453,7 @@ export interface Page {
               | null;
             tours?:
               | {
-                  tour: number | Tour;
+                  tour: (number | Tour)[];
                   id?: string | null;
                 }[]
               | null;
@@ -406,6 +464,11 @@ export interface Page {
         | {
             heading: string;
             subheading?: string | null;
+            contacts: {
+              phone: string;
+              email: string;
+              address: string;
+            };
             faqs?:
               | {
                   question: string;
@@ -420,21 +483,11 @@ export interface Page {
         | {
             heading: string;
             subheading?: string | null;
-            button?:
-              | {
-                  label?: string | null;
-                  link?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            testimonials?:
-              | {
-                  author: string;
-                  content: string;
-                  rating?: number | null;
-                  id?: string | null;
-                }[]
-              | null;
+            reviews?: (number | Review)[] | null;
+            button?: {
+              text?: string | null;
+              link?: (number | null) | Page;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
@@ -451,12 +504,46 @@ export interface Page {
             blockName?: string | null;
             blockType: 'statistics';
           }
+        | RecommendedTours
+        | RecommendedCities
       )[]
     | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedTours".
+ */
+export interface RecommendedTours {
+  heading?: string | null;
+  subheading?: string | null;
+  tours: (number | Tour)[];
+  button?: {
+    text?: string | null;
+    link?: (number | null) | Page;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'recommended-tours';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedCities".
+ */
+export interface RecommendedCities {
+  heading?: string | null;
+  subheading?: string | null;
+  cities: (number | City)[];
+  button?: {
+    text?: string | null;
+    link?: (number | null) | Page;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'recommended-cities';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -522,6 +609,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'types';
         value: number | Type;
+      } | null)
+    | ({
+        relationTo: 'hotels';
+        value: number | Hotel;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -594,70 +685,65 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ToursSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
   duration?: T;
+  price?: T;
+  description?: T;
   type?: T;
-  steps?:
+  cities?: T;
+  locations?:
     | T
     | {
-        title?: T;
-        sections?:
+        from?: T;
+        to?: T;
+        transport?: T;
+        date?: T;
+        time?: T;
+        duration?: T;
+        id?: T;
+      };
+  accommodation?:
+    | T
+    | {
+        city?: T;
+        nights?: T;
+        hotel?: T;
+        id?: T;
+      };
+  services?:
+    | T
+    | {
+        included?:
           | T
           | {
-              'tour-itinerary'?:
-                | T
-                | {
-                    itinerary?:
-                      | T
-                      | {
-                          day?: T;
-                          city?: T;
-                          features?:
-                            | T
-                            | {
-                                title?: T;
-                                id?: T;
-                              };
-                          id?: T;
-                        };
-                    id?: T;
-                    blockName?: T;
-                  };
-              'dates-prices-tour'?:
-                | T
-                | {
-                    title?: T;
-                    type?: T;
-                    dates_prices?:
-                      | T
-                      | {
-                          start_date?: T;
-                          end_date?: T;
-                          price?: T;
-                          link_to_booking?: T;
-                          id?: T;
-                        };
-                    description?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
-              'tour-enquiry'?:
-                | T
-                | {
-                    title?:
-                      | T
-                      | {
-                          name?: T;
-                          email?: T;
-                          phone?: T;
-                          message?: T;
-                          tour?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                    blockName?: T;
-                  };
+              title?: T;
+              id?: T;
             };
+        notIncluded?:
+          | T
+          | {
+              title?: T;
+              id?: T;
+            };
+      };
+  itinerary?:
+    | T
+    | {
+        day?: T;
+        activities?:
+          | T
+          | {
+              activity?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  booking_pricing?:
+    | T
+    | {
+        dateStart?: T;
+        dateEnd?: T;
+        pricePerAdult?: T;
+        pricePerChild?: T;
         id?: T;
       };
   images?:
@@ -699,6 +785,30 @@ export interface PagesSelect<T extends boolean = true> {
                     link?: T;
                     id?: T;
                   };
+              static_content?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'special-offer-section'?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              action_type?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              date?: T;
               id?: T;
               blockName?: T;
             };
@@ -749,6 +859,13 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
+              contacts?:
+                | T
+                | {
+                    phone?: T;
+                    email?: T;
+                    address?: T;
+                  };
               faqs?:
                 | T
                 | {
@@ -764,20 +881,12 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
+              reviews?: T;
               button?:
                 | T
                 | {
-                    label?: T;
+                    text?: T;
                     link?: T;
-                    id?: T;
-                  };
-              testimonials?:
-                | T
-                | {
-                    author?: T;
-                    content?: T;
-                    rating?: T;
-                    id?: T;
                   };
               id?: T;
               blockName?: T;
@@ -795,11 +904,47 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        'recommended-tours'?: T | RecommendedToursSelect<T>;
+        'recommended-cities'?: T | RecommendedCitiesSelect<T>;
       };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedTours_select".
+ */
+export interface RecommendedToursSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  tours?: T;
+  button?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedCities_select".
+ */
+export interface RecommendedCitiesSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  cities?: T;
+  button?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -810,7 +955,6 @@ export interface ReviewsSelect<T extends boolean = true> {
   rating?: T;
   comment?: T;
   tour?: T;
-  publishedAt?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -824,6 +968,7 @@ export interface CitiesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   image?: T;
+  link?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -923,6 +1068,44 @@ export interface PostsSelect<T extends boolean = true> {
 export interface TypesSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hotels_select".
+ */
+export interface HotelsSelect<T extends boolean = true> {
+  name?: T;
+  city?: T;
+  description?: T;
+  address?: T;
+  phone?: T;
+  website?: T;
+  rating?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  policies?:
+    | T
+    | {
+        checkIn?: T;
+        checkOut?: T;
+        cancellation?: T;
+        pet?: T;
+        smoking?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

@@ -25,7 +25,7 @@ interface HeaderData {
 const Header = ({ data }: { data: HeaderData }) => {
   return (
     <header className="sticky top-6 z-50">
-      <div className="container">
+      <div className="container px-8">
         <div className="flex items-center justify-between">
           
           {/* Logo */}
@@ -35,9 +35,9 @@ const Header = ({ data }: { data: HeaderData }) => {
           
           {/* Desktop navigation */}
           <div className="hidden flex-1 items-center justify-center md:flex">
-            <nav className="flex items-center justify-center gap-6">
+            <nav className="flex items-center justify-center gap-4">
               {data.navigations?.map((item: Navigation, index: number) => (
-                <Button key={index} variant="nav" className={`${index === 0 ? "text-primary-dark" : ""}`} asChild>
+                <Button key={index} variant={index === 0 ? "nav_active" : "nav"} size="nav" className={`${index === 0 ? "rounded-xl" : "rounded-xl"}`} asChild>
                   <Link href={item.url} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noopener noreferrer" : undefined}>
                     {item.label}
                   </Link>

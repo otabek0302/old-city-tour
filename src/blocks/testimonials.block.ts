@@ -15,41 +15,19 @@ export const testimonials_block: Block = {
       localized: true,
     },
     {
-      name: 'button',
-      type: 'array',
-      localized: true,
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-        },
-        {
-          name: 'link',
-          type: 'text',
-        }
-      ]
+      name: 'reviews',
+      type: 'relationship',
+      relationTo: 'reviews',
+      hasMany: true,
     },
     {
-      name: 'testimonials',
-      type: 'array',
+      name: 'button',
+      type: 'group',
+      localized: true,
       fields: [
-        {
-          name: 'author',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'content',
-          type: 'textarea',
-          required: true,
-        },
-        {
-          name: 'rating',
-          type: 'number',
-          min: 1,
-          max: 5,
-        },
-      ],
-    },
+        { name: 'text', type: 'text' },
+        { name: 'link', type: 'relationship', relationTo: 'pages' },
+      ]
+    }
   ],
 }; 

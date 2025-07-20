@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
-import {  Users, Tours, Pages, Reviews, Cities, Media, Header, Footer, Posts, Types } from './collections'
+import {  Users, Tours, Pages, Reviews, Cities, Media, Header, Footer, Posts, Types, Hotels } from './collections'
 import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,10 +26,10 @@ export default buildConfig({
 
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Users, Tours, Pages, Reviews, Cities, Media, Posts, Types],
+  collections: [Users, Tours, Pages, Reviews, Cities, Media, Posts, Types, Hotels],
   globals: [Header, Footer],
   cors: [getServerSideURL()].filter(Boolean),
   secret: process.env.PAYLOAD_SECRET,

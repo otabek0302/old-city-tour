@@ -1,6 +1,7 @@
 // Collections
 export { Users } from './Users'
 export { Tours } from './Tours'
+export { Hotels } from './Hotels'
 export { Pages } from './Pages' 
 export { Reviews } from './Reviews'
 export { Cities } from './Cities'

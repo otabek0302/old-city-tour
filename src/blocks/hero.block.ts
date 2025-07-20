@@ -34,7 +34,27 @@ export const hero_block: Block = {
           type: 'text',
           localized: true,
         }
-      ]
+      ],
+      minRows: 1,
+      maxRows: 2,
     },
+    {
+      name: "static_content",
+      type: "array",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          localized: true,
+        },
+        {
+          name: "text",
+          type: "text",
+          localized: true,
+        }
+      ],
+      minRows: 1,
+      maxRows: 4,
+    }
   ],
 }; 

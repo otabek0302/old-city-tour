@@ -41,26 +41,6 @@ export const Reviews: CollectionConfig = {
       relationTo: 'tours',
       required: true,
     },
-    {
-      name: 'publishedAt',
-      type: 'date',
-      admin: {
-        date: {
-          pickerAppearance: 'dayAndTime',
-        },
-        position: 'sidebar',
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
-      },
-    },
     ...slugField(),
   ],
   timestamps: true,

@@ -22,3 +22,5 @@ node_modules/
 
 # Payload admin (optional, if generated)
 src/payload-admin/
+.env.local
+.pnpm-store

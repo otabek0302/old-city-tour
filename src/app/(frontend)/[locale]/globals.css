@@ -15,8 +15,9 @@
   }
 
   :root {
-    --background: #FFFFFF;
+    --background: #F0F0F0;
     --foreground: #1C1C1E;
+    --border: #DFDFDF;
 
     --card: #EEEEEE;
     --card-foreground: #1C1C1E;
@@ -34,29 +35,36 @@
     --secondary-dark: #FFB300;
     --secondary-foreground: #1C1C1E;
 
-    --muted: #6C757D;
-    --muted-foreground: #EEEEEE;
+    --copy: #262626;
+    --copy-light: #666666;
+    --copy-lighter: #8C8C8C;
+    --copy-black: #1C1C1E;
+    --copy-white: #FBFBFB;
+
+    --muted: #666666;
+    --muted-foreground: #8C8C8C;
 
     --accent: #FFD427;
     --accent-foreground: #1C1C1E;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: #D64545;
+    --destructive-foreground: #FFFFFF;
 
-    --border: #CED4DA;
-    --input: #1C1C1E;
-    --ring: #5CA9D8;
+    --input: #DBDEE3;
+    --ring: #07689F;
 
     --radius: 0.2rem;
 
+    /* Status */
     --success: #4CAF50;
-    --warning: #E1A100;
+    --warning: #FDBC17;
     --error: #D64545;
   }
 
   [data-theme='dark'] {
-    --background: #1C1C1E;
-    --foreground: #FFFFFF;
+    --background: #1A1A1A;
+    --foreground: #FBFBFB;
+    --border: #404040;
 
     --card: #1C1C1E;
     --card-foreground: #FFFFFF;
@@ -64,16 +72,23 @@
     --popover: #1C1C1E;
     --popover-foreground: #FFFFFF;
 
-    --primary: #5CA9D8;
+    --primary: #07689F;
     --primary-light: #5CA9D8;
     --primary-dark: #05476D;
-    --primary-foreground: #1C1C1E;
+    --primary-foreground: #FFFFFF;
 
-    --secondary: #FFB300;
+    --secondary: #FFD427;
     --secondary-light: #FFE88D;
     --secondary-dark: #FFB300;
-    --secondary-foreground: #1C1C1E;
+    --secondary-foreground: #1A1A1A;
 
+    --copy: #FBFBFB;
+    --copy-light: #D9D9D9;
+    --copy-lighter: #A6A6A6;
+    --copy-black: #1A1A1A;
+    --copy-white: #FBFBFB;
+
+    /* UI states */
     --muted: #6C757D;
     --muted-foreground: #EEEEEE;
 
@@ -83,16 +98,21 @@
     --destructive: #D64545;
     --destructive-foreground: #FFFFFF;
 
-    --border: #CED4DA;
     --input: #1C1C1E;
     --ring: #5CA9D8;
 
+    --radius: 0.2rem;
+
+    /* Status */
     --success: #4CAF50;
     --warning: #E1A100;
     --error: #D64545;
   }
 }
 
+/* ------------------------------------------------
+   Base element styling
+------------------------------------------------- */
 @layer base {
   * {
     @apply border-border;
@@ -113,5 +133,24 @@ html[data-theme='light'] {
 }
 
 .container {
-  @apply w-full max-w-[1340px] mx-auto px-4 sm:px-6 lg:px-8;
+  @apply w-full max-w-[1440px] mx-auto px-4;
+}
+
+/* Embla Carousel Styles */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  min-width: 0;
+  position: relative;
 }

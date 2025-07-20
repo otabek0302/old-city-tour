@@ -38,6 +38,8 @@ export const tours_block: Block = {
           type: 'relationship',
           relationTo: 'tours',
           required: true,
+          hasMany: true,
+          maxRows: 4,
         }
       ],
     },

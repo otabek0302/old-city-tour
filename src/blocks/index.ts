@@ -4,3 +4,6 @@ export * from './tours.block';
 export * from './faq.block';
 export * from './testimonials.block';
 export * from './statistics.block';
+export * from './special-offer-section.block';
+export * from './recommended-tours.block';
+export * from './recommended-cities.block';
