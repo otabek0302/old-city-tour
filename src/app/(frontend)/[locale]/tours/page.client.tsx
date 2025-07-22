@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
 import TourCard from "@/components/sections/tours/TourCard";
 import TourFilter from "@/components/sections/tours/TourFilter";
+
+import { useState, useMemo } from "react";
 import { Tour, Type } from "@/payload-types";
 
 interface PageClientProps {
@@ -45,8 +46,8 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
   }, [tours, selectedTypes, priceRange, durationRange]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <section className="py-6 min-h-screen">
+      <div className="container">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
           <div className="lg:w-1/4">
@@ -58,7 +59,7 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
             {filteredTours.length > 0 ? (
               <div className="grid gap-6">
                 {filteredTours.map((tour) => (
-                  <TourCard key={tour.id} tour={tour} locale={locale} />
+                  <TourCard key={tour.id} tour={tour} />
                 ))}
               </div>
             ) : (
@@ -70,7 +71,7 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

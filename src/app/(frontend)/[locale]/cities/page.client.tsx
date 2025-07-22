@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+
 import { City } from "@/payload-types";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface PageClientProps {
   cities: City[];
@@ -10,7 +13,6 @@ interface PageClientProps {
 }
 
 const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
-  // Helper function to get city image
   const getCityImage = (city: City) => {
     if (city.image) {
       if (typeof city.image === "string") {
@@ -20,54 +22,38 @@ const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
         return city.image.url;
       }
     }
-    return "/placeholder-city.jpg"; // Fallback image
+    return "/placeholder-city.jpg";
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Our Cities</h1>
-          <p className="text-gray-600">Discover amazing destinations around the world</p>
-        </div>
+  console.log(cities);
 
-        {/* Cities Grid */}
+  return (
+    <div className="py-6">
+      <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {cities.length > 0 ? (
             cities.map((city) => (
-              <Card key={city.id} className="overflow-hidden bg-white shadow-lg hover:shadow-xl transition-all duration-300 border-0 rounded-xl">
+              <Card key={city.id} className="overflow-hidden bg-background rounded-2xl">
                 <div className="relative">
-                  <img
-                    src={getCityImage(city)}
-                    alt={city.name || "City Image"}
-                    className="w-full h-48 object-cover"
-                  />
+                  <Image src={getCityImage(city)} alt={city.name || "City Image"} className="w-full h-48 object-cover" width={220} height={220} />
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {city.name || "City Name"}
-                  </h3>
-                  {city.description && (
-                    <p className="text-gray-600 text-sm line-clamp-3">
-                      {city.description}
-                    </p>
-                  )}
+                  <h3 className="text-copy text-xl font-semibold mb-2">{city.name || "City Name"}</h3>
+                  <p className="text-copy-lighter text-sm font-normal leading-tight">{city.description?.slice(0, 35)}...</p>
                   {city.link && (
-                    <a
-                      href={city.link}
-                      className="inline-block mt-3 text-blue-600 hover:text-blue-800 font-medium text-sm"
-                    >
-                      Learn More →
-                    </a>
+                    <Button variant="primary" size="md" className="mt-4 rounded-xl" asChild>
+                      <Link href={`/cities/${city.slug}`} className="text-primary-foreground text-sm font-normal">
+                        {city.link}
+                      </Link>
+                    </Button>
                   )}
                 </CardContent>
               </Card>
             ))
           ) : (
             <div className="col-span-full text-center py-12">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No cities found</h3>
-              <p className="text-gray-600">Check back later for new destinations.</p>
+              <h3 className="text-xl font-semibold text-copy mb-2">No cities found</h3>
+              <p className="text-copy-light">Check back later for new destinations.</p>
             </div>
           )}
         </div>
@@ -76,4 +62,4 @@ const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
   );
 };
 
-export default PageClient; 
+export default PageClient;

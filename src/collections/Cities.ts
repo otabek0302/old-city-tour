@@ -21,6 +21,7 @@ export const Cities: CollectionConfig = {
       type: 'text',
       localized: true,
       required: true,
+      index: true,
     },
     {
       name: 'description',

@@ -34,4 +34,4 @@ const ToursPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
   return <PageClient tours={tours} tourTypes={tourTypes} locale={locale} />;
 };
 
-export default ToursPage; 
+export default ToursPage;

@@ -15,12 +15,12 @@
   }
 
   :root {
-    --background: #F0F0F0;
+    --background: #FFFFFF;
     --foreground: #1C1C1E;
     --border: #DFDFDF;
 
-    --card: #EEEEEE;
-    --card-foreground: #1C1C1E;
+    --card: #FFFFFF;
+    --card-foreground: #0A0A0A;
 
     --popover: #FFFFFF;
     --popover-foreground: #1C1C1E;
@@ -62,12 +62,12 @@
   }
 
   [data-theme='dark'] {
-    --background: #1A1A1A;
+    --background: #0A0A0A;
     --foreground: #FBFBFB;
     --border: #404040;
 
-    --card: #1C1C1E;
-    --card-foreground: #FFFFFF;
+    --card: #171717;
+    --card-foreground: #FAFAFA;
 
     --popover: #1C1C1E;
     --popover-foreground: #FFFFFF;
