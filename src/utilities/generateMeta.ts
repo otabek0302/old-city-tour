@@ -11,9 +11,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   let url = serverUrl + '/website-template-OG.webp'
 
   if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url as string | undefined;
-
-    url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url;
+    url = serverUrl + image.url
   }
 
   return url
@@ -21,20 +19,18 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
 export const generateMeta = async (args: {
   doc: Partial<City> | Partial<Post> | null
-  tourTypes: Type[]
+  _tourTypes: Type[]
 }): Promise<Metadata> => {
-  const { doc } = args
+  const { doc, _tourTypes } = args
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  const ogImage = getImageURL(doc?.image)
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | ' + tourTypes.map((type) => type.name).join(', ')
-    : tourTypes.map((type) => type.name).join(', ') + ' | ' + 'Payload Website Template'
+  const title = 'Old City Tour Agency'
 
   return {
-    description: doc?.meta?.description,
+    description: 'Discover amazing tours and destinations with Old City Tour Agency',
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || '',
+      description: 'Discover amazing tours and destinations with Old City Tour Agency',
       images: ogImage
         ? [
             {
@@ -43,7 +39,7 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: '/',
     }),
     title,
   }
