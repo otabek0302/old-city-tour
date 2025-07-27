@@ -2,10 +2,26 @@ import HomePageClient from "./page.client";
 
 async function getSections(locale: string) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    // Use the correct environment variable or fallback
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
+                   process.env.NEXT_PUBLIC_SERVER_URL || 
+                   "http://localhost:3000";
+    
+    console.log("Debug - Base URL:", baseUrl);
+    console.log("Debug - Locale:", locale);
+    
     const res = await fetch(`${baseUrl}/api/home?locale=${locale}`, { cache: "no-store" });
-    if (!res.ok) return [];
+    console.log("Debug - Response status:", res.status);
+    
+    if (!res.ok) {
+      console.log("Debug - Response not ok:", res.statusText);
+      return [];
+    }
+    
     const data = await res.json();
+    console.log("Debug - API Response data:", JSON.stringify(data, null, 2));
+    
     const sections = data.docs || [];
     return sections;
   } catch (error) {
