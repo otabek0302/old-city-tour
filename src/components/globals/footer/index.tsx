@@ -85,8 +85,14 @@ async function getFooterData(locale: string): Promise<FooterData | null> {
       icon: link.icon 
     })) : [];
     
+    const originalLogoUrl = data.logo?.url;
+    const absoluteLogoUrl = getImageURL(originalLogoUrl);
+    
+    console.log("Debug - Original logo URL:", originalLogoUrl);
+    console.log("Debug - Absolute logo URL:", absoluteLogoUrl);
+    
     const logo = typeof data.logo === "object" && data.logo !== null ? { 
-      url: getImageURL(data.logo.url), 
+      url: absoluteLogoUrl, 
       alt: data.logo.alt || "Logo" 
     } : { url: "", alt: "Logo" };
     
