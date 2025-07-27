@@ -39,6 +39,7 @@ export const getImageURL = (imageUrl?: string | null) => {
   }
   
   // If it's a relative URL, make it absolute
-  const serverUrl = getServerSideURL()
-  return serverUrl + imageUrl
+  // Use client-side URL if available, otherwise server-side
+  const baseUrl = canUseDOM ? getClientSideURL() : getServerSideURL()
+  return baseUrl + imageUrl
 }

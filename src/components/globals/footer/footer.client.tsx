@@ -63,7 +63,7 @@ const FooterClient = ({ data }: { data: FooterData }) => {
             <div className="flex gap-3">
               {data.socialLinks?.map((link, idx) => (
                 <Button variant="social_media" size="icon" key={idx} className="group flex items-center justify-center">
-                  <Link href={link.icon === "phone" ? `tel:${link.icon}` : link.icon === "email" ? `mailto:${link.icon}` : link.icon} aria-label={link.title} target="_blank" rel="noopener noreferrer">
+                  <Link href={link.link} aria-label={link.title} target="_blank" rel="noopener noreferrer">
                     <SocialMediaIcon name={link.icon as string} className="h-4 w-4 lg:h-5 lg:w-5 text-inherit" />
                   </Link>
                 </Button>
@@ -87,7 +87,11 @@ const FooterClient = ({ data }: { data: FooterData }) => {
             <ul className="flex flex-wrap gap-8">
               {data.contactLinks?.map((link, idx) => (
                 <li key={idx} className="flex items-center gap-2">
-                  <Link href={link.type === "phone" ? `tel:${link.value}` : link.type === "email" ? `mailto:${link.value}` : link.value} className={`${isHomeLanguagePath ? "text-copy-light hover:text-copy text-sm font-normal transition-colors" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`} target="_blank">
+                  <Link 
+                    href={link.type === "phone" ? `tel:${link.value}` : link.type === "email" ? `mailto:${link.value}` : `https://maps.google.com/?q=${encodeURIComponent(link.value)}`} 
+                    className={`${isHomeLanguagePath ? "text-copy-light hover:text-copy text-sm font-normal transition-colors" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`} 
+                    target="_blank"
+                  >
                     {link.value}
                   </Link>
                 </li>
