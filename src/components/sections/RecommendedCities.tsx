@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { getImageURL } from "../../utilities/getURL";
 
 interface City {
   slug: string;
@@ -35,7 +36,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
         {cities.length === 2 ? (
           <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-6">
             {cities.map((city, idx) => (
-              <div key={idx} className="col-span-2 relative rounded-2xl overflow-hidden min-h-[600px] flex items-end" style={{ backgroundImage: `url(${city.image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+              <div key={idx} className="col-span-2 relative rounded-2xl overflow-hidden min-h-[600px] flex items-end" style={{ backgroundImage: `url(${getImageURL(city.image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-10" />
                 <div className="relative z-20 py-8 px-32 w-full flex flex-col items-center justify-end text-center">
@@ -55,7 +56,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4 w-full">
             {/* Column 1: col 1, spans 2 rows */}
-            <div className="group relative rounded-2xl overflow-hidden min-h-[640px] row-span-2 flex items-end" style={{ backgroundImage: `url(${cities[0].image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="group relative rounded-2xl overflow-hidden min-h-[640px] row-span-2 flex items-end" style={{ backgroundImage: `url(${getImageURL(cities[0].image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-20"></div>
               <div className="relative z-10 p-8 w-full flex flex-col items-start justify-end">
@@ -63,7 +64,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
               </div>
             </div>
             {/* Column 2: col 2, row 1 */}
-            <div className="group relative rounded-2xl overflow-hidden min-h-[150px] flex items-end" style={{ backgroundImage: `url(${cities[1].image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="group relative rounded-2xl overflow-hidden min-h-[150px] flex items-end" style={{ backgroundImage: `url(${getImageURL(cities[1].image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-20"></div>
               <div className="relative z-10 p-8 w-full flex flex-col items-start justify-end">
@@ -71,7 +72,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
               </div>
             </div>
             {/* Column 3: col 3, spans 2 rows */}
-            <div className="group relative rounded-2xl overflow-hidden min-h-[640px] row-span-2 flex items-end" style={{ backgroundImage: `url(${cities[3].image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="group relative rounded-2xl overflow-hidden min-h-[640px] row-span-2 flex items-end" style={{ backgroundImage: `url(${getImageURL(cities[3].image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-20"></div>
               <div className="relative z-10 p-8 w-full flex flex-col items-start justify-end">
@@ -79,7 +80,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
               </div>
             </div>
             {/* Column 4: col 2, row 2 */}
-            <div className="group relative rounded-2xl overflow-hidden min-h-[150px] flex items-end" style={{ backgroundImage: `url(${cities[2].image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="group relative rounded-2xl overflow-hidden min-h-[150px] flex items-end" style={{ backgroundImage: `url(${getImageURL(cities[2].image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-20"></div>
               <div className="relative z-10 p-8 w-full flex flex-col items-start justify-end">

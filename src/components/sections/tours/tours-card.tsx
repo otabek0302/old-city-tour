@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Tour } from "@/payload-types";
 import { Card } from "@/components/ui/card";
 import { Star, Clock, Users } from "lucide-react";
+import { getImageURL } from "../../../utilities/getURL";
 
 interface TourCardProps {
   tour: Tour;
@@ -14,10 +15,10 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
     if (tour.images && tour.images.length > 0) {
       const image = tour.images[0];
       if (typeof image.image === "string") {
-        return image.image;
+        return getImageURL(image.image);
       }
       if (typeof image.image === "object" && image.image.url) {
-        return image.image.url;
+        return getImageURL(image.image.url);
       }
     }
     return "/placeholder-tour.jpg";

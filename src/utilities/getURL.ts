@@ -29,3 +29,16 @@ export const getClientSideURL = () => {
 
   return process.env.NEXT_PUBLIC_SERVER_URL || ''
 }
+
+export const getImageURL = (imageUrl?: string | null) => {
+  if (!imageUrl) return ''
+  
+  // If it's already an absolute URL, return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl
+  }
+  
+  // If it's a relative URL, make it absolute
+  const serverUrl = getServerSideURL()
+  return serverUrl + imageUrl
+}

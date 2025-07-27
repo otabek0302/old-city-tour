@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "../../ui/button";
+import { getImageURL } from "../../../utilities/getURL";
 
 interface HomeHeroButton {
   label: string;
@@ -29,13 +30,15 @@ interface HomeHeroProps {
 }
 
 const HomeHero = ({ heading, subheading, image, button, static_content = [] }: HomeHeroProps) => {
+  const imageUrl = image?.url ? getImageURL(image.url) : '';
+  
   return (
     <section className="relative -top-8">
       <div className="w-full px-4">
         <div className="relative min-h-[calc(100vh-2vh)] h-[100vh] max-h-[780px] rounded-[28px] overflow-hidden">
-          {image?.url && (
+          {imageUrl && (
             <div className="absolute inset-0 z-0">
-              <Image src={image.url} alt={image.alt || "Hero background"} fill className="object-cover" priority />
+              <Image src={imageUrl} alt={image?.alt || "Hero background"} fill className="object-cover" priority />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-black/30"></div>
