@@ -1,18 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-interface PageClientProps {
-  locale: string;
+interface ContactUsPageClientProps {
+  heading: string;
+  subheading: string;
+  form_info: {
+    heading: string;
+    subheading: string;
+  };
+  contact_info: {
+    heading: string;
+    subheading: string;
+    email: string;
+    phone: string;
+    address: string;
+    business_hours: string;
+  };
 }
 
-const PageClient: React.FC<PageClientProps> = ({ locale }) => {
+const ContactUsPageClient = ({ heading, subheading, form_info, contact_info }: ContactUsPageClientProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,213 +33,168 @@ const PageClient: React.FC<PageClientProps> = ({ locale }) => {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    // You can add API call here to send the form data
+
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Telegram bot configuration
+      const telegramToken = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || "8350645290:AAHcjzo0hMse7vIN7XD_u4Sbx4NKd-4MlKM";
+      const chatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID || "-1002896625144";
+
+      // Format the message for Telegram
+      const text = `🆕 New Contact Form Submission <br> 👤 Name: ${formData.name} <br> 📧 Email: ${formData.email} <br> 📞 Phone: ${formData.phone || "Not provided"} <br> 📝 Subject: ${formData.subject} <br> 💬 Message: ${formData.message} <br>  ⏰ Submitted at: ${new Date().toLocaleString()}`;
+
+      const response = await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: text,
+          parse_mode: "HTML",
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Message sent successfully! We'll get back to you soon.");
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        const responseData = await response.json();
+        throw new Error(`Failed to send message: ${responseData.description || "Unknown error"}`);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Have questions about our tours? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-          </p>
+    <section className="min-h-screen py-8">
+      <div className="container">
+        <div className={`${!heading && !subheading ? "mb-0" : "mb-8"} max-w-2xl pl-1`}>
+          {heading && <h2 className="text-copy text-2xl md:text-4xl font-bold leading-normal">{heading}</h2>}
+          {subheading && <p className="text-copy-light text-sm font-normal leading-tight mt-2">{subheading}</p>}
         </div>
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div className="border border-border rounded-2xl p-8">
+            {form_info?.heading && <h2 className="text-2xl font-bold text-gray-900 mb-6">{form_info?.heading}</h2>}
+            {form_info?.subheading && <p className="text-gray-700 mb-6">{form_info?.subheading}</p>}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                    Full Name *
+                  </Label>
+                  <Input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} placeholder="Your full name" className="border-border rounded-[10px]" disabled={isSubmitting} />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email Address *</Label>
+                  <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} placeholder="your.email@example.com" className="border-border rounded-[10px]" disabled={isSubmitting} />
+                </div>
+              </div>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div>
-              <Card className="shadow-lg border-0">
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name" className="text-sm font-medium text-gray-700">
-                          Full Name *
-                        </Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="mt-1 border-gray-300"
-                          placeholder="Your full name"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                          Email Address *
-                        </Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="mt-1 border-gray-300"
-                          placeholder="your.email@example.com"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                        Phone Number
-                      </Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="mt-1 border-gray-300"
-                        placeholder="+1 (555) 123-4567"
-                      />
-                    </div>
+              <div>
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="+1 (555) 123-4567" className="border-border rounded-[10px]" disabled={isSubmitting} />
+              </div>
 
-                    <div>
-                      <Label htmlFor="subject" className="text-sm font-medium text-gray-700">
-                        Subject *
-                      </Label>
-                      <Input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        required
-                        value={formData.subject}
-                        onChange={handleChange}
-                        className="mt-1 border-gray-300"
-                        placeholder="What's this about?"
-                      />
-                    </div>
+              <div>
+                <Label htmlFor="subject">Subject *</Label>
+                <Input id="subject" name="subject" type="text" required value={formData.subject} onChange={handleChange} placeholder="What&apos;s this about?" className="border-border rounded-[10px]" disabled={isSubmitting} />
+              </div>
 
-                    <div>
-                      <Label htmlFor="message" className="text-sm font-medium text-gray-700">
-                        Message *
-                      </Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        required
-                        value={formData.message}
-                        onChange={handleChange}
-                        className="mt-1 border-gray-300 min-h-[120px]"
-                        placeholder="Tell us more about your inquiry..."
-                      />
-                    </div>
+              <div>
+                <Label htmlFor="message">Message *</Label>
+                <Textarea id="message" name="message" required value={formData.message} onChange={handleChange} placeholder="Tell us more about your inquiry..." className="border-border rounded-[10px]" disabled={isSubmitting} />
+              </div>
 
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-                      <Send className="h-4 w-4 mr-2" />
-                      Send Message
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+              <Button type="submit" variant="primary" size="xxl" className="py-2.5 w-full" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <span className="hidden md:inline text-primary-foreground text-sm font-medium">Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    <span className="hidden md:inline text-primary-foreground text-sm font-medium">Send Message</span>
+                  </>
+                )}
+              </Button>
+            </form>
+          </div>
+
+          <div className="space-y-6">
+            <div className="flex items-start space-x-4">
+              <div className="bg-blue-100 p-3 rounded-full">
+                <Mail className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                <p className="text-gray-700">{contact_info?.email || "info@oldcity.com"}</p>
+              </div>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
+            <div className="flex items-start space-x-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <Phone className="h-6 w-6 text-green-600" />
+              </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-                <p className="text-gray-700 mb-6">
-                  We're here to help and answer any questions you might have. We look forward to hearing from you.
-                </p>
+                <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
+                <p className="text-gray-700">{contact_info?.phone || "+1 (555) 123-4567"}</p>
               </div>
+            </div>
 
-              {/* Contact Details */}
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-100 p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-700">info@oldcity.com</p>
-                    <p className="text-gray-700">support@oldcity.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-green-100 p-3 rounded-full">
-                    <Phone className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-700">+1 (555) 123-4567</p>
-                    <p className="text-gray-700">+1 (555) 987-6543</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-purple-100 p-3 rounded-full">
-                    <MapPin className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Office</h3>
-                    <p className="text-gray-700">
-                      123 Travel Street<br />
-                      Tourism City, TC 12345<br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-orange-100 p-3 rounded-full">
-                    <Clock className="h-6 w-6 text-orange-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Business Hours</h3>
-                    <p className="text-gray-700">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p className="text-gray-700">Saturday: 10:00 AM - 4:00 PM</p>
-                    <p className="text-gray-700">Sunday: Closed</p>
-                  </div>
-                </div>
+            <div className="flex items-start space-x-4">
+              <div className="bg-purple-100 p-3 rounded-full">
+                <MapPin className="h-6 w-6 text-purple-600" />
               </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Office</h3>
+                <p className="text-gray-700">{contact_info?.address || "123 Travel Street, Tourism City, TC 12345"}</p>
+              </div>
+            </div>
 
-              {/* FAQ Section */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Frequently Asked Questions</h3>
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-medium text-gray-900">How do I book a tour?</h4>
-                    <p className="text-sm text-gray-600">You can book directly through our website or contact us for personalized assistance.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">What's your cancellation policy?</h4>
-                    <p className="text-sm text-gray-600">Cancellation policies vary by tour. Please check individual tour details for specific terms.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-900">Do you offer group discounts?</h4>
-                    <p className="text-sm text-gray-600">Yes! Contact us for group booking rates and special arrangements.</p>
-                  </div>
-                </div>
+            <div className="flex items-start space-x-4">
+              <div className="bg-orange-100 p-3 rounded-full">
+                <Clock className="h-6 w-6 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-1">Business Hours</h3>
+                <p className="text-gray-700">{contact_info?.business_hours || "Monday - Friday: 9:00 AM - 6:00 PM"}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default PageClient; 
+export default ContactUsPageClient;

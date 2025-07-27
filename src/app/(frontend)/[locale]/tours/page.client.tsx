@@ -1,18 +1,18 @@
 "use client";
 
-import TourCard from "@/components/sections/tours/TourCard";
-import TourFilter from "@/components/sections/tours/TourFilter";
+import ToursCard from "@/components/sections/tours/tours-card";
+import ToursFilter from "@/components/sections/tours/tours-filter";
 
-import { useState, useMemo } from "react";
 import { Tour, Type } from "@/payload-types";
+import { useState, useMemo } from "react";
 
 interface PageClientProps {
   tours: Tour[];
   tourTypes: Type[];
-  locale: string;
+  _locale: string;
 }
 
-const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => {
+const PageClient = ({ tours, tourTypes, _locale }: PageClientProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
   const [durationRange, setDurationRange] = useState<[number, number]>([3, 21]);
@@ -21,7 +21,8 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
     return tours.filter((tour) => {
       // Filter by type
       if (selectedTypes.length > 0 && tour.type) {
-        const tourType = typeof tour.type === "string" ? tour.type : (tour.type as any).id.toString();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const tourType = typeof tour.type === "string" ? tour.type : (tour.type as any).id?.toString() || tour.type;
         if (!selectedTypes.includes(tourType)) return false;
       }
 
@@ -51,7 +52,7 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Filters Sidebar */}
           <div className="lg:w-1/4">
-            <TourFilter tourTypes={tourTypes} selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} priceRange={priceRange} setPriceRange={setPriceRange} durationRange={durationRange} setDurationRange={setDurationRange} />
+            <ToursFilter tourTypes={tourTypes} selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} priceRange={priceRange} setPriceRange={setPriceRange} durationRange={durationRange} setDurationRange={setDurationRange} />
           </div>
 
           {/* Tours Grid */}
@@ -59,7 +60,7 @@ const PageClient: React.FC<PageClientProps> = ({ tours, tourTypes, locale }) => 
             {filteredTours.length > 0 ? (
               <div className="grid gap-6">
                 {filteredTours.map((tour) => (
-                  <TourCard key={tour.id} tour={tour} />
+                  <ToursCard key={tour.id} tour={tour} />
                 ))}
               </div>
             ) : (

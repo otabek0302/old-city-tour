@@ -69,7 +69,11 @@ export interface Config {
   collections: {
     users: User;
     tours: Tour;
-    pages: Page;
+    'contact-us': ContactUs;
+    home: Home;
+    'about-us': AboutUs;
+    'privacy-policy': PrivacyPolicy;
+    terms: Term;
     reviews: Review;
     cities: City;
     media: Media;
@@ -84,7 +88,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     tours: ToursSelect<false> | ToursSelect<true>;
-    pages: PagesSelect<false> | PagesSelect<true>;
+    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+    'about-us': AboutUsSelect<false> | AboutUsSelect<true>;
+    'privacy-policy': PrivacyPolicySelect<false> | PrivacyPolicySelect<true>;
+    terms: TermsSelect<false> | TermsSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     cities: CitiesSelect<false> | CitiesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -176,7 +184,8 @@ export interface Tour {
         to: number | City;
         transport?: string | null;
         date?: string | null;
-        time?: string | null;
+        fromTime?: string | null;
+        toTime?: string | null;
         duration?: string | null;
         id?: string | null;
       }[]
@@ -227,12 +236,6 @@ export interface Tour {
   images?:
     | {
         image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  reviews?:
-    | {
-        review?: (number | null) | Review;
         id?: string | null;
       }[]
     | null;
@@ -352,7 +355,8 @@ export interface Hotel {
     checkOut: string;
     cancellation?: string | null;
     pet?: string | null;
-    smoking?: string | null;
+    children?: string | null;
+    payment?: string | null;
   };
   slug?: string | null;
   slugLock?: boolean | null;
@@ -361,24 +365,33 @@ export interface Hotel {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "reviews".
+ * via the `definition` "contact-us".
  */
-export interface Review {
+export interface ContactUs {
   id: number;
-  name: string;
-  rating: number;
-  comment: string;
-  tour: number | Tour;
-  slug?: string | null;
-  slugLock?: boolean | null;
+  title: string;
+  heading: string;
+  subheading: string;
+  form_info: {
+    heading: string;
+    subheading: string;
+  };
+  contact_info: {
+    heading: string;
+    subheading: string;
+    phone: string;
+    email: string;
+    address: string;
+    opening_hours: string;
+  };
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
+ * via the `definition` "home".
  */
-export interface Page {
+export interface Home {
   id: number;
   title: string;
   sections?:
@@ -483,33 +496,14 @@ export interface Page {
         | {
             heading: string;
             subheading?: string | null;
-            reviews?: (number | Review)[] | null;
-            button?: {
-              text?: string | null;
-              link?: (number | null) | Page;
-            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
-          }
-        | {
-            statistics?:
-              | {
-                  number?: string | null;
-                  label?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'statistics';
           }
         | RecommendedTours
         | RecommendedCities
       )[]
     | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -522,8 +516,8 @@ export interface RecommendedTours {
   subheading?: string | null;
   tours: (number | Tour)[];
   button?: {
-    text?: string | null;
-    link?: (number | null) | Page;
+    label?: string | null;
+    link?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
@@ -538,12 +532,144 @@ export interface RecommendedCities {
   subheading?: string | null;
   cities: (number | City)[];
   button?: {
-    text?: string | null;
-    link?: (number | null) | Page;
+    label?: string | null;
+    link?: string | null;
   };
   id?: string | null;
   blockName?: string | null;
   blockType: 'recommended-cities';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us".
+ */
+export interface AboutUs {
+  id: number;
+  title: string;
+  sections?:
+    | (
+        | {
+            heading: string;
+            subheading?: string | null;
+            'image-group'?:
+              | {
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            button?: {
+              label?: string | null;
+              link?: string | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about-us-hero';
+          }
+        | {
+            statistics?:
+              | {
+                  number?: string | null;
+                  label?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'statistics';
+          }
+        | RecommendedTours
+        | {
+            heading: string;
+            subheading?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials';
+          }
+        | {
+            heading: string;
+            subheading?: string | null;
+            action_type: 'buttons' | 'date';
+            button?:
+              | {
+                  label?: string | null;
+                  link?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            date?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'special-offer-section';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "privacy-policy".
+ */
+export interface PrivacyPolicy {
+  id: number;
+  title: string;
+  paragraphs?: {
+    p1?: string | null;
+    p2?: string | null;
+  };
+  sections?:
+    | {
+        heading: string;
+        content?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'privacy-policy';
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "terms".
+ */
+export interface Term {
+  id: number;
+  title: string;
+  paragraphs?: {
+    p1?: string | null;
+    p2?: string | null;
+  };
+  sections?:
+    | {
+        heading: string;
+        content?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'terms';
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  name: string;
+  rating: number;
+  comment: string;
+  tour: number | Tour;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -587,8 +713,24 @@ export interface PayloadLockedDocument {
         value: number | Tour;
       } | null)
     | ({
-        relationTo: 'pages';
-        value: number | Page;
+        relationTo: 'contact-us';
+        value: number | ContactUs;
+      } | null)
+    | ({
+        relationTo: 'home';
+        value: number | Home;
+      } | null)
+    | ({
+        relationTo: 'about-us';
+        value: number | AboutUs;
+      } | null)
+    | ({
+        relationTo: 'privacy-policy';
+        value: number | PrivacyPolicy;
+      } | null)
+    | ({
+        relationTo: 'terms';
+        value: number | Term;
       } | null)
     | ({
         relationTo: 'reviews';
@@ -697,7 +839,8 @@ export interface ToursSelect<T extends boolean = true> {
         to?: T;
         transport?: T;
         date?: T;
-        time?: T;
+        fromTime?: T;
+        toTime?: T;
         duration?: T;
         id?: T;
       };
@@ -752,12 +895,6 @@ export interface ToursSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
-  reviews?:
-    | T
-    | {
-        review?: T;
-        id?: T;
-      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -765,9 +902,36 @@ export interface ToursSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages_select".
+ * via the `definition` "contact-us_select".
  */
-export interface PagesSelect<T extends boolean = true> {
+export interface ContactUsSelect<T extends boolean = true> {
+  title?: T;
+  heading?: T;
+  subheading?: T;
+  form_info?:
+    | T
+    | {
+        heading?: T;
+        subheading?: T;
+      };
+  contact_info?:
+    | T
+    | {
+        heading?: T;
+        subheading?: T;
+        phone?: T;
+        email?: T;
+        address?: T;
+        opening_hours?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
   title?: T;
   sections?:
     | T
@@ -881,11 +1045,73 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
-              reviews?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'recommended-tours'?: T | RecommendedToursSelect<T>;
+        'recommended-cities'?: T | RecommendedCitiesSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedTours_select".
+ */
+export interface RecommendedToursSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  tours?: T;
+  button?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RecommendedCities_select".
+ */
+export interface RecommendedCitiesSelect<T extends boolean = true> {
+  heading?: T;
+  subheading?: T;
+  cities?: T;
+  button?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us_select".
+ */
+export interface AboutUsSelect<T extends boolean = true> {
+  title?: T;
+  sections?:
+    | T
+    | {
+        'about-us-hero'?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              'image-group'?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
               button?:
                 | T
                 | {
-                    text?: T;
+                    label?: T;
                     link?: T;
                   };
               id?: T;
@@ -905,7 +1131,58 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         'recommended-tours'?: T | RecommendedToursSelect<T>;
-        'recommended-cities'?: T | RecommendedCitiesSelect<T>;
+        testimonials?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'special-offer-section'?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              action_type?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                    link?: T;
+                    id?: T;
+                  };
+              date?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "privacy-policy_select".
+ */
+export interface PrivacyPolicySelect<T extends boolean = true> {
+  title?: T;
+  paragraphs?:
+    | T
+    | {
+        p1?: T;
+        p2?: T;
+      };
+  sections?:
+    | T
+    | {
+        'privacy-policy'?:
+          | T
+          | {
+              heading?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   slug?: T;
   slugLock?: T;
@@ -914,37 +1191,32 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RecommendedTours_select".
+ * via the `definition` "terms_select".
  */
-export interface RecommendedToursSelect<T extends boolean = true> {
-  heading?: T;
-  subheading?: T;
-  tours?: T;
-  button?:
+export interface TermsSelect<T extends boolean = true> {
+  title?: T;
+  paragraphs?:
     | T
     | {
-        text?: T;
-        link?: T;
+        p1?: T;
+        p2?: T;
       };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RecommendedCities_select".
- */
-export interface RecommendedCitiesSelect<T extends boolean = true> {
-  heading?: T;
-  subheading?: T;
-  cities?: T;
-  button?:
+  sections?:
     | T
     | {
-        text?: T;
-        link?: T;
+        terms?:
+          | T
+          | {
+              heading?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
-  id?: T;
-  blockName?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1104,7 +1376,8 @@ export interface HotelsSelect<T extends boolean = true> {
         checkOut?: T;
         cancellation?: T;
         pet?: T;
-        smoking?: T;
+        children?: T;
+        payment?: T;
       };
   slug?: T;
   slugLock?: T;

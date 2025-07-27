@@ -21,6 +21,7 @@ async function getHeaderData(locale: string): Promise<HeaderData | null> {
     if (!res.ok) return null;
     const data = await res.json();
     const logo = typeof data.logo === "object" && data.logo !== null ? { url: data.logo.url, alt: data.logo.alt || "Logo" } : { url: "", alt: "Logo" };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: any) => ({ label: nav.label, url: nav.url, isExternal: !!nav.isExternal })) : [];
     return { logo, navigations };
   } catch (error) {

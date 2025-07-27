@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
-import {  Users, Tours, Pages, Reviews, Cities, Media, Header, Footer, Posts, Types, Hotels } from './collections'
+import {  Users, Tours, ContactUs, Home, AboutUs, PrivacyPolicy, Terms, Reviews, Cities, Media, Header, Footer, Posts, Types, Hotels } from './collections'
 import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
@@ -29,7 +29,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Users, Tours, Pages, Reviews, Cities, Media, Posts, Types, Hotels],
+  collections: [Users, Tours, ContactUs, Home, AboutUs, PrivacyPolicy, Terms, Reviews, Cities, Media, Posts, Types, Hotels],
   globals: [Header, Footer],
   cors: [getServerSideURL()].filter(Boolean),
   secret: process.env.PAYLOAD_SECRET,

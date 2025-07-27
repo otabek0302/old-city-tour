@@ -7,3 +7,6 @@ export * from './statistics.block';
 export * from './special-offer-section.block';
 export * from './recommended-tours.block';
 export * from './recommended-cities.block';
+export * from './about-us-hero.block';
+export * from './privacy-policy.block';
+export * from './terms.block';

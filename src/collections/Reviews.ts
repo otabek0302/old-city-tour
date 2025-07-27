@@ -7,12 +7,13 @@ import { slugField } from '@/fields/slug'
 export const Reviews: CollectionConfig = {
   slug: 'reviews',
   access: {
-    create: authenticated,
+    create: anyone,
     delete: authenticated,
     read: anyone,
     update: authenticated,
   },
   admin: {
+    group: 'Sections',
     useAsTitle: 'name',
   },
   fields: [

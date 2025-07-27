@@ -31,7 +31,7 @@ const ToursPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
   const tours = await getTours(locale || "en");
   const tourTypes = await getTourTypes(locale || "en");
 
-  return <PageClient tours={tours} tourTypes={tourTypes} locale={locale} />;
+  return <PageClient tours={tours} tourTypes={tourTypes} _locale={locale} />;
 };
 
 export default ToursPage;

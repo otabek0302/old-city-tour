@@ -8,6 +8,7 @@ import { cn } from "@/utilities/ui";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { Providers } from "@/providers";
+import { Toaster } from "sonner";
 
 import Header from "@/components/globals/header";
 import Footer from "@/components/globals/footer";
@@ -36,6 +37,7 @@ export default async function Layout({ children, params }: Props) {
           <Header locale={locale} />
           <main>{children}</main>
           <Footer locale={locale} />
+          <Toaster position="top-right" richColors />
         </Providers>
       </body>
     </html>

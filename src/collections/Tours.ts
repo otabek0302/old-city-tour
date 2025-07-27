@@ -13,6 +13,7 @@ export const Tours: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    group: 'Sections',
     useAsTitle: 'title',
   },
   fields: [
@@ -85,7 +86,8 @@ export const Tours: CollectionConfig = {
           type: 'row',
           fields: [
             { name: 'date', type: 'date' },
-            { name: 'time', type: 'text' },
+            { name: 'fromTime', type: 'text' },
+            { name: 'toTime', type: 'text' },
             { name: 'duration', type: 'text' },
           ]
         }
@@ -158,18 +160,6 @@ export const Tours: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
           required: true,
-        },
-      ],
-    },
-    {
-      name: 'reviews',
-      type: 'array',
-      label: 'Tour Reviews',
-      fields: [
-        {
-          name: 'review',
-          type: 'relationship',
-          relationTo: 'reviews',
         },
       ],
     },

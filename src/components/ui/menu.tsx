@@ -4,7 +4,9 @@ import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Menu as MenuIcon } from "lucide-react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Menu = (data: { navigations: any[] }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getNavigationUrl = (item: any) => {
     if (item.isExternal) return item.url;
     return `/${item.slug}`;
@@ -19,6 +21,7 @@ export const Menu = (data: { navigations: any[] }) => {
       </PopoverTrigger>
       <PopoverContent side="bottom" align="end" className="w-52 p-4">
         <nav className="flex flex-col items-end justify-center">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {data.navigations?.map((item: any, index: number) => (
             <Button key={index} variant="nav" asChild>
               <Link href={getNavigationUrl(item)} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noopener noreferrer" : undefined}>

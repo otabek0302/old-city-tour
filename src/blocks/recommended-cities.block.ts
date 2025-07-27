@@ -27,8 +27,8 @@ export const recommended_cities_block: Block = {
             type: "group",
             localized: true,
             fields: [
-                { name: "text", type: "text" },
-                { name: "link", type: "relationship", relationTo: "pages" },
+                { name: "label", type: "text", label: "Link Label" },
+                { name: "link", type: "text", label: "Link URL" },
             ],
         }
     ]

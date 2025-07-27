@@ -13,6 +13,7 @@ export const Posts: CollectionConfig = {
         update: authenticated,
     },
     admin: {
+        group: 'Sections',
         useAsTitle: 'title',
     },
     fields: [

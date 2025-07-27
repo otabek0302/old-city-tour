@@ -40,9 +40,9 @@ const SpecialOfferSection: React.FC<SpecialOfferSectionProps> = ({ heading, subh
                 </div>
               </>
             ) : (
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-col gap-4">
                 {button.slice(0, 2).map((btn, idx) => (
-                  <Button key={idx} variant="primary" size="xxl" className="rounded-xl" asChild>
+                  <Button key={idx} variant={`${idx === 0 ? "primary" : "secondary"}`} size="xxl" className="rounded-xl" asChild>
                     <Link href={btn.link} className="text-primary-foreground text-sm font-normal">
                       {btn.label}
                     </Link>

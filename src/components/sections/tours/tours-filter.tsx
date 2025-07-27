@@ -16,7 +16,7 @@ interface TourFilterProps {
   setDurationRange: (range: [number, number]) => void;
 }
 
-const TourFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setSelectedTypes, priceRange, setPriceRange, durationRange, setDurationRange }) => {
+const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setSelectedTypes, priceRange, setPriceRange, durationRange, setDurationRange }) => {
   const [expandedSections, setExpandedSections] = useState({
     filterBy: true,
     price: true,
@@ -102,11 +102,15 @@ const TourFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setSe
           <CardContent className="pb-4 px-6 space-y-2">
             <div className="flex gap-2">
               <div className="flex-1">
-                <Label htmlFor="min-length" className="text-copy-lighter text-sm font-normal">Min</Label>
+                <Label htmlFor="min-length" className="text-copy-lighter text-sm font-normal">
+                  Min
+                </Label>
                 <Input id="min-length" type="number" value={durationRange[0]} onChange={(e) => setDurationRange([parseInt(e.target.value) || 0, durationRange[1]])} placeholder="0" className="rounded-xl" />
               </div>
               <div className="flex-1">
-                <Label htmlFor="max-length" className="text-copy-lighter text-sm font-normal">Max</Label>
+                <Label htmlFor="max-length" className="text-copy-lighter text-sm font-normal">
+                  Max
+                </Label>
                 <Input id="max-length" type="number" value={durationRange[1]} onChange={(e) => setDurationRange([durationRange[0], parseInt(e.target.value) || 0])} placeholder="0" className="rounded-xl" />
               </div>
             </div>
@@ -117,4 +121,4 @@ const TourFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setSe
   );
 };
 
-export default TourFilter;
+export default ToursFilter;

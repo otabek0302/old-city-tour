@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 
 interface PageClientProps {
   cities: City[];
-  locale: string;
+  _locale: string;
 }
 
-const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
+const PageClient = ({ cities, _locale }: PageClientProps) => {
   const getCityImage = (city: City) => {
     if (city.image) {
       if (typeof city.image === "string") {
@@ -25,10 +25,8 @@ const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
     return "/placeholder-city.jpg";
   };
 
-  console.log(cities);
-
   return (
-    <div className="py-6">
+    <section className="py-6">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {cities.length > 0 ? (
@@ -58,7 +56,7 @@ const PageClient: React.FC<PageClientProps> = ({ cities, locale }) => {
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

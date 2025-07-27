@@ -13,21 +13,6 @@ export const testimonials_block: Block = {
       name: 'subheading',
       type: 'text',
       localized: true,
-    },
-    {
-      name: 'reviews',
-      type: 'relationship',
-      relationTo: 'reviews',
-      hasMany: true,
-    },
-    {
-      name: 'button',
-      type: 'group',
-      localized: true,
-      fields: [
-        { name: 'text', type: 'text' },
-        { name: 'link', type: 'relationship', relationTo: 'pages' },
-      ]
     }
   ],
-}; 
+};

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Button } from "../../ui/button";
 
-interface HeroButton {
+interface HomeHeroButton {
   label: string;
   link: string;
   icon?: {
@@ -14,21 +14,21 @@ interface HeroButton {
   };
 }
 
-interface HeroProps {
+interface HomeHeroProps {
   heading: string;
   subheading?: string;
   image?: {
     url: string;
     alt?: string;
   };
-  button?: HeroButton[];
+  button?: HomeHeroButton[];
   static_content?: {
     title: string;
     text: string;
   }[];
 }
 
-const Hero = ({ heading, subheading, image, button, static_content = [] }: HeroProps) => {
+const HomeHero = ({ heading, subheading, image, button, static_content = [] }: HomeHeroProps) => {
   return (
     <section className="relative -top-8">
       <div className="w-full px-4">
@@ -69,4 +69,4 @@ const Hero = ({ heading, subheading, image, button, static_content = [] }: HeroP
   );
 };
 
-export default Hero;
+export default HomeHero;

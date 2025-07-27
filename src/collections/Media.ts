@@ -12,13 +12,13 @@ export const Media: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    group: 'Site Settings',
     useAsTitle: 'filename',
   },
   fields: [
     {
       name: 'alt',
       type: 'text',
-      localized: true,
     }
   ],
   upload: {

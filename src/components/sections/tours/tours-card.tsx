@@ -9,7 +9,7 @@ interface TourCardProps {
   tour: Tour;
 }
 
-const TourCard: React.FC<TourCardProps> = ({ tour }) => {
+const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
   const getMainImage = () => {
     if (tour.images && tour.images.length > 0) {
       const image = tour.images[0];
@@ -51,14 +51,18 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
   // Helper function to get rating
   const getRating = () => {
-    if (tour.reviews && tour.reviews.length > 0) {
-      const totalRating = tour.reviews.reduce((sum, review) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const tourWithReviews = tour as any;
+    if (tourWithReviews.reviews && tourWithReviews.reviews.length > 0) {
+      const totalRating = tourWithReviews.reviews.reduce((sum: number, review: any) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (review.review && typeof review.review === "object" && (review.review as any).rating) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return sum + (review.review as any).rating;
         }
         return sum;
       }, 0);
-      return (totalRating / tour.reviews.length).toFixed(1);
+      return (totalRating / tourWithReviews.reviews.length).toFixed(1);
     }
     return "4.6";
   };
@@ -100,7 +104,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-secondary" />
                   <span className="text-copy-light text-xs">
-                    {rating} ({tour.reviews?.length || 0} Reviews)
+                    {rating} ({(tour as any).reviews?.length || 0} Reviews)
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -120,4 +124,4 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   );
 };
 
-export default TourCard;
+export default ToursCard;

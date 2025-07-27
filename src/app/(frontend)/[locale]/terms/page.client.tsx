@@ -1,12 +1,9 @@
 "use client";
-
-import React from "react";
-
 interface PageClientProps {
-  locale: string;
+  _locale: string;
 }
 
-const PageClient: React.FC<PageClientProps> = ({ locale }) => {
+const PageClient = ({ _locale }: PageClientProps) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -28,7 +25,7 @@ const PageClient: React.FC<PageClientProps> = ({ locale }) => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Use License</h2>
               <p className="text-gray-700 mb-4">
-                Permission is granted to temporarily download one copy of the materials (information or software) on Old City Tour Agency's website for personal, non-commercial transitory viewing only.
+                Permission is granted to temporarily download one copy of the materials (information or software) on Old City Tour Agency&apos;s website for personal, non-commercial transitory viewing only.
               </p>
               <p className="text-gray-700 mb-4">This is the grant of a license, not a transfer of title, and under this license you may not:</p>
               <ul className="list-disc pl-6 text-gray-700 mb-4">
@@ -77,7 +74,7 @@ const PageClient: React.FC<PageClientProps> = ({ locale }) => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Disclaimer</h2>
               <p className="text-gray-700 mb-4">
-                The materials on Old City Tour Agency's website are provided on an 'as is' basis. Old City Tour Agency makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                The materials on Old City Tour Agency&apos;s website are provided on an &apos;as is&apos; basis. Old City Tour Agency makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
               </p>
             </section>
 
@@ -91,7 +88,7 @@ const PageClient: React.FC<PageClientProps> = ({ locale }) => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Changes to Terms</h2>
               <p className="text-gray-700 mb-4">
-                We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page and updating the "Last updated" date.
+                We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on this page and updating the &quot;Last updated&quot; date.
               </p>
             </section>
 

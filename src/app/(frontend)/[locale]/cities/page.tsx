@@ -17,7 +17,7 @@ const CitiesPage = async ({ params }: { params: Promise<{ locale: string }> }) =
   const { locale } = await params;
   const cities = await getCities(locale || "en");
 
-  return <PageClient cities={cities} locale={locale} />;
+  return <PageClient cities={cities} _locale={locale} />;
 };
 
 export default CitiesPage;

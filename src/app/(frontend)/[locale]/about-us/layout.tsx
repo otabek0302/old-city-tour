@@ -12,4 +12,4 @@ type Props = {
 
 export default function AboutUsLayout({ children }: Props) {
   return <>{children}</>;
-} 
+}

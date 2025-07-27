@@ -1,6 +1,6 @@
 "use client";
 
-import Hero from "@/components/sections/home/Hero";
+import HomeHero from "@/components/sections/home/home-hero";
 import SpecialOfferSection from "@/components/sections/SpecialOfferSection";
 import Statistics from "@/components/sections/Statistics";
 import RecommendedTours from "@/components/sections/RecommendedTours";
@@ -8,22 +8,24 @@ import RecommendedCities from "@/components/sections/RecommendedCities";
 import Testimonials from "@/components/sections/Testimonials";
 import Faq from "@/components/sections/Faq";
 
-import { Page } from "@/payload-types";
+import { Home as HomeType } from "@/payload-types";
 
-const PageClient = ({ sections }: { sections: Page[] }) => {
+const HomePageClient = ({ sections }: { sections: HomeType[] }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocks: Record<string, React.FC<any>> = {
-    hero: Hero,
+    hero: HomeHero,
     "special-offer-section": SpecialOfferSection,
     "recommended-tours": RecommendedTours,
     "recommended-cities": RecommendedCities,
-    "testimonials": Testimonials,
-    "faq": Faq,
-    statistics: Statistics
+    testimonials: Testimonials,
+    faq: Faq,
+    statistics: Statistics,
   };
 
   return (
     <>
       {sections && sections.length > 0 ? (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sections.map((section: any, idx: number) => {
           const BlockComponent = blocks[section.blockType];
           if (!BlockComponent) return <p key={idx}>Unknown block type</p>;
@@ -36,4 +38,4 @@ const PageClient = ({ sections }: { sections: Page[] }) => {
   );
 };
 
-export default PageClient;
+export default HomePageClient;

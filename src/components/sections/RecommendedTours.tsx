@@ -71,10 +71,8 @@ interface RecommendedToursProps {
   subheading?: string;
   tours: Tour[];
   button: {
-    text: string;
-    link: {
-      slug: string;
-    };
+    label: string;
+    link: string;
   };
 }
 
@@ -82,8 +80,8 @@ const RecommendedTours: React.FC<RecommendedToursProps> = ({ heading, subheading
   return (
     <section className="py-8">
       <div className="container">
-        <div className="mb-8 max-w-2xl">
-          <h2 className="text-copy text-2xl md:text-4xl font-bold leading-normal">{heading}</h2>
+        <div className={`${!heading && !subheading ? "mb-0" : "mb-8"} max-w-2xl`}>
+          {heading && <h2 className="text-copy text-2xl md:text-4xl font-bold leading-normal">{heading}</h2>}
           {subheading && <p className="text-copy-light text-sm font-normal leading-tight mt-2">{subheading}</p>}
         </div>
         {
@@ -126,8 +124,8 @@ const RecommendedTours: React.FC<RecommendedToursProps> = ({ heading, subheading
         {button && (
           <div className="mt-8 flex justify-end">
             <Button variant="primary" size="xl" className="rounded-xl w-fit" asChild>
-              <Link href={button.link.slug} className="text-primary-foreground text-sm font-normal" target="_blank" rel="noopener noreferrer">
-                <span className="text-inherit">{button.text}</span>
+              <Link href={button.link} className="text-primary-foreground text-sm font-normal">
+                <span className="text-inherit">{button.label || "View More"}</span>
                 <ArrowRight className="w-4 h-4 animate-arrow-right" />
               </Link>
             </Button>

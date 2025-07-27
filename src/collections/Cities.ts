@@ -39,7 +39,7 @@ export const Cities: CollectionConfig = {
       type: 'text',
       localized: true,
     },
-    ...slugField(),
+    ...slugField('name'),
   ],
   timestamps: true,
 }

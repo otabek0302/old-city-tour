@@ -13,6 +13,7 @@ export const Hotels: CollectionConfig = {
         update: authenticated,
     },
     admin: {
+        group: 'Sections',
         useAsTitle: 'name',
     },
     fields: [
@@ -120,9 +121,10 @@ export const Hotels: CollectionConfig = {
             fields: [
                 { name: 'checkIn', type: 'text', required: true },
                 { name: 'checkOut', type: 'text', required: true },
-                { name: 'cancellation', type: 'textarea' },
-                { name: 'pet', type: 'textarea' },
-                { name: 'smoking', type: 'textarea' },
+                { name: 'cancellation', type: 'text' },
+                { name: 'pet', type: 'text' },
+                { name: 'children', type: 'text' },
+                { name: 'payment', type: 'text' },
             ],
         },
         ...slugField(),
