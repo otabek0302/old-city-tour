@@ -50,7 +50,11 @@ const FooterClient = ({ data }: { data: FooterData }) => {
             <div className="flex items-center gap-6">
               {data.logo?.url && (
                 <div className="relative h-32 w-80">
-                  <Image src={data.logo.url} alt={data.logo.alt || "Logo"} fill className="object-contain" priority sizes="calc(100vw - 32px)" />
+                  <img 
+                    src={data.logo.url} 
+                    alt={data.logo.alt || "Logo"} 
+                    className="object-contain w-full h-full"
+                  />
                 </div>
               )}
             </div>
