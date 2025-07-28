@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -25,11 +26,39 @@ interface HeaderData {
 
 const Header = ({ data }: { data: HeaderData }) => {
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const isHomeLanguagePath = ["/ru", "/en", "/uz"].includes(pathname);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const getHeaderClasses = () => {
+    if (isHomeLanguagePath) {
+      return `sticky z-50 transition-all duration-300 ${
+        isScrolled 
+          ? "bg-primary-dark top-0 py-4 shadow-lg" 
+          : "bg-transparent top-6"
+      }`;
+    }
+    return "bg-primary-dark top-0 py-4 sticky z-50";
+  };
+
   return (
-    <header className={`${isHomeLanguagePath ? "bg-transparent top-6" : "bg-primary-dark top-0 py-4"} sticky z-50`}>
+    <header className={getHeaderClasses()}>
       <div className="container px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}

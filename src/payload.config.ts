@@ -91,10 +91,11 @@ export default buildConfig({
         api_secret: process.env.CLOUDINARY_API_SECRET!,
       },
       collections: {
-        media: true,
+        media: {
+          disableLocalStorage: true,
+        },
       },
-      folder: 'oldcitytours',
-      disableLocalStorage: true,
+      folder: 'oldcitytours'
     }),
   ],
 

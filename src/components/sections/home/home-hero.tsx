@@ -30,9 +30,7 @@ interface HomeHeroProps {
 }
 
 const HomeHero = ({ heading, subheading, image, button = [], static_content = [] }: HomeHeroProps) => {
-  const imageUrl = image?.url ? getImageURL(image.url) : "";
-
-  console.log(image);
+  const imageUrl = getImageURL(image);
 
   return (
     <section className="relative -top-8">
