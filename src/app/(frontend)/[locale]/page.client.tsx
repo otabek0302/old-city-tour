@@ -10,7 +10,7 @@ import Faq from "@/components/sections/Faq";
 
 import { Home } from "@/payload-types";
 
-const HomePageClient = ({ sections }: { sections: Home['sections'] }) => {
+const HomePageClient = ({ sections }: { sections: Home["sections"] }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocks: Record<string, React.FC<any>> = {
     hero: HomeHero,
@@ -28,7 +28,7 @@ const HomePageClient = ({ sections }: { sections: Home['sections'] }) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sections.map((section: any, idx: number) => {
           const BlockComponent = blocks[section.blockType];
-          if (!BlockComponent) return <p key={idx}>Unknown block type: {section.blockType}</p>;
+          if (!BlockComponent) return null;
           return <BlockComponent key={section.id || idx} {...section} />;
         })
       ) : (

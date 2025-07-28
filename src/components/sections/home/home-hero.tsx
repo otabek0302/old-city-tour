@@ -30,15 +30,14 @@ interface HomeHeroProps {
 }
 
 const HomeHero = ({ heading, subheading, image, button = [], static_content = [] }: HomeHeroProps) => {
-  const imageUrl = getImageURL(image);
 
   return (
     <section className="relative -top-8">
       <div className="w-full px-4">
         <div className="relative min-h-[calc(100vh-2vh)] h-[100vh] max-h-[780px] rounded-[28px] overflow-hidden">
-          {imageUrl && (
+          {image && (
             <div className="absolute inset-0 z-0">
-              <Image src={imageUrl} alt={image?.alt || "Hero background"} fill className="object-cover" priority />
+              <Image src={image.url || "website-template.png"} alt={image?.alt || "Hero background"} fill className="object-cover" priority />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-transparent"></div>
               <div className="absolute inset-0 bg-black/30"></div>

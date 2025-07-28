@@ -36,7 +36,7 @@ const RecommendedCities: React.FC<RecommendedCitiesProps> = ({ heading, subheadi
         {cities.length === 2 ? (
           <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-6">
             {cities.map((city, idx) => (
-              <div key={idx} className="col-span-2 relative rounded-2xl overflow-hidden min-h-[600px] flex items-end" style={{ backgroundImage: `url(${getImageURL(city.image.url)})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+              <div key={idx} className="col-span-2 relative rounded-2xl overflow-hidden min-h-[600px] flex items-end" style={{ backgroundImage: `url(${city.image.url})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 group-hover:from-black/30 to-transparent z-10" />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 group-hover:from-black/20 via-black/10 to-transparent z-10" />
                 <div className="relative z-20 py-8 px-32 w-full flex flex-col items-center justify-end text-center">
