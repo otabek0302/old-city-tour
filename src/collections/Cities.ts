@@ -21,6 +21,7 @@ export const Cities: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+    group: 'Sections',
   },
   fields: [
     {

@@ -3,16 +3,35 @@ import CityPage from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
 import { NotCompleted } from "@/components/ui/not-completed";
 
-async function getCity(cityName: string, locale: string) {
+const getCity = async (slug: string, locale: string) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/cities?where[slug][equals]=${encodeURIComponent(cityName)}&locale=${locale}`, { cache: "no-store" });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.docs?.[0] || null;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/cities?where[slug][equals]=${slug}&locale=${locale}`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) {
+      return null
+    }
+    const data = await res.json()
+    return data.docs?.[0] || null
   } catch (error) {
-    // Silently return null instead of logging error
-    return null;
+    return null
+  }
+}
+
+const getCities = async (locale: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/cities?locale=${locale}`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) {
+      return []
+    }
+    const data = await res.json()
+    return data.docs || []
+  } catch (error) {
+    return []
   }
 }
 

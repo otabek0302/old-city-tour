@@ -1,62 +1,48 @@
-import type { CollectionConfig } from 'payload'
-
-import path from 'path'
-import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
-import { fileURLToPath } from 'url'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  upload: true,
   access: {
-    create: authenticated,
-    delete: authenticated,
-    read: anyone,
-    update: authenticated,
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
   },
   admin: {
+    useAsTitle: 'alt',
     group: 'Site Settings',
-    useAsTitle: 'filename',
   },
   fields: [
     {
       name: 'alt',
+      label: 'Alt Text',
       type: 'text',
-    }
+      required: false,
+      admin: {
+        description: 'Describe the image for accessibility',
+      },
+    },
+    {
+      name: 'customTag',
+      label: 'Custom Tag',
+      type: 'text',
+      required: false,
+    },
+    {
+      name: 'cloudinaryMetadata',
+      label: 'Cloudinary Info',
+      type: 'group',
+      admin: { readOnly: true },
+      fields: [
+        { name: 'secure_url', type: 'text' },
+        { name: 'original_filename', type: 'text' },
+        { name: 'format', type: 'text' },
+        { name: 'resource_type', type: 'text' },
+        { name: 'width', type: 'number' },
+        { name: 'height', type: 'number' },
+        { name: 'bytes', type: 'number' },
+      ],
+    },
   ],
-  upload: {
-    staticDir: path.resolve(dirname, '../../public/media'),
-    adminThumbnail: 'thumbnail',
-    focalPoint: true,
-    mimeTypes: ['image/*'],
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        position: 'centre',
-      },
-      {
-        name: 'card',
-        width: 768,
-        height: 1024,
-        position: 'centre',
-      },
-      {
-        name: 'tablet',
-        width: 1024,
-        height: undefined,
-        position: 'centre',
-      },
-      {
-        name: 'desktop',
-        width: undefined,
-        height: undefined,
-        position: 'centre',
-      }
-    ],
-  },
-  timestamps: true,
-} 
+};

@@ -31,12 +31,10 @@ interface FooterData {
   description: string;
 }
 
-// Function to fix broken social media links
 const fixSocialLinks = (socialLinks: any[]): SocialLink[] => {
   return socialLinks.map((link: any) => {
     let fixedLink = link.link;
 
-    // Fix specific broken links
     if (link.icon === "telegram" && (link.link === "/" || !link.link.startsWith("http"))) {
       fixedLink = "https://t.me/oldcitytour_samarkand";
     } else if (link.icon === "facebook" && link.link.includes("instagram.com")) {
@@ -53,17 +51,19 @@ const fixSocialLinks = (socialLinks: any[]): SocialLink[] => {
   });
 };
 
-async function getFooterData(locale: string): Promise<FooterData | null> {
+const getFooterData = async (locale: string) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/globals/footer?locale=${locale}`, { cache: "no-store" });
-    if (!res.ok) return null;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/globals/footer?locale=${locale}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      return null;
+    }
     const data = await res.json();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const socialLinks = Array.isArray(data.socialLinks) ? fixSocialLinks(data.socialLinks) : [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const navigationLinks = Array.isArray(data.navigationLinks)
       ? data.navigationLinks.map((link: any) => ({
           label: link.label,
@@ -71,7 +71,6 @@ async function getFooterData(locale: string): Promise<FooterData | null> {
         }))
       : [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const licenceLinks = Array.isArray(data.licenceLinks)
       ? data.licenceLinks.map((link: any) => ({
           label: link.label,
@@ -79,7 +78,6 @@ async function getFooterData(locale: string): Promise<FooterData | null> {
         }))
       : [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const contactLinks = Array.isArray(data.contactLinks)
       ? data.contactLinks.map((link: any) => ({
           type: link.type,
@@ -102,10 +100,10 @@ async function getFooterData(locale: string): Promise<FooterData | null> {
     const description = data.description;
     const copyright = data.copyright;
     return { socialLinks, navigationLinks, licenceLinks, contactLinks, logo, description, copyright };
-  } catch {
+  } catch (error) {
     return null;
   }
-}
+};
 
 const Footer = async ({ locale }: { locale: string }) => {
   const footerData = await getFooterData(locale);

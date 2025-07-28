@@ -1,45 +1,64 @@
-import type { CollectionConfig } from 'payload'
+import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '../access/authenticated'
 import { anyone } from '../access/anyone'
-import { slugField } from '@/fields/slug'
+import { authenticated } from '../access/authenticated'
+import {
+  MetaDescriptionField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 import { privacy_policy_block } from '../blocks'
 
-export const PrivacyPolicy: CollectionConfig = {
-    slug: 'privacy-policy',
-    access: {
-        create: authenticated,
-        delete: authenticated,
-        read: anyone,
-        update: authenticated,
+export const PrivacyPolicy: GlobalConfig = {
+  slug: 'privacy-policy',
+  access: {
+    read: anyone,
+    update: authenticated,
+  },
+  admin: {
+    group: 'Pages',
+  },
+  fields: [
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              localized: true,
+              required: true,
+            },
+            {
+              name: 'sections',
+              type: 'blocks',
+              blocks: [privacy_policy_block],
+            },
+          ],
+        },
+        {
+          name: 'meta',
+          label: 'SEO',
+          fields: [
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaDescriptionField({}),
+            PreviewField({
+              hasGenerateFn: true,
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
+          ],
+        },
+      ],
     },
-    admin: {
-        useAsTitle: 'title',
-        group: 'Pages',
-    },
-    fields: [
-        {
-            name: 'title',
-            type: 'text',
-            required: true,
-            localized: true,
-            unique: true,
-        },
-        {
-            name: 'paragraphs',
-            type: 'group',
-            localized: true,
-            fields: [
-                {name: "p1", type: "text", localized: true},
-                {name: "p2", type: "text", localized: true},
-            ]
-        },
-        {
-            name: 'sections',
-            type: 'blocks',
-            blocks: [privacy_policy_block],
-        },
-        ...slugField(),
-    ],
-    timestamps: true,
+  ],
 }

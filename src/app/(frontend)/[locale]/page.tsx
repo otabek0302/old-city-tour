@@ -2,21 +2,19 @@ import HomePageClient from "./page.client";
 
 import { NotCompleted } from "@/components/ui/not-completed";
 
-async function getSections(locale: string) {
+const getSections = async (locale: string) => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-    const res = await fetch(`${baseUrl}/api/home?locale=${locale}`, { cache: "no-store" });
-
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/home?locale=${locale}`, {
+      cache: 'no-store',
+    })
     if (!res.ok) {
-      return [];
+      return []
     }
-
-    const data = await res.json();
-    const sections = data.docs || [];
-    return sections;
+    const data = await res.json()
+    return data.docs?.[0]?.blocks || []
   } catch (error) {
-    return [];
+    return []
   }
 }
 

@@ -16,18 +16,15 @@ interface HeaderData {
 
 async function getHeaderData(locale: string): Promise<HeaderData | null> {
   try {
-    // Use dynamic port detection
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3001";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
     const res = await fetch(`${baseUrl}/api/globals/header?locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     const logo = typeof data.logo === "object" && data.logo !== null ? { url: data.logo.url, alt: data.logo.alt || "Logo" } : { url: "", alt: "Logo" };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: any) => ({ label: nav.label, url: nav.url, isExternal: !!nav.isExternal })) : [];
+    const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: { label: string; url: string; isExternal: boolean }) => ({ label: nav.label, url: nav.url, isExternal: !!nav.isExternal })) : [];
     return { logo, navigations };
   } catch (error) {
-    // Silently return null instead of logging error
     return null;
   }
 }

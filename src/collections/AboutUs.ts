@@ -1,34 +1,75 @@
-import type { CollectionConfig } from 'payload'
+import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '../access/authenticated'
 import { anyone } from '../access/anyone'
-import { about_us_hero_block, recommended_tours_block, special_offer_section_block, statistics_block, testimonials_block } from '../blocks'
+import { authenticated } from '../access/authenticated'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
+import { about_us_hero_block, statistics_block, recommended_tours_block, testimonials_block, special_offer_section_block } from '../blocks'
 
-export const AboutUs: CollectionConfig = {
+export const AboutUs: GlobalConfig = {
   slug: 'about-us',
   access: {
-    create: authenticated,
-    delete: authenticated,
     read: anyone,
     update: authenticated,
   },
   admin: {
     group: 'Pages',
-    useAsTitle: 'title',  
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-      localized: true,
-      unique: true,
-    },
-    {
-      name: 'sections',
-      type: 'blocks',
-      blocks: [ about_us_hero_block, statistics_block, recommended_tours_block, testimonials_block, special_offer_section_block ],
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              localized: true,
+              required: true,
+            },
+            {
+              name: 'sections',
+              type: 'blocks',
+              blocks: [
+                about_us_hero_block,
+                statistics_block,
+                recommended_tours_block,
+                testimonials_block,
+                special_offer_section_block,
+              ],
+            },
+          ],
+        },
+        {
+          name: 'meta',
+          label: 'SEO',
+          fields: [
+            OverviewField({
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+              imagePath: 'meta.image',
+            }),
+            MetaTitleField({
+              hasGenerateFn: true,
+            }),
+            MetaImageField({
+              relationTo: 'media',
+            }),
+            MetaDescriptionField({}),
+            PreviewField({
+              hasGenerateFn: true,
+              titlePath: 'meta.title',
+              descriptionPath: 'meta.description',
+            }),
+          ],
+        },
+      ],
     },
   ],
-  timestamps: true,
 }

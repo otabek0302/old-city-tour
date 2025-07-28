@@ -68,8 +68,65 @@ export const plugins: Plugin[] = [
   //   generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
   // }),
   seoPlugin({
-    generateTitle,
-    generateURL,
+    collections: ['tours', 'cities', 'hotels', 'posts', 'reviews'],
+    globals: ['about-us', 'contact-us', 'privacy-policy', 'terms'],
+    generateTitle: ({ doc, locale }) => {
+      if (doc?.meta?.title) {
+        return doc.meta.title
+      }
+
+      // Generate titles based on collection type
+      if ('title' in doc && doc.title) {
+        return `${doc.title} | Old City Tours`
+      }
+      if ('name' in doc && doc.name) {
+        return `${doc.name} | Old City Tours`
+      }
+
+      return 'Old City Tours'
+    },
+    generateURL: ({ doc, locale }) => {
+      if (doc?.meta?.url) {
+        return doc.meta.url
+      }
+
+      // Generate URLs based on collection type and slug
+      if (doc?.slug) {
+        if ('title' in doc) {
+          return `/tours/${doc.slug}`
+        }
+        if ('name' in doc && 'image' in doc) {
+          return `/cities/${doc.slug}`
+        }
+        if ('name' in doc && 'city' in doc) {
+          return `/hotels/${doc.slug}`
+        }
+        if ('title' in doc && 'image' in doc && 'content' in doc) {
+          return `/posts/${doc.slug}`
+        }
+        if ('name' in doc && 'rating' in doc && 'tour' in doc) {
+          return `/reviews/${doc.slug}`
+        }
+      }
+
+      // Generate URLs for globals
+      if ('title' in doc) {
+        if (doc.title?.toLowerCase().includes('about')) {
+          return '/about-us'
+        }
+        if (doc.title?.toLowerCase().includes('contact')) {
+          return '/contact-us'
+        }
+        if (doc.title?.toLowerCase().includes('privacy')) {
+          return '/privacy-policy'
+        }
+        if (doc.title?.toLowerCase().includes('terms')) {
+          return '/terms'
+        }
+      }
+
+      return '/'
+    },
   }),
   // formBuilderPlugin({
   //   fields: {

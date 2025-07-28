@@ -1,9 +1,40 @@
-import PageClient from "./page.client";
+import PrivacyPolicyPageClient from "./page.client";
+import { NotCompleted } from "@/components/ui/not-completed";
+import { generateMeta } from '@/utilities/generateMeta'
+import { Metadata } from 'next'
+
+async function getPrivacyPolicy(locale: string) {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/globals/privacy-policy?locale=${locale}`, { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data;
+  } catch (_error) {
+    return null;
+  }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const privacyPolicy = await getPrivacyPolicy(locale);
+  
+  return generateMeta({
+    doc: privacyPolicy,
+    global: 'privacy-policy',
+  })
+}
 
 const PrivacyPolicyPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
+  const privacyPolicy = await getPrivacyPolicy(locale || "en");
 
-  return <PageClient _locale={locale} />;
+  if (!privacyPolicy) return <NotCompleted
+    title="Privacy Policy Not Available"
+    message="The privacy policy content is currently not available. Please contact us for assistance."
+  />;
+
+  return <PrivacyPolicyPageClient _locale={locale} />;
 };
 
 export default PrivacyPolicyPage; 

@@ -1,31 +1,40 @@
 import ContactUsPageClient from "./page.client";
 import { NotCompleted } from "@/components/ui/not-completed";
+import { generateMeta } from '@/utilities/generateMeta'
+import { Metadata } from 'next'
 
 async function getContactUs(locale: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/contact-us?locale=${locale}`, { cache: "no-store" });
-    if (!res.ok) return [];
+    const res = await fetch(`${baseUrl}/api/globals/contact-us?locale=${locale}`, { cache: "no-store" });
+    if (!res.ok) return null;
     const data = await res.json();
-    return data.docs || [];
-  } catch (error) {
-    // Silently return empty array instead of logging error
-    return [];
+    return data;
+  } catch (_error) {
+    return null;
   }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const contactUs = await getContactUs(locale);
+  
+  return generateMeta({
+    doc: contactUs,
+    global: 'contact-us',
+  })
 }
 
 const ContactUsPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
-  const contact_us = await getContactUs(locale || "en");
+  const contactUs = await getContactUs(locale || "en");
 
-  const data = Array.isArray(contact_us) ? contact_us[0] : contact_us;
-
-  if (!data) return <NotCompleted 
+  if (!contactUs) return <NotCompleted
     title="Contact Us Page Not Available"
     message="The contact us page content is currently not available. Please contact us for assistance."
   />;
 
-  return <ContactUsPageClient heading={data?.title} subheading={data?.heading} form_info={data?.form_info} contact_info={data?.contact_info} />;
+  return <ContactUsPageClient heading={contactUs?.title} subheading={contactUs?.heading} form_info={contactUs?.form_info} contact_info={contactUs?.contact_info} />;
 };
 
 export default ContactUsPage;

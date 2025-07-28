@@ -1,7 +1,7 @@
 import canUseDOM from './canUseDOM'
 
 export const getServerSideURL = () => {
-  let url = process.env.NEXT_PUBLIC_SERVER_URL
+  let url = process.env.NEXT_PUBLIC_SITE_URL
 
   if (!url && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -27,19 +27,28 @@ export const getClientSideURL = () => {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
 
-  return process.env.NEXT_PUBLIC_SERVER_URL || ''
+  return process.env.NEXT_PUBLIC_SITE_URL || ''
 }
 
-export const getImageURL = (imageUrl?: string | null) => {
-  if (!imageUrl) return ''
-  
-  // If it's already an absolute URL, return as is
-  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-    return imageUrl
+export const getImageURL = (image?: any) => {
+  const serverUrl = getServerSideURL()
+  let url = serverUrl + '/website-template.png'
+
+  if (image && typeof image === 'object' && 'url' in image) {
+    // Use desktop size if available, otherwise fall back to original URL
+    const desktopUrl = image.sizes?.desktop?.url
+    const imageUrl = desktopUrl || image.url
+
+    // If it's already an absolute URL (Cloudinary), return as is
+    if (imageUrl && (imageUrl.startsWith('http://') || imageUrl.startsWith('https://'))) {
+      return imageUrl
+    }
+
+    // Otherwise, prefix with server URL (for local files)
+    if (imageUrl) {
+      url = serverUrl + imageUrl
+    }
   }
-  
-  // If it's a relative URL, make it absolute
-  // Use client-side URL if available, otherwise server-side
-  const baseUrl = canUseDOM ? getClientSideURL() : getServerSideURL()
-  return baseUrl + imageUrl
+
+  return url
 }
