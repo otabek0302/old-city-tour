@@ -15,6 +15,22 @@ import { plugins } from './plugins'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+// Validate required environment variables
+const requiredEnvVars = [
+  'DATABASE_URI',
+  'PAYLOAD_SECRET',
+  'CLOUDINARY_CLOUD_NAME',
+  'CLOUDINARY_API_KEY',
+  'CLOUDINARY_API_SECRET',
+]
+
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`Missing required environment variable: ${envVar}`)
+    process.exit(1)
+  }
+}
+
 export default buildConfig({
   localization: {
     locales: ['uz', 'ru', 'en'],
@@ -30,6 +46,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
   }),
 

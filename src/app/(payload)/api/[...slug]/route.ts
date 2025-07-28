@@ -11,10 +11,30 @@ import {
   REST_PUT,
 } from '@payloadcms/next/routes'
 
-export const GET = REST_GET(config)
-export const POST = REST_POST(config)
-export const DELETE = REST_DELETE(config)
-export const PATCH = REST_PATCH(config)
+// Simple error handling wrapper
+const wrapWithErrorHandling = (handler: any) => {
+  return async (req: Request, context: any) => {
+    try {
+      return await handler(req, context)
+    } catch (error: unknown) {
+      console.error('API Error:', error)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Internal server error',
+          message: 'An unexpected error occurred. Please check your database connection and environment variables.',
+        }),
+        { 
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+    }
+  }
+}
 
-export const PUT = REST_PUT(config)
-export const OPTIONS = REST_OPTIONS(config)
+export const GET = wrapWithErrorHandling(REST_GET(config))
+export const POST = wrapWithErrorHandling(REST_POST(config))
+export const DELETE = wrapWithErrorHandling(REST_DELETE(config))
+export const PATCH = wrapWithErrorHandling(REST_PATCH(config))
+export const PUT = wrapWithErrorHandling(REST_PUT(config))
+export const OPTIONS = wrapWithErrorHandling(REST_OPTIONS(config))
