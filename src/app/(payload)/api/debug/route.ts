@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 export async function GET() {
   const envCheck = {
     NODE_ENV: process.env.NODE_ENV,
-    DATABASE_URI: process.env.DATABASE_URI ? 'SET' : 'MISSING',
+    DATABASE_URL: process.env.DATABASE_URL ? 'SET' : 'MISSING',
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET ? 'SET' : 'MISSING',
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME ? 'SET' : 'MISSING',
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY ? 'SET' : 'MISSING',

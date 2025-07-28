@@ -3,7 +3,7 @@ declare global {
     interface ProcessEnv {
       NEXT_PUBLIC_SITE_URL: string
       PAYLOAD_SECRET: string
-      DATABASE_URI: string
+      DATABASE_URL: string
       CLOUDINARY_CLOUD_NAME: string
       CLOUDINARY_API_KEY: string
       CLOUDINARY_API_SECRET: string

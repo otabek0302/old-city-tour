@@ -17,7 +17,7 @@ const dirname = path.dirname(filename)
 
 // Validate required environment variables
 const requiredEnvVars = [
-  'DATABASE_URI',
+  'DATABASE_URL',
   'PAYLOAD_SECRET',
   'CLOUDINARY_CLOUD_NAME',
   'CLOUDINARY_API_KEY',
@@ -45,7 +45,7 @@ export default buildConfig({
 
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: process.env.DATABASE_URL,
       ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
   }),
