@@ -1,4 +1,6 @@
+import { Metadata } from 'next'
 import PageClient from "./page.client";
+import { generateMeta } from '@/utilities/generateMeta'
 
 async function getCities(locale: string) {
   try {
@@ -8,9 +10,16 @@ async function getCities(locale: string) {
     const data = await res.json();
     return data.docs || [];
   } catch (error) {
-    console.error("Error fetching cities:", error);
+    // Silently return empty array instead of logging error
     return [];
   }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  return generateMeta({
+    doc: null,
+    collection: 'cities'
+  });
 }
 
 const CitiesPage = async ({ params }: { params: Promise<{ locale: string }> }) => {

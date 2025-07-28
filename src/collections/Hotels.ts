@@ -47,7 +47,6 @@ export const Hotels: CollectionConfig = {
             label: 'Hotel Description',
             type: 'textarea',
             localized: true,
-            required: true,
         },
         {
             type: 'row',

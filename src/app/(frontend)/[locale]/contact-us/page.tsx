@@ -1,4 +1,5 @@
 import ContactUsPageClient from "./page.client";
+import { NotCompleted } from "@/components/ui/not-completed";
 
 async function getContactUs(locale: string) {
   try {
@@ -8,7 +9,7 @@ async function getContactUs(locale: string) {
     const data = await res.json();
     return data.docs || [];
   } catch (error) {
-    console.error("Error fetching contact us:", error);
+    // Silently return empty array instead of logging error
     return [];
   }
 }
@@ -18,6 +19,11 @@ const ContactUsPage = async ({ params }: { params: Promise<{ locale: string }> }
   const contact_us = await getContactUs(locale || "en");
 
   const data = Array.isArray(contact_us) ? contact_us[0] : contact_us;
+
+  if (!data) return <NotCompleted 
+    title="Contact Us Page Not Available"
+    message="The contact us page content is currently not available. Please contact us for assistance."
+  />;
 
   return <ContactUsPageClient heading={data?.title} subheading={data?.heading} form_info={data?.form_info} contact_info={data?.contact_info} />;
 };

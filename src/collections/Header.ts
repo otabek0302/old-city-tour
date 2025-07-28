@@ -17,7 +17,7 @@ export const Header: GlobalConfig = {
       name: 'logo',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
     },
     {
       name: 'navigations',
@@ -27,12 +27,10 @@ export const Header: GlobalConfig = {
         {
           name: 'label',
           type: 'text',
-          required: true,
         },
         {
           name: 'url',
           type: 'text',
-          required: true,
         },
         {
           name: 'isExternal',

@@ -239,6 +239,14 @@ export interface Tour {
         id?: string | null;
       }[]
     | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -267,6 +275,14 @@ export interface City {
   description?: string | null;
   image: number | Media;
   link?: string | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -333,7 +349,7 @@ export interface Hotel {
   id: number;
   name: string;
   city: number | City;
-  description: string;
+  description?: string | null;
   address?: string | null;
   phone?: string | null;
   website?: string | null;
@@ -895,6 +911,13 @@ export interface ToursSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -1241,6 +1264,13 @@ export interface CitiesSelect<T extends boolean = true> {
   description?: T;
   image?: T;
   link?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -1422,11 +1452,11 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
-  logo: number | Media;
+  logo?: (number | null) | Media;
   navigations?:
     | {
-        label: string;
-        url: string;
+        label?: string | null;
+        url?: string | null;
         isExternal?: boolean | null;
         id?: string | null;
       }[]
@@ -1444,41 +1474,44 @@ export interface Footer {
   description?: string | null;
   socialLinks?:
     | {
-        title: string;
-        link: string;
-        icon:
-          | 'facebook'
-          | 'instagram'
-          | 'telegram'
-          | 'whatsapp'
-          | 'twitter'
-          | 'youtube'
-          | 'linkedin'
-          | 'email'
-          | 'phone'
-          | 'website';
+        title?: string | null;
+        link?: string | null;
+        icon?:
+          | (
+              | 'facebook'
+              | 'instagram'
+              | 'telegram'
+              | 'whatsapp'
+              | 'twitter'
+              | 'youtube'
+              | 'linkedin'
+              | 'email'
+              | 'phone'
+              | 'website'
+            )
+          | null;
         id?: string | null;
       }[]
     | null;
   navigationLinks?:
     | {
-        label: string;
-        url: string;
+        label?: string | null;
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
   licenceLinks?:
     | {
-        label: string;
-        url: string;
+        label?: string | null;
+        url?: string | null;
         id?: string | null;
       }[]
     | null;
   contactLinks?:
     | {
-        type: 'phone' | 'email' | 'address';
-        value: string;
-        icon: 'phone' | 'email' | 'address';
+        type?: ('phone' | 'email' | 'address') | null;
+        value?: string | null;
+        icon?: ('phone' | 'email' | 'address') | null;
         id?: string | null;
       }[]
     | null;

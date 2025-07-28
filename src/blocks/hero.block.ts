@@ -27,12 +27,10 @@ export const hero_block: Block = {
         {
           name: 'label',
           type: 'text',
-          localized: true,
         },
         {
           name: 'link',
           type: 'text',
-          localized: true,
         }
       ],
       minRows: 1,
@@ -41,16 +39,15 @@ export const hero_block: Block = {
     {
       name: "static_content",
       type: "array",
+      localized: true,
       fields: [
         {
           name: "title",
           type: "text",
-          localized: true,
         },
         {
           name: "text",
           type: "text",
-          localized: true,
         }
       ],
       minRows: 1,

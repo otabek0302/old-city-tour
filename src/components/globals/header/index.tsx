@@ -16,7 +16,9 @@ interface HeaderData {
 
 async function getHeaderData(locale: string): Promise<HeaderData | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    // Use dynamic port detection
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3001";
+
     const res = await fetch(`${baseUrl}/api/globals/header?locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
@@ -25,7 +27,7 @@ async function getHeaderData(locale: string): Promise<HeaderData | null> {
     const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: any) => ({ label: nav.label, url: nav.url, isExternal: !!nav.isExternal })) : [];
     return { logo, navigations };
   } catch (error) {
-    console.error("Error fetching header data:", error);
+    // Silently return null instead of logging error
     return null;
   }
 }

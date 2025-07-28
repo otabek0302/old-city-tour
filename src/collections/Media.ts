@@ -1,7 +1,12 @@
 import type { CollectionConfig } from 'payload'
 
+import path from 'path'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { fileURLToPath } from 'url'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -22,7 +27,10 @@ export const Media: CollectionConfig = {
     }
   ],
   upload: {
-    staticDir: '../public/media',
+    staticDir: path.resolve(dirname, '../../public/media'),
+    adminThumbnail: 'thumbnail',
+    focalPoint: true,
+    mimeTypes: ['image/*'],
     imageSizes: [
       {
         name: 'thumbnail',
@@ -49,8 +57,6 @@ export const Media: CollectionConfig = {
         position: 'centre',
       }
     ],
-    adminThumbnail: 'thumbnail',
-    mimeTypes: ['image/*'],
   },
   timestamps: true,
 } 

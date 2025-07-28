@@ -17,6 +17,7 @@ export const Footer: GlobalConfig = {
       name: 'logo',
       type: 'upload',
       relationTo: 'media',
+      required: false,
     },
     {
       name: 'description',
@@ -28,8 +29,8 @@ export const Footer: GlobalConfig = {
       type: 'array',
       localized: true,
       fields: [
-        { name: 'title', type: 'text', required: true },
-        { name: 'link', type: 'text', required: true },
+        { name: 'title', type: 'text' },
+        { name: 'link', type: 'text' },
         {
           name: 'icon', type: 'select', options: [
             { label: 'Facebook', value: 'facebook' },
@@ -42,7 +43,7 @@ export const Footer: GlobalConfig = {
             { label: 'Email', value: 'email' },
             { label: 'Phone', value: 'phone' },
             { label: 'Website', value: 'website' },
-          ], required: true
+          ],
         },
       ],
     },
@@ -51,8 +52,8 @@ export const Footer: GlobalConfig = {
       type: 'array',
       localized: true,
       fields: [
-        { name: 'label', type: 'text', required: true },
-        { name: 'url', type: 'text', required: true },
+        { name: 'label', type: 'text' },
+        { name: 'url', type: 'text' },
       ],
     },
     {
@@ -60,8 +61,8 @@ export const Footer: GlobalConfig = {
       type: 'array',
       localized: true,
       fields: [
-        { name: 'label', type: 'text', required: true },
-        { name: 'url', type: 'text', required: true },
+        { name: 'label', type: 'text' },
+        { name: 'url', type: 'text' },
       ],
     },
     {
@@ -74,14 +75,16 @@ export const Footer: GlobalConfig = {
             { label: 'Phone', value: 'phone' },
             { label: 'Email', value: 'email' },
             { label: 'Address', value: 'address' },
-          ], required: true
+          ],
         },
-        { name: 'value', type: 'text', required: true },
-        { name: 'icon', type: 'select', options: [
-          { label: 'Phone', value: 'phone' },
-          { label: 'Email', value: 'email' },
-          { label: 'Address', value: 'address' },
-        ], required: true, defaultValue: 'phone' },
+        { name: 'value', type: 'text' },
+        {
+          name: 'icon', type: 'select', options: [
+            { label: 'Phone', value: 'phone' },
+            { label: 'Email', value: 'email' },
+            { label: 'Address', value: 'address' },
+          ], defaultValue: 'phone'
+        },
       ],
     },
     {

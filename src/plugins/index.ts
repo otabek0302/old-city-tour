@@ -2,27 +2,43 @@ import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 // import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 // import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 // import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-// import { seoPlugin } from '@payloadcms/plugin-seo'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 // import { searchPlugin } from '@payloadcms/plugin-search'
 import { Plugin } from 'payload'
 // import { revalidateRedirects } from '@/hooks/revalidateRedirects'
-// import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
+import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 // import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 // import { searchFields } from '@/search/fieldOverrides'
 // import { beforeSyncWithSearch } from '@/search/beforeSync'
 
-// import { Page, Post } from '@/payload-types'
-// import { getServerSideURL } from '@/utilities/getURL'
+import { Tour, City } from '@/payload-types'
+import { getServerSideURL } from '@/utilities/getURL'
 
-// const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-//   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
-// }
+const generateTitle: GenerateTitle<Tour | City> = ({ doc }) => {
+  // Check if it's a Tour by looking for tour-specific properties
+  if ('title' in doc && doc.title) {
+    return (doc as any).meta?.title || `${doc.title} | Old City Tours`
+  }
+  // Check if it's a City by looking for city-specific properties
+  if ('name' in doc && doc.name) {
+    return (doc as any).meta?.title || `${doc.name} | Old City Tours`
+  }
+  return 'Old City Tours'
+}
 
-// const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
-//   const url = getServerSideURL()
-
-//   return doc?.slug ? `${url}/${doc.slug}` : url
-// }
+const generateURL: GenerateURL<Tour | City> = ({ doc }) => {
+  const url = getServerSideURL()
+  
+  // Check if it's a Tour by looking for tour-specific properties
+  if ('title' in doc && doc.slug) {
+    return `${url}/tours/${doc.slug}`
+  }
+  // Check if it's a City by looking for city-specific properties
+  if ('name' in doc && doc.slug) {
+    return `${url}/cities/${doc.slug}`
+  }
+  return url
+}
 
 export const plugins: Plugin[] = [
   // redirectsPlugin({
@@ -51,10 +67,10 @@ export const plugins: Plugin[] = [
   //   collections: ['categories'],
   //   generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
   // }),
-  // seoPlugin({
-  //   generateTitle,
-  //   generateURL,
-  // }),
+  seoPlugin({
+    generateTitle,
+    generateURL,
+  }),
   // formBuilderPlugin({
   //   fields: {
   //     payment: false,

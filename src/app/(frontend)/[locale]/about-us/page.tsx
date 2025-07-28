@@ -1,4 +1,5 @@
 import AboutUsClient from "./page.client";
+import { NotCompleted } from "@/components/ui/not-completed";
 
 async function getSections(locale: string) {
   try {
@@ -9,7 +10,7 @@ async function getSections(locale: string) {
     const sections = data.docs || [];
     return sections;
   } catch (error) {
-    console.error("Error fetching sections:", error);
+    // Silently return empty array instead of logging error
     return [];
   }
 }
@@ -18,7 +19,10 @@ const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => 
   const { locale } = await params;
   const sections = await getSections(locale || "en");
   if (!sections || !sections.length || !sections[0]?.sections) {
-    return <p>Translation or content missing for this locale.</p>;
+    return <NotCompleted 
+      title="About Us Page Not Available"
+      message="The about us page content is currently not available. Please contact us for assistance."
+    />;
   }
   return <AboutUsClient sections={sections[0].sections} />;
 };
