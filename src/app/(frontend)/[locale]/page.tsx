@@ -9,36 +9,35 @@ const getSections = async (locale: string) => {
       cache: 'no-store',
     })
     if (!res.ok) {
-      return []
+      return null
     }
     const data = await res.json()
-    return data.docs?.[0]?.blocks || []
-  } catch (error) {
-    return []
+    return data.docs?.[0] || null
+  } catch (_error) {
+    return null
   }
 }
 
 const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
-  const sections = await getSections(locale || "en");
+  const homeData = await getSections(locale || "en");
 
-  if (!sections || sections.length === 0) {
+  if (!homeData) {
     if (locale !== "en") {
-      const fallbackSections = await getSections("en");
-      if (fallbackSections && fallbackSections.length > 0 && fallbackSections[0]?.sections) {
-        return <HomePageClient sections={fallbackSections[0].sections} />;
+      const fallbackData = await getSections("en");
+      if (fallbackData?.sections) {
+        return <HomePageClient sections={fallbackData.sections} />;
       }
     }
 
     return <NotCompleted title="Home Page Not Available" message="The home page content is currently not available. Please contact us for assistance." />;
   }
 
-  const firstSection = sections[0];
-  if (!firstSection?.sections) {
-    return <NotCompleted title="Content Structure Error" message="The content structure is not properly configured. Please contact us to fix this issue." />;
+  if (!homeData.sections || homeData.sections.length === 0) {
+    return <NotCompleted title="No Content Available" message="The home page has no content sections. Please add content through the admin panel." />;
   }
 
-  return <HomePageClient sections={firstSection.sections} />;
+  return <HomePageClient sections={homeData.sections} />;
 };
 
 export default HomePage;

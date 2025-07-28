@@ -22,11 +22,11 @@ export const hero_block: Block = {
     {
       name: 'button',
       type: 'array',
-      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
+          localized: true,
         },
         {
           name: 'link',
@@ -39,7 +39,6 @@ export const hero_block: Block = {
     {
       name: "static_content",
       type: "array",
-      localized: true,
       fields: [
         {
           name: "title",
@@ -48,6 +47,7 @@ export const hero_block: Block = {
         {
           name: "text",
           type: "text",
+          localized: true,
         }
       ],
       minRows: 1,

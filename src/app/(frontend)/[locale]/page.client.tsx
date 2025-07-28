@@ -8,9 +8,9 @@ import RecommendedCities from "@/components/sections/RecommendedCities";
 import Testimonials from "@/components/sections/Testimonials";
 import Faq from "@/components/sections/Faq";
 
-import { Home as HomeType } from "@/payload-types";
+import { Home } from "@/payload-types";
 
-const HomePageClient = ({ sections }: { sections: HomeType[] }) => {
+const HomePageClient = ({ sections }: { sections: Home['sections'] }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocks: Record<string, React.FC<any>> = {
     hero: HomeHero,
@@ -28,11 +28,11 @@ const HomePageClient = ({ sections }: { sections: HomeType[] }) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sections.map((section: any, idx: number) => {
           const BlockComponent = blocks[section.blockType];
-          if (!BlockComponent) return <p key={idx}>Unknown block type</p>;
+          if (!BlockComponent) return <p key={idx}>Unknown block type: {section.blockType}</p>;
           return <BlockComponent key={section.id || idx} {...section} />;
         })
       ) : (
-        <p>Translation or content missing for this locale.</p>
+        <p>No content sections found. Please add content through the admin panel.</p>
       )}
     </>
   );

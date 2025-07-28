@@ -290,7 +290,6 @@ export interface Media {
    * Describe the image for accessibility
    */
   alt?: string | null;
-  customTag?: string | null;
   cloudinaryMetadata?: {
     secure_url?: string | null;
     original_filename?: string | null;
@@ -955,7 +954,6 @@ export interface CitiesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  customTag?: T;
   cloudinaryMetadata?:
     | T
     | {

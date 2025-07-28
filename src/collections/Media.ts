@@ -24,12 +24,6 @@ export const Media: CollectionConfig = {
       },
     },
     {
-      name: 'customTag',
-      label: 'Custom Tag',
-      type: 'text',
-      required: false,
-    },
-    {
       name: 'cloudinaryMetadata',
       label: 'Cloudinary Info',
       type: 'group',

@@ -19,11 +19,11 @@ const wrapWithErrorHandling = (handler: any) => {
     } catch (error: unknown) {
       console.error('API Error:', error)
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: 'Internal server error',
           message: 'An unexpected error occurred. Please check your database connection and environment variables.',
         }),
-        { 
+        {
           status: 500,
           headers: { 'Content-Type': 'application/json' }
         }
