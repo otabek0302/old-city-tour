@@ -62,13 +62,13 @@ const Header = ({ data }: { data: HeaderData }) => {
   return (
     <header className={getHeaderClasses()}>
       <div className="container px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-4">
           <div className="flex flex-shrink-0 items-center">
             <div className="relative h-10 w-32">{data.logo?.url && <Image src={data.logo.url} alt={data.logo.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>
           </div>
 
           <div className="hidden flex-1 items-center justify-center md:flex">
-            <nav aria-label="Main Navigation" className="flex items-center justify-center gap-4">
+            <nav aria-label="Main Navigation" className="flex items-center justify-center xl:gap-4">
               {data.navigations?.map((item: Navigation, index: number) => {
                 const absoluteUrl = getAbsoluteUrl(item.url);
                 return (

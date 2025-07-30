@@ -1,5 +1,4 @@
 import FooterClient from "./footer.client";
-import { getImageURL } from "../../../utilities/getURL";
 
 interface SocialLink {
   link: string;

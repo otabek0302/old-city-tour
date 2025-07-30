@@ -45,28 +45,45 @@ const PageClient = ({ tours, tourTypes, _locale }: PageClientProps) => {
   }, [tours, selectedTypes, priceRange, durationRange]);
 
   return (
-    <section className="min-h-screen py-6">
+    <section className="min-h-screen py-6 sm:py-8 md:py-10">
       <div className="container">
-        <div className="mb-6 border-b border-copy-light pb-6">
-          <h2 className="text-copy text-3xl font-bold leading-tight mb-4">{t("pages.tours.title")}</h2>
-          <p className="text-copy-light text-sm font-normal leading-tight">{t("pages.tours.subtitle")}</p>
+        <div className="mb-6 sm:mb-8 border-b border-copy-light pb-4 sm:pb-6">
+          <h2 className="text-copy text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 sm:mb-4">
+            {t("pages.tours.title")}
+          </h2>
+          <p className="text-copy-light text-sm sm:text-base font-normal leading-tight">
+            {t("pages.tours.subtitle")}
+          </p>
         </div>
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="lg:w-1/4">
-            <ToursFilter tourTypes={tourTypes} selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} priceRange={priceRange} setPriceRange={setPriceRange} durationRange={durationRange} setDurationRange={setDurationRange} />
+        
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
+          <div className="lg:w-1/4 order-2 lg:order-1">
+            <ToursFilter 
+              tourTypes={tourTypes} 
+              selectedTypes={selectedTypes} 
+              setSelectedTypes={setSelectedTypes} 
+              priceRange={priceRange} 
+              setPriceRange={setPriceRange} 
+              durationRange={durationRange} 
+              setDurationRange={setDurationRange} 
+            />
           </div>
 
-          <div className="lg:w-3/4">
+          <div className="lg:w-3/4 order-1 lg:order-2">
             {filteredTours.length > 0 ? (
-              <div className="grid gap-6">
+              <div className="grid gap-4 sm:gap-6">
                 {filteredTours.map((tour) => (
                   <ToursCard key={tour.id} tour={tour} />
                 ))}
               </div>
             ) : (
-              <div className="col-span-full text-center py-12">
-                <h3 className="text-xl font-semibold text-copy mb-2">{t("pages.tours.noTours")}</h3>
-                <p className="text-copy-light">{t("pages.tours.tryAdjustingFilters")}</p>
+              <div className="text-center py-8 sm:py-12">
+                <h3 className="text-lg sm:text-xl font-semibold text-copy mb-2 sm:mb-3">
+                  {t("pages.tours.noTours")}
+                </h3>
+                <p className="text-copy-light text-sm sm:text-base">
+                  {t("pages.tours.tryAdjustingFilters")}
+                </p>
               </div>
             )}
           </div>

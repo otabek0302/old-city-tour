@@ -26,7 +26,7 @@ const AboutUsClient = ({ sections }: { sections: AboutUsType[] }) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sections.map((section: any, idx: number) => {
           const BlockComponent = blocks[section.blockType];
-          if (!BlockComponent) return <p key={idx}>Unknown block type</p>;
+          if (!BlockComponent) return null;
           return <BlockComponent key={section.id || idx} {...section} />;
         })
       ) : (

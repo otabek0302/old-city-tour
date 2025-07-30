@@ -98,6 +98,32 @@
         "send": "Send Message"
       }
     },
+    "review": {
+      "title": "Add Review",
+      "subtitle": "Share your experience with us and help others find the best tours",
+      "form": {
+        "name": "Your Name",
+        "namePlaceholder": "Enter your name",
+        "tour": "Select Tour",
+        "tourPlaceholder": "Choose a tour you experienced",
+        "rating": "Rating",
+        "comment": "Your Review",
+        "commentPlaceholder": "Share your experience, what you liked, what could be improved...",
+        "submit": "Submit Review",
+        "submitting": "Submitting...",
+        "cancel": "Cancel",
+        "loadingTours": "Loading tours...",
+        "noTours": "No tours available",
+        "characters": "characters",
+        "outOf5": "out of 5"
+      },
+      "validation": {
+        "fillRequiredFields": "Please fill in all required fields",
+        "charLimitExceeded": "Review comment cannot exceed 500 characters"
+      },
+      "success": "Thank you! Your review has been submitted successfully.",
+      "error": "Sorry, there was an error submitting your review. Please try again."
+    },
     "privacy": {
       "title": "Privacy Policy",
       "subtitle": "Your privacy is important to us",
@@ -150,7 +176,9 @@
       "email": "Please enter a valid email address",
       "minLength": "Must be at least {min} characters",
       "maxLength": "Must be no more than {max} characters",
-      "passwordMatch": "Passwords must match"
+      "passwordMatch": "Passwords must match",
+      "fillRequiredFields": "Please fill in all required fields",
+      "sendFailed": "Failed to send message. Please try again."
     }
   },
   "components": {

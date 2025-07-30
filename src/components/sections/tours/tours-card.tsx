@@ -43,7 +43,7 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
   return (
     <Card className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
       <div className="p-2 flex flex-col lg:flex-row">
-        <div className="lg:w-2/5 relative border border-border rounded-xl overflow-hidden">
+        <div className="lg:w-2/5 h-48 relative border border-border rounded-xl overflow-hidden">
           <Image src={typeof tour.images?.[0]?.image === "object" && tour.images?.[0]?.image?.url ? tour.images[0].image.url : ""} alt={tour.title || "Tour Image"} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         </div>
 

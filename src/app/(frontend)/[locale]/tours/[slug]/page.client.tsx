@@ -16,7 +16,7 @@ interface SingleTourPageClientProps {
 
 const SingleTourPageClient = ({ tour }: SingleTourPageClientProps) => {
   return (
-    <section className="min-h-screen py-6">
+    <section className="min-h-screen py-6 sm:py-8 md:py-10">
       <div className="container">
         <SingleTourImages images={tour.images} />
         <SingleTourInfo tour={tour} />

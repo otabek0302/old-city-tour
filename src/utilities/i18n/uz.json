@@ -22,7 +22,12 @@
     "notFound": "Topilmadi",
     "unauthorized": "Ruxsat berilmagan",
     "forbidden": "Taqiqlangan",
-    "serverError": "Server xatosi"
+    "serverError": "Server xatosi",
+    "pleaseWait": "Iltimos, kuting...",
+    "switchingLanguage": "Til almashtirilmoqda...",
+    "loadingData": "Ma'lumotlar yuklanmoqda...",
+    "initializing": "Ishga tushirilmoqda...",
+    "navigating": "Navigatsiya..."
   },
   "navigation": {
     "home": "Bosh sahifa",
@@ -111,6 +116,32 @@
         "office": "Ofis",
         "businessHours": "Ish vaqti"
       }
+    },
+    "review": {
+      "title": "Tafsilot qo'shish",
+      "subtitle": "O'z tajribangizni biz bilan baham ko'ring va boshqalarga eng yaxshi turlarni topishda yordam bering",
+      "form": {
+        "name": "Sizning ismingiz",
+        "namePlaceholder": "Ismingizni kiriting",
+        "tour": "Turni tanlang",
+        "tourPlaceholder": "Siz tashrif buyurgan turni tanlang",
+        "rating": "Reyting",
+        "comment": "Sizning tafsilotingiz",
+        "commentPlaceholder": "O'z tajribangizni baham ko'ring, nima yoqdilar, nima yaxshilanishi mumkin...",
+        "submit": "Tafsilot yuborish",
+        "submitting": "Yuborilmoqda...",
+        "cancel": "Bekor qilish",
+        "loadingTours": "Turlar yuklanmoqda...",
+        "noTours": "Turlar mavjud emas",
+        "characters": "belgi",
+        "outOf5": "5 dan"
+      },
+      "validation": {
+        "fillRequiredFields": "Iltimos, barcha majburiy maydonlarni to'ldiring",
+        "charLimitExceeded": "Tafsilot 500 belgidan oshmasligi kerak"
+      },
+      "success": "Rahmat! Sizning tafsilotingiz muvaffaqiyatli yuborildi.",
+      "error": "Kechirasiz, tafsilot yuborishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring."
     },
     "privacy": {
       "title": "Maxfiylik siyosati",

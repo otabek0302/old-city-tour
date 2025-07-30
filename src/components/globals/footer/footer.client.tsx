@@ -42,13 +42,13 @@ const FooterClient = ({ data }: { data: FooterData }) => {
     <footer className="bg-primary-dark py-6">
       <div className="container">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-start gap-6">
-          {/* Logo */}
-          <div className="flex-1 py-4">
-            <div className="flex items-center gap-6">{data.logo?.url && <div className="relative h-32 w-80">{data.logo?.url && <Image src={data.logo?.url} alt={data.logo?.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>}</div>
+
+          <div className="flex-1 py-4 flex flex-col gap-4">
+            <div className="flex items-center gap-6">{data.logo?.url && <div className="relative h-32 lg:h-80 w-52">{data.logo?.url && <Image src={data.logo?.url} alt={data.logo?.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>}</div>
             <p className="max-w-lg text-gray-300 hover:text-copy-white text-sm font-normal leading-tight">{data?.description}</p>
           </div>
 
-          {/* Social media section */}
+
           <div className="max-w-md space-y-4 flex flex-col items-start">
             <p className="text-gray-300 hover:text-copy-white text-sm font-normal leading-tight">{t("footer.followUs")}</p>
             <div className="flex gap-3">
@@ -63,9 +63,8 @@ const FooterClient = ({ data }: { data: FooterData }) => {
           </div>
         </div>
 
-        {/* Navigation menu */}
-        <nav className="py-4 border-y-[0.5px] border-border">
-          <div className="flex items-center justify-between">
+        <nav className="py-4 md:mt-0 mt-4 border-y-[0.5px] border-border">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-0">
             <ul className="flex flex-wrap gap-8">
               {data?.navigationLinks?.map((link, idx) => (
                 <li key={idx}>
@@ -75,7 +74,7 @@ const FooterClient = ({ data }: { data: FooterData }) => {
                 </li>
               ))}
             </ul>
-            <ul className="flex flex-wrap gap-8">
+            <ul className="md:flex hidden flex-wrap gap-8">
               {data.contactLinks?.map((link, idx) => (
                 <li key={idx} className="flex items-center gap-2">
                   <Link href={link?.type === "phone" ? `tel:${link?.value}` : link.type === "email" ? `mailto:${link.value}` : `https://maps.google.com/?q=${encodeURIComponent(link.value)}`} className="text-gray-300 hover:text-copy-white text-sm font-normal" target="_blank">
@@ -87,7 +86,6 @@ const FooterClient = ({ data }: { data: FooterData }) => {
           </div>
         </nav>
 
-        {/* Bottom section */}
         <div className="pt-2 flex flex-col lg:flex-row justify-between items-center gap-4">
           <p className="text-gray-300 hover:text-copy-white text-sm font-normal">{data.copyright || "© 2025 Old City. All rights reserved."}</p>
           <div className="flex gap-6 text-sm">

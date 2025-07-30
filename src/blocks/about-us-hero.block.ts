@@ -24,6 +24,7 @@ export const about_us_hero_block: Block = {
                     relationTo: 'media',
                 },
             ],
+            maxRows: 4,
         },
         {
             name: 'button',

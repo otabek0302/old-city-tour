@@ -17,7 +17,7 @@ export const buttonVariants = cva("inline-flex items-center justify-center white
       icon: "h-8 w-8 xl:h-10 xl:w-10 p-0",
       circle: "h-10 w-10 p-0 rounded-full",
       hero: "px-10 py-2",
-      nav: "px-6 py-1.5"
+      nav: "px-4 xl:px-6 py-1.5"
     },
     variant: {
       default: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -27,7 +27,7 @@ export const buttonVariants = cva("inline-flex items-center justify-center white
       outline: "border border-border bg-background hover:bg-card hover:text-accent-foreground",
       primary: "bg-primary hover:bg-primary-dark text-primary-foreground shadow-none cursor-pointer",
       secondary: "bg-secondary hover:bg-secondary-dark text-secondary-foreground shadow-none cursor-pointer",
-      nav: "bg-transparent hover:bg-primary-foreground text-copy-white hover:text-primary-dark text-sm font-semibold leading-tight",
+      nav: "bg-transparent hover:bg-primary-foreground text-copy-white hover:text-primary-dark text-xs lg:text-sm font-semibold leading-tight",
       nav_active: "bg-background dark:bg-primary-foreground text-primary-dark hover:text-primary text-sm font-semibold leading-tight",
       icon: "bg-primary hover:bg-primary-dark text-primary-foreground rounded-full shadow-none",
       social_media: "bg-primary hover:bg-primary-dark text-secondary hover:text-secondary-dark rounded-full cursor-pointer shadow-none",
