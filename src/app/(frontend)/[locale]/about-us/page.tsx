@@ -1,5 +1,4 @@
 import AboutUsClient from "./page.client";
-import { NotCompleted } from "@/components/ui/not-completed";
 import { generateMeta } from '@/utilities/generateMeta'
 import { Metadata } from 'next'
 
@@ -30,10 +29,7 @@ const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => 
   const aboutUs = await getSections(locale || "en");
   
   if (!aboutUs || !aboutUs.sections) {
-    return <NotCompleted
-      title="About Us Page Not Available"
-      message="The about us page content is currently not available. Please contact us for assistance."
-    />;
+    return null;
   }
   return <AboutUsClient sections={aboutUs.sections} />;
 };

@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import SingleTourPageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
-import { NotCompleted } from "@/components/ui/not-completed";
 import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 async function getTour(slug: string, locale: string) {
@@ -37,10 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const SingleTourPage = async ({ params }: { params: Promise<{ slug: string; locale: string }> }) => {
   const { slug, locale } = await params;
   const tour = await getTour(slug, locale || "en");
-  if (!tour) return <NotCompleted 
-    title="Tour Not Found"
-    message="The requested tour could not be found. Please check the URL or contact us for assistance."
-  />;
+  if (!tour) return null;
   return <SingleTourPageClient tour={tour} />;
 };
 
