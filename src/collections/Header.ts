@@ -22,21 +22,16 @@ export const Header: GlobalConfig = {
     {
       name: 'navigations',
       type: 'array',
-      localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
+          localized: true,
         },
         {
           name: 'url',
           type: 'text',
-        },
-        {
-          name: 'isExternal',
-          type: 'checkbox',
-          defaultValue: false,
-        },
+        }
       ],
     },
   ],

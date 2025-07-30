@@ -3,7 +3,6 @@ import HeaderClient from "./header.client";
 interface Navigation {
   label: string;
   url: string;
-  isExternal: boolean;
 }
 
 interface HeaderData {
@@ -22,7 +21,7 @@ async function getHeaderData(locale: string): Promise<HeaderData | null> {
     if (!res.ok) return null;
     const data = await res.json();
     const logo = typeof data.logo === "object" && data.logo !== null ? { url: data.logo.url, alt: data.logo.alt || "Logo" } : { url: "", alt: "Logo" };
-    const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: { label: string; url: string; isExternal: boolean }) => ({ label: nav.label, url: nav.url, isExternal: !!nav.isExternal })) : [];
+    const navigations = Array.isArray(data.navigations) ? data.navigations.map((nav: { label: string; url: string }) => ({ label: nav.label, url: nav.url })) : [];
     return { logo, navigations };
   } catch (error) {
     return null;
@@ -30,9 +29,8 @@ async function getHeaderData(locale: string): Promise<HeaderData | null> {
 }
 
 const Header = async ({ locale }: { locale: string }) => {
-  const headerData = await getHeaderData(locale);
-  if (!headerData) return null;
-  return <HeaderClient data={headerData} />;
+  const data = await getHeaderData(locale);
+  return data ? <HeaderClient data={data} /> : null;
 };
 
 export default Header;

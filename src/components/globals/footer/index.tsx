@@ -2,7 +2,6 @@ import FooterClient from "./footer.client";
 import { getImageURL } from "../../../utilities/getURL";
 
 interface SocialLink {
-  title: string;
   link: string;
   icon: string;
 }
@@ -44,26 +43,20 @@ const fixSocialLinks = (socialLinks: any[]): SocialLink[] => {
     }
 
     return {
-      title: link.title,
       link: fixedLink,
       icon: link.icon,
     };
   });
 };
 
-const getFooterData = async (locale: string) => {
+const getFooterData = async (locale: string): Promise<FooterData | null> => {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/globals/footer?locale=${locale}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      return null;
-    }
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+    const res = await fetch(`${baseUrl}/api/globals/footer?locale=${locale}`, { cache: "no-store" });
+    if (!res.ok) return null;
     const data = await res.json();
-
     const socialLinks = Array.isArray(data.socialLinks) ? fixSocialLinks(data.socialLinks) : [];
-
     const navigationLinks = Array.isArray(data.navigationLinks)
       ? data.navigationLinks.map((link: any) => ({
           label: link.label,
@@ -86,17 +79,8 @@ const getFooterData = async (locale: string) => {
         }))
       : [];
 
-    const originalLogoUrl = data.logo?.url;
-    const absoluteLogoUrl = getImageURL(originalLogoUrl);
-
-    const logo =
-      typeof data.logo === "object" && data.logo !== null
-        ? {
-            url: absoluteLogoUrl,
-            alt: data.logo.alt || "Logo",
-          }
-        : { url: "", alt: "Logo" };
-
+    const logo = typeof data.logo === "object" && data.logo !== null ? { url: data.logo.url, alt: data.logo.alt || "Logo" } : { url: "", alt: "Logo" };
+    
     const description = data.description;
     const copyright = data.copyright;
     return { socialLinks, navigationLinks, licenceLinks, contactLinks, logo, description, copyright };

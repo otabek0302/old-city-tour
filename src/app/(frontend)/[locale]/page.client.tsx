@@ -7,10 +7,13 @@ import RecommendedTours from "@/components/sections/RecommendedTours";
 import RecommendedCities from "@/components/sections/RecommendedCities";
 import Testimonials from "@/components/sections/Testimonials";
 import Faq from "@/components/sections/Faq";
+import { useTranslation } from "@/providers/i18n";
 
 import { Home } from "@/payload-types";
 
 const HomePageClient = ({ sections }: { sections: Home["sections"] }) => {
+  const { t } = useTranslation();
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocks: Record<string, React.FC<any>> = {
     hero: HomeHero,
@@ -32,7 +35,9 @@ const HomePageClient = ({ sections }: { sections: Home["sections"] }) => {
           return <BlockComponent key={section.id || idx} {...section} />;
         })
       ) : (
-        <p>No content sections found. Please add content through the admin panel.</p>
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-copy-light">{t("components.missing")}</p>
+        </div>
       )}
     </>
   );

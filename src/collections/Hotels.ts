@@ -7,7 +7,6 @@ import {
   MetaDescriptionField,
   MetaImageField,
   MetaTitleField,
-  OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
@@ -179,11 +178,6 @@ export const Hotels: CollectionConfig = {
                     name: 'meta',
                     label: 'SEO',
                     fields: [
-                        OverviewField({
-                            titlePath: 'meta.title',
-                            descriptionPath: 'meta.description',
-                            imagePath: 'meta.image',
-                        }),
                         MetaTitleField({
                             hasGenerateFn: true,
                         }),

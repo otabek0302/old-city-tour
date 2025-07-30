@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import PageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
+import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 async function getTours(locale: string) {
   try {
@@ -8,7 +9,10 @@ async function getTours(locale: string) {
     const res = await fetch(`${baseUrl}/api/tours?locale=${locale}&limit=100`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.docs || [];
+    const tours = data.docs || [];
+    
+    // Clean the localized data for each tour
+    return tours.map((tour: any) => cleanLocalizedData(tour, locale));
   } catch (error) {
     // Silently return empty array instead of logging error
     return [];
@@ -21,7 +25,10 @@ async function getTourTypes(locale: string) {
     const res = await fetch(`${baseUrl}/api/types?locale=${locale}&limit=100`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.docs || [];
+    const types = data.docs || [];
+    
+    // Clean the localized data for each type
+    return types.map((type: any) => cleanLocalizedData(type, locale));
   } catch (error) {
     // Silently return empty array instead of logging error
     return [];

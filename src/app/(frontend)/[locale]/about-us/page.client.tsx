@@ -7,12 +7,14 @@ import Testimonials from "@/components/sections/Testimonials";
 import SpecialOfferSection from "@/components/sections/SpecialOfferSection";
 
 import { AboutUs as AboutUsType } from "@/payload-types";
+import { useTranslation } from "@/providers/i18n";
 
 const AboutUsClient = ({ sections }: { sections: AboutUsType[] }) => {
+  const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocks: Record<string, React.FC<any>> = {
     "about-us-hero": AboutHero,
-    "statistics": Statistics,
+    statistics: Statistics,
     "recommended-tours": RecommendedTours,
     testimonials: Testimonials,
     "special-offer-section": SpecialOfferSection,
@@ -28,7 +30,9 @@ const AboutUsClient = ({ sections }: { sections: AboutUsType[] }) => {
           return <BlockComponent key={section.id || idx} {...section} />;
         })
       ) : (
-        <p>Translation or content missing for this locale.</p>
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-copy-light">{t("pages.missing")}</p>
+        </div>
       )}
     </>
   );

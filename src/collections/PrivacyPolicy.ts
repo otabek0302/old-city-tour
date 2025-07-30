@@ -5,7 +5,6 @@ import { authenticated } from '../access/authenticated'
 import {
   MetaDescriptionField,
   MetaTitleField,
-  OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { privacy_policy_block } from '../blocks'
@@ -33,6 +32,11 @@ export const PrivacyPolicy: GlobalConfig = {
               required: true,
             },
             {
+              name: 'description',
+              type: 'textarea',
+              localized: true,
+            },
+            {
               name: 'sections',
               type: 'blocks',
               blocks: [privacy_policy_block],
@@ -43,10 +47,6 @@ export const PrivacyPolicy: GlobalConfig = {
           name: 'meta',
           label: 'SEO',
           fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
             MetaTitleField({
               hasGenerateFn: true,
             }),

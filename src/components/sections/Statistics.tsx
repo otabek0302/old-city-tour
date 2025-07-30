@@ -22,12 +22,12 @@ const Statistics = ({ title, description, statistics }: StatisticsProps) => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {statistics.map((stat) => (
-            <div key={stat.id} className="text-center">
+          {statistics?.map((stat) => (
+            <div key={stat?.id} className="text-center">
               <div className="mb-2">
-                <span className="text-4xl font-bold text-primary">{stat.number}</span>
+                <span className="text-4xl font-bold text-primary">{stat?.number}</span>
               </div>
-              <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
+              <p className="text-sm text-muted-foreground font-medium">{stat?.label}</p>
             </div>
           ))}
         </div>

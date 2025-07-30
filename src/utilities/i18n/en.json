@@ -1,0 +1,193 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "view": "View",
+    "readMore": "Read More",
+    "viewMore": "View More",
+    "showLess": "Show Less",
+    "noData": "No data available",
+    "notFound": "Not Found",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden",
+    "serverError": "Server Error"
+  },
+  "navigation": {
+    "home": "Home",
+    "tours": "Tours",
+    "cities": "Cities",
+    "hotels": "Hotels",
+    "posts": "Blog",
+    "about": "About Us",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  },
+  "pages": {
+    "home": {
+      "title": "Welcome to Old City Tours",
+      "subtitle": "Discover amazing destinations with our expert guides",
+      "hero": {
+        "title": "Explore the World",
+        "subtitle": "Unforgettable travel experiences await you",
+        "cta": "Start Your Journey"
+      }
+    },
+    "tours": {
+      "title": "Our Tours",
+      "subtitle": "Discover amazing destinations with our expert guides",
+      "noTours": "No tours available at the moment",
+      "filterBy": "Filter by",
+      "sortBy": "Sort by",
+      "price": "Price",
+      "duration": "Duration",
+      "rating": "Rating",
+      "perAdult": "per adult",
+      "days": "days",
+      "reviews": "reviews"
+    },
+    "cities": {
+      "title": "Our Cities",
+      "subtitle": "Explore beautiful destinations around the world",
+      "noCities": "No cities found",
+      "checkBackLater": "Check back later for new destinations",
+      "viewMore": "View More",
+      "noToursAvailable": "No tours available for this city."
+    },
+    "hotels": {
+      "title": "Our Hotels",
+      "subtitle": "Discover our carefully selected accommodations",
+      "noHotels": "Hotels not available at the moment",
+      "contactForAssistance": "Please contact us for assistance"
+    },
+    "posts": {
+      "title": "Blog Posts",
+      "subtitle": "Discover our latest articles and travel insights",
+      "noPosts": "Blog posts are currently not available",
+      "contactForAssistance": "Please contact us for assistance",
+      "publishedOn": "Published on",
+      "readFullPost": "Read Full Post"
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Learn more about our mission and values",
+      "lastUpdated": "Last updated",
+      "missing": "Content not available at the moment. Please contact us for assistance."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "subtitle": "Get in touch with our team",
+      "form": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "subject": "Subject",
+        "message": "Message",
+        "send": "Send Message",
+        "sending": "Sending...",
+        "namePlaceholder": "Your full name",
+        "emailPlaceholder": "your.email@example.com",
+        "phonePlaceholder": "+1 (555) 123-4567",
+        "subjectPlaceholder": "What's this about?",
+        "messagePlaceholder": "Tell us more about your inquiry...",
+        "required": "Required",
+        "optional": "Optional"
+      },
+      "info": {
+        "email": "Email",
+        "phone": "Phone",
+        "office": "Office",
+        "businessHours": "Business Hours"
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "subtitle": "Your privacy is important to us",
+      "lastUpdated": "Last updated"
+    },
+    "terms": {
+      "title": "Terms & Conditions",
+      "subtitle": "Please read our terms carefully",
+      "lastUpdated": "Last updated"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page Not Found",
+      "message": "The page you're looking for doesn't exist",
+      "backHome": "Back to Home"
+    },
+    "serverError": {
+      "title": "Server Error",
+      "message": "Something went wrong on our end",
+      "tryAgain": "Try Again"
+    },
+    "unauthorized": {
+      "title": "Unauthorized",
+      "message": "You don't have permission to access this resource"
+    },
+    "forbidden": {
+      "title": "Forbidden",
+      "message": "Access to this resource is forbidden"
+    },
+    "networkError": {
+      "title": "Network Error",
+      "message": "Please check your internet connection and try again"
+    },
+    "validationError": {
+      "title": "Validation Error",
+      "message": "Please check your input and try again"
+    }
+  },
+  "success": {
+    "messageSent": "Message sent successfully! We'll get back to you soon.",
+    "dataSaved": "Data saved successfully",
+    "dataDeleted": "Data deleted successfully",
+    "dataUpdated": "Data updated successfully"
+  },
+  "forms": {
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be no more than {max} characters",
+      "passwordMatch": "Passwords must match",
+      "fillRequiredFields": "Please fill in all required fields",
+      "sendFailed": "Failed to send message. Please try again later."
+    }
+  },
+  "components": {
+    "notCompleted": {
+      "title": "Not Available",
+      "message": "This feature is not available at the moment. Please contact us for assistance."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page",
+      "of": "of"
+    },
+    "search": {
+      "placeholder": "Search...",
+      "noResults": "No results found",
+      "searching": "Searching..."
+    },
+    "filters": {
+      "clearAll": "Clear All",
+      "apply": "Apply Filters",
+      "reset": "Reset"
+    }
+  }
+}

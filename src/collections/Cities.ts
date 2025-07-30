@@ -3,13 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
+import { MetaDescriptionField, MetaImageField, MetaTitleField, PreviewField } from '@payloadcms/plugin-seo/fields'
 
 export const Cities: CollectionConfig = {
   slug: 'cities',
@@ -51,7 +45,6 @@ export const Cities: CollectionConfig = {
             {
               name: 'link',
               type: 'text',
-              localized: true,
             },
           ],
         },
@@ -59,11 +52,6 @@ export const Cities: CollectionConfig = {
           name: 'meta',
           label: 'SEO',
           fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
             MetaTitleField({
               hasGenerateFn: true,
             }),

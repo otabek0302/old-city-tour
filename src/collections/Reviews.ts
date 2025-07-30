@@ -3,12 +3,6 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
-import {
-  MetaDescriptionField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
 
 export const Reviews: CollectionConfig = {
     slug: 'reviews',
@@ -54,25 +48,6 @@ export const Reviews: CollectionConfig = {
                             localized: true,
                             required: true,
                         },
-                    ],
-                },
-                {
-                    name: 'meta',
-                    label: 'SEO',
-                    fields: [
-                        OverviewField({
-                            titlePath: 'meta.title',
-                            descriptionPath: 'meta.description',
-                        }),
-                        MetaTitleField({
-                            hasGenerateFn: true,
-                        }),
-                        MetaDescriptionField({}),
-                        PreviewField({
-                            hasGenerateFn: true,
-                            titlePath: 'meta.title',
-                            descriptionPath: 'meta.description',
-                        }),
                     ],
                 },
             ],

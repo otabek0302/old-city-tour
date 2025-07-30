@@ -22,23 +22,19 @@ export const faq_block: Block = {
           name: "phone",
           type: "text",
           required: true,
-          localized: true,
         },
         {
           name: "email",
           type: "text",
           required: true,
-          localized: true,
         },
         {
           name: "address",
           type: "text",
           required: true,
-          localized: true,
         },
       ],
       required: true,
-      localized: true,
     },
     {
       name: 'faqs',

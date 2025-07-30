@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import PageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
+import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 async function getCities(locale: string) {
   try {
@@ -8,7 +9,10 @@ async function getCities(locale: string) {
     const res = await fetch(`${baseUrl}/api/cities?locale=${locale}&limit=100`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.docs || [];
+    const cities = data.docs || [];
+    
+    // Clean the localized data for each city
+    return cities.map((city: any) => cleanLocalizedData(city, locale));
   } catch (error) {
     // Silently return empty array instead of logging error
     return [];

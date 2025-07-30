@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useTranslation } from "@/providers/i18n";
 
 interface TourFilterProps {
   tourTypes: Type[];
@@ -17,6 +18,7 @@ interface TourFilterProps {
 }
 
 const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setSelectedTypes, priceRange, setPriceRange, durationRange, setDurationRange }) => {
+  const { t } = useTranslation();
   const [expandedSections, setExpandedSections] = useState({
     filterBy: true,
     price: true,
@@ -44,7 +46,7 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
       <Card className="bg-card border border-border rounded-2xl">
         <CardHeader className="py-4 px-6 cursor-pointer" onClick={() => toggleSection("filterBy")}>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-copy text-base font-semibold">Filter By</CardTitle>
+            <CardTitle className="text-copy text-base font-semibold">{t("pages.tours.filterBy")}</CardTitle>
             {expandedSections.filterBy ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </div>
         </CardHeader>
@@ -66,7 +68,7 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
       <Card className="bg-card border border-border rounded-2xl">
         <CardHeader className="py-4 px-6 cursor-pointer" onClick={() => toggleSection("price")}>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-copy text-base font-semibold">Price</CardTitle>
+            <CardTitle className="text-copy text-base font-semibold">{t("pages.tours.price")}</CardTitle>
             {expandedSections.price ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </div>
         </CardHeader>
@@ -75,13 +77,13 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
             <div className="flex gap-2">
               <div className="flex-1">
                 <Label htmlFor="min-price" className="text-copy-lighter text-sm font-normal">
-                  Min
+                  {t("pages.tours.min")}
                 </Label>
                 <Input id="min-price" type="number" value={priceRange[0]} onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])} placeholder="0$" className="rounded-xl" />
               </div>
               <div className="flex-1">
                 <Label htmlFor="max-price" className="text-copy-lighter text-sm font-normal">
-                  Max
+                  {t("pages.tours.max")}
                 </Label>
                 <Input id="max-price" type="number" value={priceRange[1]} onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 0])} placeholder="0$" className="rounded-xl" />
               </div>
@@ -94,7 +96,7 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
       <Card className="bg-card border border-border rounded-2xl">
         <CardHeader className="py-4 px-6 cursor-pointer" onClick={() => toggleSection("length")}>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-copy text-base font-semibold">Length</CardTitle>
+            <CardTitle className="text-copy text-base font-semibold">{t("pages.tours.duration")}</CardTitle>
             {expandedSections.length ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </div>
         </CardHeader>
@@ -103,13 +105,13 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
             <div className="flex gap-2">
               <div className="flex-1">
                 <Label htmlFor="min-length" className="text-copy-lighter text-sm font-normal">
-                  Min
+                  {t("pages.tours.min")}
                 </Label>
                 <Input id="min-length" type="number" value={durationRange[0]} onChange={(e) => setDurationRange([parseInt(e.target.value) || 0, durationRange[1]])} placeholder="0" className="rounded-xl" />
               </div>
               <div className="flex-1">
                 <Label htmlFor="max-length" className="text-copy-lighter text-sm font-normal">
-                  Max
+                  {t("pages.tours.max")}
                 </Label>
                 <Input id="max-length" type="number" value={durationRange[1]} onChange={(e) => setDurationRange([durationRange[0], parseInt(e.target.value) || 0])} placeholder="0" className="rounded-xl" />
               </div>

@@ -8,6 +8,7 @@ import { Textarea } from "./textarea";
 import { Label } from "./label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./dialog";
+import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 interface Tour {
   id: string | number;
@@ -48,7 +49,10 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
         });
         const data = await res.json();
         const toursArray = Array.isArray(data) ? data : data.docs || data.data || [];
-        setTours(toursArray);
+        
+        // Clean the localized data for each tour
+        const cleanedTours = toursArray.map((tour: any) => cleanLocalizedData(tour, locale));
+        setTours(cleanedTours);
       } catch (error) {
         console.error("Error fetching tours:", error);
         setTours([]);
@@ -57,7 +61,7 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
       }
     };
     fetchTours();
-  }, [open]);
+  }, [open, locale]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

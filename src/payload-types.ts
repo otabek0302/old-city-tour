@@ -241,6 +241,10 @@ export interface Tour {
     | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   slug?: string | null;
@@ -255,7 +259,6 @@ export interface Tour {
 export interface Type {
   id: number;
   title: string;
-  description: string;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -273,6 +276,10 @@ export interface City {
   link?: string | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   slug?: string | null;
@@ -346,6 +353,10 @@ export interface Hotel {
   };
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   slug?: string | null;
@@ -403,46 +414,6 @@ export interface Home {
         | {
             heading: string;
             subheading?: string | null;
-            button?:
-              | {
-                  label?: string | null;
-                  link?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            cities?:
-              | {
-                  city: number | City;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'cities';
-          }
-        | {
-            heading: string;
-            subheading?: string | null;
-            button?:
-              | {
-                  label?: string | null;
-                  link?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            tours?:
-              | {
-                  tour: (number | Tour)[];
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'tours';
-          }
-        | {
-            heading: string;
-            subheading?: string | null;
             contacts: {
               phone: string;
               email: string;
@@ -462,6 +433,9 @@ export interface Home {
         | {
             heading: string;
             subheading?: string | null;
+            button?: {
+              label?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
@@ -515,10 +489,6 @@ export interface Review {
   tour: number | Tour;
   name: string;
   comment: string;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-  };
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -547,6 +517,10 @@ export interface Post {
   publishedAt?: string | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   slug?: string | null;
@@ -740,6 +714,7 @@ export interface ToursSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   slug?: T;
@@ -796,48 +771,6 @@ export interface HomeSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        cities?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              button?:
-                | T
-                | {
-                    label?: T;
-                    link?: T;
-                    id?: T;
-                  };
-              cities?:
-                | T
-                | {
-                    city?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        tours?:
-          | T
-          | {
-              heading?: T;
-              subheading?: T;
-              button?:
-                | T
-                | {
-                    label?: T;
-                    link?: T;
-                    id?: T;
-                  };
-              tours?:
-                | T
-                | {
-                    tour?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         faq?:
           | T
           | {
@@ -865,6 +798,11 @@ export interface HomeSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -917,12 +855,6 @@ export interface ReviewsSelect<T extends boolean = true> {
   tour?: T;
   name?: T;
   comment?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -941,6 +873,7 @@ export interface CitiesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   slug?: T;
@@ -1001,6 +934,7 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   slug?: T;
@@ -1014,7 +948,6 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface TypesSelect<T extends boolean = true> {
   title?: T;
-  description?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -1058,6 +991,7 @@ export interface HotelsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   slug?: T;
@@ -1108,7 +1042,6 @@ export interface Header {
     | {
         label?: string | null;
         url?: string | null;
-        isExternal?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -1125,22 +1058,8 @@ export interface Footer {
   description?: string | null;
   socialLinks?:
     | {
-        title?: string | null;
         link?: string | null;
-        icon?:
-          | (
-              | 'facebook'
-              | 'instagram'
-              | 'telegram'
-              | 'whatsapp'
-              | 'twitter'
-              | 'youtube'
-              | 'linkedin'
-              | 'email'
-              | 'phone'
-              | 'website'
-            )
-          | null;
+        icon?: ('facebook' | 'instagram' | 'telegram' | 'whatsapp') | null;
         id?: string | null;
       }[]
     | null;
@@ -1212,6 +1131,9 @@ export interface AboutUs {
         | {
             heading: string;
             subheading?: string | null;
+            button?: {
+              label?: string | null;
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonials';
@@ -1236,6 +1158,10 @@ export interface AboutUs {
     | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   updatedAt?: string | null;
@@ -1264,6 +1190,10 @@ export interface ContactUs {
   };
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
     description?: string | null;
   };
   updatedAt?: string | null;
@@ -1276,6 +1206,7 @@ export interface ContactUs {
 export interface PrivacyPolicy {
   id: number;
   title: string;
+  description?: string | null;
   sections?:
     | {
         heading: string;
@@ -1299,6 +1230,7 @@ export interface PrivacyPolicy {
 export interface Term {
   id: number;
   title: string;
+  description?: string | null;
   sections?:
     | {
         heading: string;
@@ -1326,7 +1258,6 @@ export interface HeaderSelect<T extends boolean = true> {
     | {
         label?: T;
         url?: T;
-        isExternal?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1343,7 +1274,6 @@ export interface FooterSelect<T extends boolean = true> {
   socialLinks?:
     | T
     | {
-        title?: T;
         link?: T;
         icon?: T;
         id?: T;
@@ -1423,6 +1353,11 @@ export interface AboutUsSelect<T extends boolean = true> {
           | {
               heading?: T;
               subheading?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1448,6 +1383,7 @@ export interface AboutUsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   updatedAt?: T;
@@ -1482,6 +1418,7 @@ export interface ContactUsSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        image?: T;
         description?: T;
       };
   updatedAt?: T;
@@ -1494,6 +1431,7 @@ export interface ContactUsSelect<T extends boolean = true> {
  */
 export interface PrivacyPolicySelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   sections?:
     | T
     | {
@@ -1522,6 +1460,7 @@ export interface PrivacyPolicySelect<T extends boolean = true> {
  */
 export interface TermsSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   sections?:
     | T
     | {

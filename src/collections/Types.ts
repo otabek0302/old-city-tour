@@ -24,12 +24,6 @@ export const Types: CollectionConfig = {
             localized: true,
             unique: true,
         },
-        {
-            name: 'description',
-            type: 'textarea',
-            localized: true,
-            required: true,
-        },
         ...slugField(),
     ],
     timestamps: true,

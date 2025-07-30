@@ -4,11 +4,11 @@ import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
 import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
+    MetaDescriptionField,
+    MetaImageField,
+    MetaTitleField,
+    OverviewField,
+    PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
 export const Posts: CollectionConfig = {
@@ -97,11 +97,6 @@ export const Posts: CollectionConfig = {
                     name: 'meta',
                     label: 'SEO',
                     fields: [
-                        OverviewField({
-                            titlePath: 'meta.title',
-                            descriptionPath: 'meta.description',
-                            imagePath: 'meta.image',
-                        }),
                         MetaTitleField({
                             hasGenerateFn: true,
                         }),

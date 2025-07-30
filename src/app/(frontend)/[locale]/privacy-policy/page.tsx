@@ -1,7 +1,7 @@
 import PrivacyPolicyPageClient from "./page.client";
 import { NotCompleted } from "@/components/ui/not-completed";
-import { generateMeta } from '@/utilities/generateMeta'
-import { Metadata } from 'next'
+import { generateMeta } from "@/utilities/generateMeta";
+import { Metadata } from "next";
 
 async function getPrivacyPolicy(locale: string) {
   try {
@@ -18,23 +18,20 @@ async function getPrivacyPolicy(locale: string) {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const privacyPolicy = await getPrivacyPolicy(locale);
-  
+
   return generateMeta({
     doc: privacyPolicy,
-    global: 'privacy-policy',
-  })
+    global: "privacy-policy",
+  });
 }
 
 const PrivacyPolicyPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
   const privacyPolicy = await getPrivacyPolicy(locale || "en");
 
-  if (!privacyPolicy) return <NotCompleted
-    title="Privacy Policy Not Available"
-    message="The privacy policy content is currently not available. Please contact us for assistance."
-  />;
+  if (!privacyPolicy) return <NotCompleted title="Privacy Policy Not Available" message="The privacy policy content is currently not available. Please contact us for assistance." />;
 
-  return <PrivacyPolicyPageClient _locale={locale} />;
+  return <PrivacyPolicyPageClient _locale={locale} privacyPolicy={privacyPolicy} />;
 };
 
-export default PrivacyPolicyPage; 
+export default PrivacyPolicyPage;

@@ -11,7 +11,7 @@ export const privacy_policy_block: Block = {
         },
         {
             name: 'content',
-            type: 'text',
+            type: 'textarea',
             localized: true,
         },
     ],

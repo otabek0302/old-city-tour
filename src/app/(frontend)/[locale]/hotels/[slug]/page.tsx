@@ -1,6 +1,5 @@
-import { Metadata } from 'next'
-import { generateMeta } from '@/utilities/generateMeta'
-import { NotCompleted } from '@/components/ui/not-completed'
+import { Metadata } from "next";
+import { generateMeta } from "@/utilities/generateMeta";
 
 async function getHotel(slug: string, locale: string) {
   try {
@@ -17,23 +16,18 @@ async function getHotel(slug: string, locale: string) {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
   const { slug, locale } = await params;
   const hotel = await getHotel(slug, locale);
-  
+
   return generateMeta({
     doc: hotel,
-    collection: 'hotels',
-  })
+    collection: "hotels",
+  });
 }
 
 const HotelPage = async ({ params }: { params: Promise<{ slug: string; locale: string }> }) => {
   const { slug, locale } = await params;
   const hotel = await getHotel(slug, locale);
 
-  if (!hotel) {
-    return <NotCompleted
-      title="Hotel Not Found"
-      message="This hotel page is not available. Please contact us for assistance."
-    />;
-  }
+  if (!hotel) return null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -44,11 +38,7 @@ const HotelPage = async ({ params }: { params: Promise<{ slug: string; locale: s
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {hotel.images.map((imageItem: { image: { url: string } }, index: number) => (
                 <div key={index} className="h-64 bg-gray-200 rounded-lg overflow-hidden">
-                  <img
-                    src={imageItem.image.url}
-                    alt={`${hotel.name} - Image ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={imageItem.image.url} alt={`${hotel.name} - Image ${index + 1}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -61,24 +51,32 @@ const HotelPage = async ({ params }: { params: Promise<{ slug: string; locale: s
             <h1 className="text-4xl font-bold">{hotel.name}</h1>
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={`text-2xl ${i < parseInt(hotel.rating || '0') ? 'text-yellow-400' : 'text-gray-300'}`}>
+                <span key={i} className={`text-2xl ${i < parseInt(hotel.rating || "0") ? "text-yellow-400" : "text-gray-300"}`}>
                   ★
                 </span>
               ))}
             </div>
           </div>
-          
+
           <p className="text-lg text-gray-600 mb-6">{hotel.description}</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
               <h3 className="text-lg font-semibold mb-2">Contact Information</h3>
               <div className="space-y-2">
-                {hotel.address && <p><strong>Address:</strong> {hotel.address}</p>}
-                {hotel.phone && <p><strong>Phone:</strong> {hotel.phone}</p>}
+                {hotel.address && (
+                  <p>
+                    <strong>Address:</strong> {hotel.address}
+                  </p>
+                )}
+                {hotel.phone && (
+                  <p>
+                    <strong>Phone:</strong> {hotel.phone}
+                  </p>
+                )}
                 {hotel.website && (
                   <p>
-                    <strong>Website:</strong> 
+                    <strong>Website:</strong>
                     <a href={hotel.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-1">
                       Visit Website
                     </a>
@@ -86,17 +84,37 @@ const HotelPage = async ({ params }: { params: Promise<{ slug: string; locale: s
                 )}
               </div>
             </div>
-            
+
             {hotel.policies && (
               <div>
                 <h3 className="text-lg font-semibold mb-2">Hotel Policies</h3>
                 <div className="space-y-2">
-                  <p><strong>Check-in:</strong> {hotel.policies.checkIn}</p>
-                  <p><strong>Check-out:</strong> {hotel.policies.checkOut}</p>
-                  {hotel.policies.cancellation && <p><strong>Cancellation:</strong> {hotel.policies.cancellation}</p>}
-                  {hotel.policies.pet && <p><strong>Pet Policy:</strong> {hotel.policies.pet}</p>}
-                  {hotel.policies.children && <p><strong>Children:</strong> {hotel.policies.children}</p>}
-                  {hotel.policies.payment && <p><strong>Payment:</strong> {hotel.policies.payment}</p>}
+                  <p>
+                    <strong>Check-in:</strong> {hotel.policies.checkIn}
+                  </p>
+                  <p>
+                    <strong>Check-out:</strong> {hotel.policies.checkOut}
+                  </p>
+                  {hotel.policies.cancellation && (
+                    <p>
+                      <strong>Cancellation:</strong> {hotel.policies.cancellation}
+                    </p>
+                  )}
+                  {hotel.policies.pet && (
+                    <p>
+                      <strong>Pet Policy:</strong> {hotel.policies.pet}
+                    </p>
+                  )}
+                  {hotel.policies.children && (
+                    <p>
+                      <strong>Children:</strong> {hotel.policies.children}
+                    </p>
+                  )}
+                  {hotel.policies.payment && (
+                    <p>
+                      <strong>Payment:</strong> {hotel.policies.payment}
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -121,4 +139,4 @@ const HotelPage = async ({ params }: { params: Promise<{ slug: string; locale: s
   );
 };
 
-export default HotelPage; 
+export default HotelPage;

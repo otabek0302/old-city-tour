@@ -1,7 +1,9 @@
 import { Metadata } from 'next'
+
 import CityPage from "./page.client";
+
 import { generateMeta } from '@/utilities/generateMeta'
-import { NotCompleted } from "@/components/ui/not-completed";
+import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 const getCity = async (slug: string, locale: string) => {
   try {
@@ -13,25 +15,16 @@ const getCity = async (slug: string, locale: string) => {
       return null
     }
     const data = await res.json()
-    return data.docs?.[0] || null
+    const city = data.docs?.[0] || null
+    
+    // Clean the localized data to prevent double-encoded JSON strings
+    if (city) {
+      return cleanLocalizedData(city, locale);
+    }
+    
+    return city;
   } catch (error) {
     return null
-  }
-}
-
-const getCities = async (locale: string) => {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/cities?locale=${locale}`, {
-      cache: 'no-store',
-    })
-    if (!res.ok) {
-      return []
-    }
-    const data = await res.json()
-    return data.docs || []
-  } catch (error) {
-    return []
   }
 }
 
@@ -41,9 +34,10 @@ async function getTours(cityId: number, locale: string) {
     const res = await fetch(`${baseUrl}/api/tours?where[cities][in]=${cityId}&locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
-    return data.docs || [];
+    const tours = data.docs || [];
+    
+    return tours.map((tour: any) => cleanLocalizedData(tour, locale));
   } catch (error) {
-    // Silently return empty array instead of logging error
     return [];
   }
 }
@@ -63,9 +57,6 @@ export default async function Page({ params }: { params: Promise<{ city: string;
   const city = await getCity(citySlug, locale);
   const tours = await getTours(city?.id, locale);
 
-  if (!city) return <NotCompleted 
-    title="City Not Found"
-    message="The requested city could not be found. Please check the URL or contact us for assistance."
-  />;
+  if (!city) return null;
   return <CityPage city={city} tours={tours} />;
 }

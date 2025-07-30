@@ -27,9 +27,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'socialLinks',
       type: 'array',
-      localized: true,
       fields: [
-        { name: 'title', type: 'text' },
         { name: 'link', type: 'text' },
         {
           name: 'icon', type: 'select', options: [
@@ -37,12 +35,6 @@ export const Footer: GlobalConfig = {
             { label: 'Instagram', value: 'instagram' },
             { label: 'Telegram', value: 'telegram' },
             { label: 'Whatsapp', value: 'whatsapp' },
-            { label: 'Twitter', value: 'twitter' },
-            { label: 'Youtube', value: 'youtube' },
-            { label: 'Linkedin', value: 'linkedin' },
-            { label: 'Email', value: 'email' },
-            { label: 'Phone', value: 'phone' },
-            { label: 'Website', value: 'website' },
           ],
         },
       ],
@@ -50,25 +42,22 @@ export const Footer: GlobalConfig = {
     {
       name: 'navigationLinks',
       type: 'array',
-      localized: true,
       fields: [
-        { name: 'label', type: 'text' },
+        { name: 'label', type: 'text', localized: true },
         { name: 'url', type: 'text' },
       ],
     },
     {
       name: 'licenceLinks',
       type: 'array',
-      localized: true,
       fields: [
-        { name: 'label', type: 'text' },
+        { name: 'label', type: 'text', localized: true },
         { name: 'url', type: 'text' },
       ],
     },
     {
       name: 'contactLinks',
       type: 'array',
-      localized: true,
       fields: [
         {
           name: 'type', type: 'select', options: [

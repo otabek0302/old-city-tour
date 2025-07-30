@@ -5,7 +5,6 @@ import { authenticated } from '../access/authenticated'
 import {
   MetaDescriptionField,
   MetaTitleField,
-  OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { terms_block } from '../blocks'
@@ -33,6 +32,11 @@ export const Terms: GlobalConfig = {
               required: true,
             },
             {
+              name: 'description',
+              type: 'textarea',
+              localized: true,
+            },
+            {
               name: 'sections',
               type: 'blocks',
               blocks: [terms_block],
@@ -43,10 +47,6 @@ export const Terms: GlobalConfig = {
           name: 'meta',
           label: 'SEO',
           fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
             MetaTitleField({
               hasGenerateFn: true,
             }),

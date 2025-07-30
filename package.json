@@ -19,7 +19,15 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "db:generate": "payload generate:types",
+    "db:migrate": "payload migrate",
+    "db:seed": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts tsx src/seed.ts",
+    "db:reset": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts tsx src/reset.ts",
+    "db:fix-localized": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts tsx src/migrations/fix-localized-data.ts",
+    "postinstall": "payload generate:types"
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.46.0",

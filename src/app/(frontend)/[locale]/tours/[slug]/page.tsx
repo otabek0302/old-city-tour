@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import SingleTourPageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
 import { NotCompleted } from "@/components/ui/not-completed";
+import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
 
 async function getTour(slug: string, locale: string) {
   try {
@@ -9,7 +10,14 @@ async function getTour(slug: string, locale: string) {
     const res = await fetch(`${baseUrl}/api/tours?where[slug][equals]=${encodeURIComponent(slug)}&locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
-    return data.docs?.[0] || null;
+    const tour = data.docs?.[0] || null;
+    
+    // Clean the localized data to prevent double-encoded JSON strings
+    if (tour) {
+      return cleanLocalizedData(tour, locale);
+    }
+    
+    return tour;
   } catch (error) {
     // Silently return null instead of logging error
     return null;

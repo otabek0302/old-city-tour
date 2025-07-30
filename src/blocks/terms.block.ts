@@ -11,7 +11,7 @@ export const terms_block: Block = {
         },
         {
             name: 'content',
-            type: 'text',
+            type: 'textarea',
             localized: true,
         },
     ],

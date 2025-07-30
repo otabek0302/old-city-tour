@@ -3,12 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SocialMediaIcon } from "@/components/ui/social-media-icons";
+import { useTranslation } from "@/providers/i18n";
 
 interface SocialLink {
-  title: string;
   link: string;
   icon: string;
 }
@@ -38,37 +37,25 @@ interface FooterData {
 }
 
 const FooterClient = ({ data }: { data: FooterData }) => {
-  const pathname = usePathname();
-  const isHomeLanguagePath = ["/ru", "/en", "/uz"].includes(pathname);
-
+  const { t } = useTranslation();
   return (
-    <footer className={`${isHomeLanguagePath ? "border-t border-border" : "bg-primary-dark"} py-6`}>
+    <footer className="bg-primary-dark py-6">
       <div className="container">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-start gap-6">
           {/* Logo */}
           <div className="flex-1 py-4">
-            <div className="flex items-center gap-6">
-              {data.logo?.url && (
-                <div className="relative h-32 w-80">
-                  <img 
-                    src={data.logo.url} 
-                    alt={data.logo.alt || "Logo"} 
-                    className="object-contain w-full h-full"
-                  />
-                </div>
-              )}
-            </div>
-            <p className={`${isHomeLanguagePath ? "max-w-lg text-copy-light text-sm font-normal leading-tight" : "max-w-lg text-gray-300 hover:text-copy-white text-sm font-normal leading-tight"}`}>{data.description}</p>
+            <div className="flex items-center gap-6">{data.logo?.url && <div className="relative h-32 w-80">{data.logo?.url && <Image src={data.logo?.url} alt={data.logo?.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>}</div>
+            <p className="max-w-lg text-gray-300 hover:text-copy-white text-sm font-normal leading-tight">{data?.description}</p>
           </div>
 
           {/* Social media section */}
           <div className="max-w-md space-y-4 flex flex-col items-start">
-            <p className={`${isHomeLanguagePath ? "text-copy-light text-sm font-normal leading-tight" : "text-gray-300 hover:text-copy-white text-sm font-normal leading-tight"}`}>Follow us</p>
+            <p className="text-gray-300 hover:text-copy-white text-sm font-normal leading-tight">{t("footer.followUs")}</p>
             <div className="flex gap-3">
-              {data.socialLinks?.map((link, idx) => (
+              {data?.socialLinks?.map((link, idx) => (
                 <Button variant="social_media" size="icon" key={idx} className="group flex items-center justify-center">
-                  <Link href={link.link} aria-label={link.title} target="_blank" rel="noopener noreferrer">
-                    <SocialMediaIcon name={link.icon as string} className="h-4 w-4 lg:h-5 lg:w-5 text-inherit" />
+                  <Link href={link?.link} aria-label={link?.link} target="_blank" rel="noopener noreferrer">
+                    <SocialMediaIcon name={link?.icon as string} className="h-4 w-4 lg:h-5 lg:w-5 text-inherit" />
                   </Link>
                 </Button>
               ))}
@@ -77,13 +64,13 @@ const FooterClient = ({ data }: { data: FooterData }) => {
         </div>
 
         {/* Navigation menu */}
-        <nav className={`${isHomeLanguagePath ? "py-4 border-y border-border" : "py-4"}`}>
+        <nav className="py-4 border-y-[0.5px] border-border">
           <div className="flex items-center justify-between">
             <ul className="flex flex-wrap gap-8">
-              {data.navigationLinks?.map((link, idx) => (
+              {data?.navigationLinks?.map((link, idx) => (
                 <li key={idx}>
-                  <Link href={link.url} className={`${isHomeLanguagePath ? "text-copy-light hover:text-copy text-sm font-normal transition-colors" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`}>
-                    {link.label}
+                  <Link href={link?.url} className="text-gray-300 hover:text-copy-white text-sm font-normal">
+                    {link?.label}
                   </Link>
                 </li>
               ))}
@@ -91,11 +78,7 @@ const FooterClient = ({ data }: { data: FooterData }) => {
             <ul className="flex flex-wrap gap-8">
               {data.contactLinks?.map((link, idx) => (
                 <li key={idx} className="flex items-center gap-2">
-                  <Link 
-                    href={link.type === "phone" ? `tel:${link.value}` : link.type === "email" ? `mailto:${link.value}` : `https://maps.google.com/?q=${encodeURIComponent(link.value)}`} 
-                    className={`${isHomeLanguagePath ? "text-copy-light hover:text-copy text-sm font-normal transition-colors" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`} 
-                    target="_blank"
-                  >
+                  <Link href={link?.type === "phone" ? `tel:${link?.value}` : link.type === "email" ? `mailto:${link.value}` : `https://maps.google.com/?q=${encodeURIComponent(link.value)}`} className="text-gray-300 hover:text-copy-white text-sm font-normal" target="_blank">
                     {link.value}
                   </Link>
                 </li>
@@ -106,10 +89,10 @@ const FooterClient = ({ data }: { data: FooterData }) => {
 
         {/* Bottom section */}
         <div className="pt-2 flex flex-col lg:flex-row justify-between items-center gap-4">
-          <p className={`${isHomeLanguagePath ? "text-copy-lighter hover:text-copy text-sm font-normal" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`}>{data.copyright || "© 2025 Old City. All rights reserved."}</p>
+          <p className="text-gray-300 hover:text-copy-white text-sm font-normal">{data.copyright || "© 2025 Old City. All rights reserved."}</p>
           <div className="flex gap-6 text-sm">
-            {data.licenceLinks?.map((link, idx) => (
-              <Link key={idx} href={link.url} className={`${isHomeLanguagePath ? "text-copy-lighter hover:text-copy text-sm font-normal" : "text-gray-300 hover:text-copy-white text-sm font-normal"}`}>
+            {data?.licenceLinks?.map((link, idx) => (
+              <Link key={idx} href={link.url} className="text-gray-300 hover:text-copy-white text-sm font-normal">
                 {link.label}
               </Link>
             ))}

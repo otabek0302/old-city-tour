@@ -4,39 +4,12 @@ import Image from "next/image";
 import { Tour } from "@/payload-types";
 import { Card } from "@/components/ui/card";
 import { Star, Clock, Users } from "lucide-react";
-import { getImageURL } from "../../../utilities/getURL";
 
 interface TourCardProps {
   tour: Tour;
 }
 
 const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
-  const getMainImage = () => {
-    if (tour.images && tour.images.length > 0) {
-      const image = tour.images[0];
-      if (typeof image.image === "string") {
-        return getImageURL(image.image);
-      }
-      if (typeof image.image === "object" && image.image.url) {
-        return getImageURL(image.image.url);
-      }
-    }
-    return "/placeholder-tour.jpg";
-  };
-
-  const getTourType = () => {
-    if (tour.type) {
-      if (typeof tour.type === "string") {
-        return tour.type;
-      }
-      if (typeof tour.type === "object" && tour.type.title) {
-        return tour.type.title;
-      }
-    }
-    return "Standard Tour";
-  };
-
-  // Helper function to get departure dates
   const getDepartureDates = () => {
     if (tour.booking_pricing && tour.booking_pricing.length > 0) {
       return tour.booking_pricing.slice(0, 2).map((booking) =>
@@ -50,20 +23,16 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
     return ["Jan 5, 2025", "April 24, 2025"];
   };
 
-  // Helper function to get rating
-  const getRating = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const tourWithReviews = tour as any;
-    if (tourWithReviews.reviews && tourWithReviews.reviews.length > 0) {
-      const totalRating = tourWithReviews.reviews.reduce((sum: number, review: any) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if (review.review && typeof review.review === "object" && (review.review as any).rating) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return sum + (review.review as any).rating;
+  const getRating = (): string => {
+    const reviews = (tour as { reviews?: { review?: { rating?: number } }[] }).reviews;
+    if (reviews && reviews.length > 0) {
+      const totalRating = reviews.reduce((sum: number, review) => {
+        if (review.review && typeof review.review === "object" && typeof review.review.rating === "number") {
+          return sum + review.review.rating;
         }
         return sum;
       }, 0);
-      return (totalRating / tourWithReviews.reviews.length).toFixed(1);
+      return (totalRating / reviews.length).toFixed(1);
     }
     return "4.6";
   };
@@ -72,10 +41,10 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
   const rating = getRating();
 
   return (
-    <Card className="bg-card border border-border rounded-2xl overflow-hidden">
+    <Card className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
       <div className="p-2 flex flex-col lg:flex-row">
         <div className="lg:w-2/5 relative border border-border rounded-xl overflow-hidden">
-          <Image src={getMainImage()} alt={tour.title || "Tour Image"} className="w-full h-64 lg:h-full object-cover" width={220} height={220} />
+          <Image src={typeof tour.images?.[0]?.image === "object" && tour.images?.[0]?.image?.url ? tour.images[0].image.url : ""} alt={tour.title || "Tour Image"} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         </div>
 
         <div className="lg:w-3/5 p-6">
@@ -85,7 +54,7 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
             </Link>
             <span className="w-fit px-3 py-1 bg-primary-light rounded-[10px] text-primary-foreground text-sm font-medium flex items-center gap-1">
               <Users className="h-4 w-4" />
-              {getTourType()}
+              {typeof tour.type === "object" && tour.type?.title ? tour.type.title : "Standard Tour"}
             </span>
           </div>
 

@@ -13,6 +13,13 @@ export const testimonials_block: Block = {
       name: 'subheading',
       type: 'text',
       localized: true,
-    }
+    },
+    {
+      name: 'button',
+      type: 'group',
+      fields: [
+        { name: "label", type: "text", label: "Link Label", localized: true },
+      ]
+    },
   ],
 };

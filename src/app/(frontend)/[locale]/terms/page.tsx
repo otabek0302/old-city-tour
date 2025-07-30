@@ -34,7 +34,7 @@ const TermsPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
     message="The terms and conditions content is currently not available. Please contact us for assistance."
   />;
 
-  return <TermsPageClient _locale={locale} />;
+  return <TermsPageClient _locale={locale} terms={terms} />;
 };
 
 export default TermsPage; 

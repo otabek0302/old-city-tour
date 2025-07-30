@@ -1,22 +1,29 @@
 import HomePageClient from "./page.client";
 
-import { NotCompleted } from "@/components/ui/not-completed";
+import { cleanLocalizedData } from "@/utilities/cleanLocalizedData";
 
 const getSections = async (locale: string) => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/home?locale=${locale}`, {
-      cache: 'no-store',
-    })
+      cache: "no-store",
+    });
     if (!res.ok) {
-      return null
+      return null;
     }
-    const data = await res.json()
-    return data.docs?.[0] || null
+    const data = await res.json();
+    const home = data.docs?.[0] || null;
+
+    // Clean the localized data to prevent double-encoded JSON strings
+    if (home) {
+      return cleanLocalizedData(home, locale);
+    }
+
+    return home;
   } catch (_error) {
-    return null
+    return null;
   }
-}
+};
 
 const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
@@ -30,12 +37,10 @@ const HomePage = async ({ params }: { params: Promise<{ locale: string }> }) => 
       }
     }
 
-    return <NotCompleted title="Home Page Not Available" message="The home page content is currently not available. Please contact us for assistance." />;
+    return null;
   }
 
-  if (!homeData.sections || homeData.sections.length === 0) {
-    return <NotCompleted title="No Content Available" message="The home page has no content sections. Please add content through the admin panel." />;
-  }
+  if (!homeData.sections || homeData.sections.length === 0) return null;
 
   return <HomePageClient sections={homeData.sections} />;
 };

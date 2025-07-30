@@ -1,0 +1,193 @@
+{
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xato",
+    "success": "Muvaffaqiyatli",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "previous": "Oldingi",
+    "close": "Yopish",
+    "search": "Qidirish",
+    "filter": "Filtrlash",
+    "sort": "Saralash",
+    "view": "Ko'rish",
+    "readMore": "Ko'proq o'qish",
+    "viewMore": "Ko'proq ko'rish",
+    "showLess": "Kamroq ko'rsatish",
+    "noData": "Ma'lumot mavjud emas",
+    "notFound": "Topilmadi",
+    "unauthorized": "Ruxsat berilmagan",
+    "forbidden": "Taqiqlangan",
+    "serverError": "Server xatosi"
+  },
+  "navigation": {
+    "home": "Bosh sahifa",
+    "tours": "Turlar",
+    "cities": "Shaharlar",
+    "hotels": "Mehmonxonalar",
+    "posts": "Blog",
+    "about": "Biz haqida",
+    "contact": "Aloqa",
+    "privacy": "Maxfiylik siyosati",
+    "terms": "Foydalanish shartlari"
+  },
+  "pages": {
+    "home": {
+      "title": "Old City Tours-ga xush kelibsiz",
+      "subtitle": "Bizning tajribali yo'riqchilar bilan ajoyib yo'nalishlarni kashf eting",
+      "hero": {
+        "title": "Dunyoni kashf eting",
+        "subtitle": "Unutilmas sayohat tajribalari sizni kutmoqda",
+        "cta": "Sayohatingizni boshlang"
+      }
+    },
+    "tours": {
+      "title": "Bizning turlar",
+      "subtitle": "Bizning tajribali yo'riqchilar bilan ajoyib yo'nalishlarni kashf eting",
+      "noTours": "Hozirda turlar mavjud emas",
+      "filterBy": "Filtrlash",
+      "sortBy": "Saralash",
+      "price": "Narx",
+      "duration": "Davomiyligi",
+      "rating": "Reyting",
+      "perAdult": "kattalar uchun",
+      "days": "kun",
+      "reviews": "tafsilotlar"
+    },
+    "cities": {
+      "title": "Bizning shaharlar",
+      "subtitle": "Butun dunyo bo'ylab chiroyli yo'nalishlarni kashf eting",
+      "noCities": "Shaharlar topilmadi",
+      "checkBackLater": "Yangi yo'nalishlar uchun keyinroq qaytib keling",
+      "viewMore": "Ko'proq ko'rish",
+      "noToursAvailable": "Bu shahar uchun turlar mavjud emas."
+    },
+    "hotels": {
+      "title": "Bizning mehmonxonalar",
+      "subtitle": "Bizning diqqat bilan tanlangan mehmonxonalarni kashf eting",
+      "noHotels": "Hozirda mehmonxonalar mavjud emas",
+      "contactForAssistance": "Yordam uchun biz bilan bog'laning"
+    },
+    "posts": {
+      "title": "Blog",
+      "subtitle": "Bizning so'nggi maqolalar va sayohat ma'lumotlarini kashf eting",
+      "noPosts": "Blog maqolalari hozirda mavjud emas",
+      "contactForAssistance": "Yordam uchun biz bilan bog'laning",
+      "publishedOn": "Nashr etilgan",
+      "readFullPost": "To'liq maqolani o'qish"
+    },
+    "about": {
+      "title": "Biz haqida",
+      "subtitle": "Bizning missiya va qadriyatlar haqida ko'proq ma'lumot oling",
+      "lastUpdated": "Oxirgi yangilanish",
+      "missing": "Kontent hozirda mavjud emas. Yordam uchun biz bilan bog'laning."
+    },
+    "contact": {
+      "title": "Biz bilan bog'laning",
+      "subtitle": "Bizning jamoa bilan bog'laning",
+      "form": {
+        "name": "To'liq ism",
+        "email": "Email manzil",
+        "phone": "Telefon raqami",
+        "subject": "Mavzu",
+        "message": "Xabar",
+        "send": "Xabar yuborish",
+        "sending": "Yuborilmoqda...",
+        "namePlaceholder": "Sizning to'liq ismingiz",
+        "emailPlaceholder": "sizning.email@example.com",
+        "phonePlaceholder": "+998 90 123 45 67",
+        "subjectPlaceholder": "Bu nima haqida?",
+        "messagePlaceholder": "So'rovingiz haqida ko'proq ma'lumot bering...",
+        "required": "Majburiy",
+        "optional": "Ixtiyoriy"
+      },
+      "info": {
+        "email": "Email",
+        "phone": "Telefon",
+        "office": "Ofis",
+        "businessHours": "Ish vaqti"
+      }
+    },
+    "privacy": {
+      "title": "Maxfiylik siyosati",
+      "subtitle": "Sizning maxfiyligingiz biz uchun muhim",
+      "lastUpdated": "Oxirgi yangilanish"
+    },
+    "terms": {
+      "title": "Foydalanish shartlari",
+      "subtitle": "Iltimos, bizning shartlarni diqqat bilan o'qing",
+      "lastUpdated": "Oxirgi yangilanish"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Sahifa topilmadi",
+      "message": "Siz qidirayotgan sahifa mavjud emas",
+      "backHome": "Bosh sahifaga qaytish"
+    },
+    "serverError": {
+      "title": "Server xatosi",
+      "message": "Bizning tomondan biror narsa noto'g'ri ketdi",
+      "tryAgain": "Qaytadan urinib ko'ring"
+    },
+    "unauthorized": {
+      "title": "Ruxsat berilmagan",
+      "message": "Ushbu resursga kirish uchun ruxsatingiz yo'q"
+    },
+    "forbidden": {
+      "title": "Taqiqlangan",
+      "message": "Ushbu resursga kirish taqiqlangan"
+    },
+    "networkError": {
+      "title": "Tarmoq xatosi",
+      "message": "Iltimos, internet aloqangizni tekshiring va qaytadan urinib ko'ring"
+    },
+    "validationError": {
+      "title": "Validatsiya xatosi",
+      "message": "Iltimos, kiritilgan ma'lumotlarni tekshiring va qaytadan urinib ko'ring"
+    }
+  },
+  "success": {
+    "messageSent": "Xabar muvaffaqiyatli yuborildi! Tez orada siz bilan bog'lanamiz.",
+    "dataSaved": "Ma'lumotlar muvaffaqiyatli saqlandi",
+    "dataDeleted": "Ma'lumotlar muvaffaqiyatli o'chirildi",
+    "dataUpdated": "Ma'lumotlar muvaffaqiyatli yangilandi"
+  },
+  "forms": {
+    "validation": {
+      "required": "Bu maydon majburiy",
+      "email": "Iltimos, to'g'ri email manzilini kiriting",
+      "minLength": "Kamida {min} belgi bo'lishi kerak",
+      "maxLength": "{max} belgidan ko'p bo'lmasligi kerak",
+      "passwordMatch": "Parollar mos kelishi kerak",
+      "fillRequiredFields": "Iltimos, barcha majburiy maydonlarni to'ldiring",
+      "sendFailed": "Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring."
+    }
+  },
+  "components": {
+    "notCompleted": {
+      "title": "Mavjud emas",
+      "message": "Bu funksiya hozirda mavjud emas. Yordam uchun biz bilan bog'laning."
+    },
+    "pagination": {
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "page": "Sahifa",
+      "of": "dan"
+    },
+    "search": {
+      "placeholder": "Qidirish...",
+      "noResults": "Natijalar topilmadi",
+      "searching": "Qidirilmoqda..."
+    },
+    "filters": {
+      "clearAll": "Hammasini tozalash",
+      "apply": "Filtrlarni qo'llash",
+      "reset": "Qayta o'rnatish"
+    }
+  }
+}
