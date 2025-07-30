@@ -1,4 +1,5 @@
-import payload from 'payload'
+import { getPayload, Payload } from 'payload'
+import config from '../payload.config'
 
 const locales = ['uz', 'ru', 'en']
 
@@ -28,7 +29,7 @@ const cleanObject = (obj: any, locale: string): any => {
   return cleaned
 }
 
-const migrateCollection = async (collectionSlug: 'cities' | 'tours') => {
+const migrateCollection = async (payload: Payload, collectionSlug: 'cities' | 'tours') => {
   const docs = await payload.find({
     collection: collectionSlug,
     limit: 9999,
@@ -106,12 +107,11 @@ const migrateCollection = async (collectionSlug: 'cities' | 'tours') => {
 }
 
 export const handler = async () => {
-  await payload.init({
-    local: true,
-  })
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
 
-  await migrateCollection('cities')
-  await migrateCollection('tours')
+  await migrateCollection(payload, 'cities')
+  await migrateCollection(payload, 'tours')
   // Add others as needed
 
   await payload.destroy()
