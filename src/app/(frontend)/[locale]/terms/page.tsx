@@ -1,5 +1,4 @@
 import TermsPageClient from "./page.client";
-import { NotCompleted } from "@/components/ui/not-completed";
 import { generateMeta } from '@/utilities/generateMeta'
 import { Metadata } from 'next'
 
@@ -29,10 +28,7 @@ const TermsPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
   const { locale } = await params;
   const terms = await getTerms(locale || "en");
 
-  if (!terms) return <NotCompleted
-    title="Terms Not Available"
-    message="The terms and conditions content is currently not available. Please contact us for assistance."
-  />;
+  if (!terms) return null;
 
   return <TermsPageClient _locale={locale} terms={terms} />;
 };

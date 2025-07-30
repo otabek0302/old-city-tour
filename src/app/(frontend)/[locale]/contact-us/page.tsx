@@ -1,7 +1,6 @@
-import ContactUsPageClient from "./page.client";
-import { NotCompleted } from "@/components/ui/not-completed";
-import { generateMeta } from '@/utilities/generateMeta'
 import { Metadata } from 'next'
+import ContactUsPageClient from "./page.client";
+import { generateMeta } from '@/utilities/generateMeta'
 
 async function getContactUs(locale: string) {
   try {
@@ -29,10 +28,7 @@ const ContactUsPage = async ({ params }: { params: Promise<{ locale: string }> }
   const { locale } = await params;
   const contactUs = await getContactUs(locale || "en");
 
-  if (!contactUs) return <NotCompleted
-    title="Contact Us Page Not Available"
-    message="The contact us page content is currently not available. Please contact us for assistance."
-  />;
+  if (!contactUs) return null;
 
   return <ContactUsPageClient heading={contactUs?.title} subheading={contactUs?.heading} form_info={contactUs?.form_info} contact_info={contactUs?.contact_info} />;
 };
