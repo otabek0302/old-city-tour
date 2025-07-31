@@ -7,7 +7,6 @@ import {
     MetaDescriptionField,
     MetaImageField,
     MetaTitleField,
-    OverviewField,
     PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 

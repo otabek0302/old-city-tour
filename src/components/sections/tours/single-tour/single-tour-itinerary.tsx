@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Activity {
   activity?: string | null;
   id?: string | null;

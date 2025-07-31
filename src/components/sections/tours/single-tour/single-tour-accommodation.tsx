@@ -1,33 +1,12 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-interface City {
-  name: string;
-}
-
-interface Hotel {
-  name: string;
-  description: string;
-  address?: string | null;
-  phone?: string | null;
-  website?: string | null;
-  rating?: string | null;
-}
-
-interface AccommodationItem {
-  city: number | City;
-  nights: number;
-  hotel?: Hotel[] | null;
-  id?: string | null;
-}
+import { Tour } from "@/payload-types";
 
 interface SingleTourAccommodationProps {
-  tour: {
-    accommodation?: AccommodationItem[] | null;
-  };
+  tour: Tour;
 }
 
-const getCityName = (city: number | City): string => {
+const getCityName = (city: number | any): string => {
   if (typeof city === "object" && city.name) {
     return city.name.toUpperCase();
   }
@@ -68,6 +47,7 @@ const SingleTourAccommodation = ({ tour }: SingleTourAccommodationProps) => {
                 <div className="mt-4 pt-4 border-t border-border">
                   <div className="space-y-3">
                     {item.hotel.map((hotel, index) => {
+                      if (typeof hotel === "number") return null; // Skip if hotel is just an ID
                       return (
                         <div key={index} className="bg-background rounded-lg p-3">
                           <h4 className="font-semibold text-copy mb-2">{hotel.name}</h4>

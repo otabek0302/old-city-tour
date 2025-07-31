@@ -52,7 +52,7 @@ export const Reviews: CollectionConfig = {
                 },
             ],
         },
-        ...slugField(),
+        ...slugField('name'),
     ],
     timestamps: true,
 }

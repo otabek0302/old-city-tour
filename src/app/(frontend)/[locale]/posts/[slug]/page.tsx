@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -33,7 +34,9 @@ const PostPage = async ({ params }: { params: Promise<{ slug: string; locale: st
   const { slug, locale } = await params;
   const post = await getPost(slug, locale);
 
-  if (!post) return null;
+  if (!post) {
+    notFound();
+  }
 
   return (
     <section className="py-6">

@@ -9,10 +9,9 @@ export const InitialLoading = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Show initial loading for a shorter time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // 1.5 seconds
+    }, 1500);
 
     return () => {
       clearTimeout(timer);
@@ -28,14 +27,10 @@ export const InitialLoading = () => {
           <Loader2 className="h-12 w-12 animate-spin text-primary" />
         </div>
         <div className="text-center">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            {t("common.initializing")}
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-            {t("common.pleaseWait")}
-          </p>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t("common.initializing")}</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{t("common.pleaseWait")}</p>
         </div>
       </div>
     </div>
   );
-}; 
+};

@@ -8,22 +8,26 @@ import SingleTourServices from "@/components/sections/tours/single-tour/single-t
 import SingleTourAccommodation from "@/components/sections/tours/single-tour/single-tour-accommodation";
 import SingleTourReviews from "@/components/sections/tours/single-tour/single-tour-reviews";
 import SingleTourRelatedTours from "@/components/sections/tours/single-tour/single-tour-related-tours";
+import SingleTourPrices from "@/components/sections/tours/single-tour/single-tour-prices";
+
+import { Tour } from "@/payload-types";
 
 interface SingleTourPageClientProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tour: any;
+  tour: Tour;
 }
 
 const SingleTourPageClient = ({ tour }: SingleTourPageClientProps) => {
+  console.log(tour);
   return (
     <section className="min-h-screen py-6 sm:py-8 md:py-10">
       <div className="container">
-        <SingleTourImages images={tour.images} />
+        <SingleTourImages tour={tour} />
         <SingleTourInfo tour={tour} />
         <SingleTourPath tour={tour} />
         <SingleTourAccommodation tour={tour} />
         <SingleTourServices tour={tour} />
         <SingleTourItinerary tour={tour} />
+        <SingleTourPrices tour={tour} />
         <SingleTourReviews tour={tour} />
         <SingleTourRelatedTours tour={tour} />
       </div>

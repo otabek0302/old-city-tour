@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import SingleTourPageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
 import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
@@ -36,7 +37,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const SingleTourPage = async ({ params }: { params: Promise<{ slug: string; locale: string }> }) => {
   const { slug, locale } = await params;
   const tour = await getTour(slug, locale || "en");
-  if (!tour) return null;
+  
+  if (!tour) {
+    notFound();
+  }
+  
   return <SingleTourPageClient tour={tour} />;
 };
 

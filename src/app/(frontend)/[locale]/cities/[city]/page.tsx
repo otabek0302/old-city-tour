@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 import CityPage from "./page.client";
 
@@ -57,6 +58,9 @@ export default async function Page({ params }: { params: Promise<{ city: string;
   const city = await getCity(citySlug, locale);
   const tours = await getTours(city?.id, locale);
 
-  if (!city) return null;
+  if (!city) {
+    notFound();
+  }
+  
   return <CityPage city={city} tours={tours} />;
 }

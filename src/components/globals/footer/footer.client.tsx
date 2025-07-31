@@ -38,14 +38,22 @@ interface FooterData {
 
 const FooterClient = ({ data }: { data: FooterData }) => {
   const { t } = useTranslation();
+
+  const getAbsoluteUrl = (url: string) => {
+    if (url.startsWith("/")) {
+      return url;
+    }
+    return `/${url}`;
+  };
+
   return (
     <footer className="bg-primary-dark py-6">
       <div className="container">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-start gap-6">
 
           <div className="flex-1 py-4 flex flex-col gap-4">
-            <div className="flex items-center gap-6">{data.logo?.url && <div className="relative h-32 lg:h-80 w-52">{data.logo?.url && <Image src={data.logo?.url} alt={data.logo?.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>}</div>
-            <p className="max-w-lg text-gray-300 hover:text-copy-white text-sm font-normal leading-tight">{data?.description}</p>
+            <div className="flex items-center gap-6">{data.logo?.url && <div className="relative h-20 md:h-32 w-52 md:w-80">{data.logo?.url && <Image src={data.logo?.url} alt={data.logo?.alt || "Logo"} fill className="object-contain" priority sizes="(max-width: 768px) 120px, 200px" />}</div>}</div>
+            <p className="w-full max-w-lg text-gray-300 hover:text-copy-white text-sm font-normal leading-normal">{data?.description}</p>
           </div>
 
 
@@ -66,13 +74,16 @@ const FooterClient = ({ data }: { data: FooterData }) => {
         <nav className="py-4 md:mt-0 mt-4 border-y-[0.5px] border-border">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-0">
             <ul className="flex flex-wrap gap-8">
-              {data?.navigationLinks?.map((link, idx) => (
-                <li key={idx}>
-                  <Link href={link?.url} className="text-gray-300 hover:text-copy-white text-sm font-normal">
-                    {link?.label}
-                  </Link>
-                </li>
-              ))}
+              {data?.navigationLinks?.map((link, idx) => {
+                const absoluteUrl = getAbsoluteUrl(link.url);
+                return (
+                  <li key={idx}>
+                    <Link href={absoluteUrl} className="text-gray-300 hover:text-copy-white text-sm font-normal">
+                      {link?.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             <ul className="md:flex hidden flex-wrap gap-8">
               {data.contactLinks?.map((link, idx) => (
@@ -89,11 +100,14 @@ const FooterClient = ({ data }: { data: FooterData }) => {
         <div className="pt-2 flex flex-col lg:flex-row justify-between items-center gap-4">
           <p className="text-gray-300 hover:text-copy-white text-sm font-normal">{data.copyright || "© 2025 Old City. All rights reserved."}</p>
           <div className="flex gap-6 text-sm">
-            {data?.licenceLinks?.map((link, idx) => (
-              <Link key={idx} href={link.url} className="text-gray-300 hover:text-copy-white text-sm font-normal">
-                {link.label}
-              </Link>
-            ))}
+            {data?.licenceLinks?.map((link, idx) => {
+              const absoluteUrl = getAbsoluteUrl(link.url);
+              return (
+                <Link key={idx} href={absoluteUrl} className="text-gray-300 hover:text-copy-white text-sm font-normal">
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

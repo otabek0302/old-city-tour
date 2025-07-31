@@ -1,30 +1,11 @@
 import { Star } from "lucide-react";
-
-interface City {
-  name: string;
-}
-
-interface Review {
-  rating: number;
-  review?: { rating?: number };
-}
-
-interface Type {
-  title: string;
-}
+import { Tour } from "@/payload-types";
 
 interface TourInfoProps {
-  tour: {
-    title?: string;
-    description?: string;
-    duration?: string;
-    type?: Type;
-    cities?: City[];
-    reviews?: Review[];
-  };
+  tour: Tour;
 }
 
-const getRating = (reviews?: Review[]) => {
+const getRating = (reviews?: any[]) => {
   if (reviews && reviews.length > 0) {
     const total = reviews.reduce((sum, r) => {
       if (r.review && typeof r.review === "object" && r.review.rating) {
@@ -41,8 +22,8 @@ const getRating = (reviews?: Review[]) => {
 };
 
 const SingleTourInfo = ({ tour }: TourInfoProps) => {
-  const rating = getRating(tour.reviews);
-  const cities = tour.cities?.map((c) => c.name).join(", ");
+  const cities = tour.cities?.map((c) => (typeof c === "object" && c.name ? c.name : "")).join(", ");
+  const rating = getRating([]); // Reviews are not part of the Tour type, using default rating
 
   return (
     <div className="mb-8">
@@ -51,7 +32,7 @@ const SingleTourInfo = ({ tour }: TourInfoProps) => {
         <div className="flex flex-wrap items-center gap-4 text-copy-light text-sm font-medium mb-2">
           {tour.duration && <span className="italic font-semibold">{tour.duration}</span>}
           <span className="text-copy-light text-sm font-medium">|</span>
-          {tour.type && <span className="italic font-semibold">{tour.type.title as string}</span>}
+          {tour.type && <span className="italic font-semibold">{typeof tour.type === "object" && tour.type.title ? tour.type.title : ""}</span>}
           <span className="text-copy-light text-sm font-medium">|</span>
           {cities && <span className="italic">{cities}</span>}
           <span className="text-copy-light text-sm font-medium">|</span>

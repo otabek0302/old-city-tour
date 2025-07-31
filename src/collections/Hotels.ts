@@ -4,10 +4,10 @@ import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
 import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  PreviewField,
+    MetaDescriptionField,
+    MetaImageField,
+    MetaTitleField,
+    PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
 export const Hotels: CollectionConfig = {
@@ -34,7 +34,6 @@ export const Hotels: CollectionConfig = {
                             fields: [
                                 {
                                     name: 'name',
-                                    label: 'Hotel Name',
                                     type: 'text',
                                     localized: true,
                                     required: true,
@@ -194,7 +193,7 @@ export const Hotels: CollectionConfig = {
                 },
             ],
         },
-        ...slugField(),
+        ...slugField('name'),
     ],
     timestamps: true,
 } 

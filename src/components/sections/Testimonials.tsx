@@ -72,7 +72,7 @@ const Testimonials = ({ heading, subheading, button, locale }: TestimonialsProps
   };
 
   return (
-    <section className="py-8">
+    <section className="py-8 overflow-auto">
       <div className="container">
         <div className={`${!heading && !subheading ? "mb-0" : "mb-8"} max-w-2xl`}>
           {heading && <h2 className="text-copy text-2xl md:text-4xl font-bold leading-normal">{heading}</h2>}
@@ -108,7 +108,7 @@ const Testimonials = ({ heading, subheading, button, locale }: TestimonialsProps
           </div>
         )}
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-8 flex justify-center md:justify-end">
           <Button variant="primary" size="xl" className="rounded-xl w-fit" onClick={handleOpen} type="button">
             <span className="text-inherit">{button?.label || "Add Review"}</span>
             <ArrowRight className="w-4 h-4 animate-arrow-right" />

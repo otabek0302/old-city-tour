@@ -149,10 +149,10 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
 
   return (
     <Dialog open={open} onOpenChange={handleDialogChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="w-[96%] sm:max-w-[500px] bg-background border border-border rounded-[16px!important] mx-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-gray-900">{t("pages.review.title")}</DialogTitle>
-          <DialogDescription className="text-gray-700 text-sm font-normal leading-tight">{t("pages.review.subtitle")}</DialogDescription>
+          <DialogTitle className="text-2xl font-bold text-copy">{t("pages.review.title")}</DialogTitle>
+          <DialogDescription className="text-copy-light text-sm font-normal leading-tight">{t("pages.review.subtitle")}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -226,7 +226,7 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
             </p>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col sm:flex-row gap-3 sm:gap-2 pt-4">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isSubmitting} className="rounded-[10px]">
               {t("pages.review.form.cancel")}
             </Button>
@@ -234,12 +234,12 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
               {isSubmitting ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  <span className="hidden md:inline text-primary-foreground text-sm font-medium">{t("pages.review.form.submitting")}</span>
+                  <span className="inline text-primary-foreground text-sm font-medium">{t("pages.review.form.submitting")}</span>
                 </>
               ) : (
                 <>
                   <Send className="h-4 w-4 mr-2" />
-                  <span className="hidden md:inline text-primary-foreground text-sm font-medium">{t("pages.review.form.submit")}</span>
+                  <span className="inline text-primary-foreground text-sm font-medium">{t("pages.review.form.submit")}</span>
                 </>
               )}
             </Button>

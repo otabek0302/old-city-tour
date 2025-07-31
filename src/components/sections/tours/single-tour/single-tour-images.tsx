@@ -1,45 +1,37 @@
 import Image from "next/image";
+
 import { useEffect, useState } from "react";
-
-interface Media {
-  url?: string;
-  alt?: string;
-}
-
-interface ImageItem {
-  image: Media;
-  id?: string | null;
-}
+import { Tour } from "@/payload-types";
 
 interface SingleTourImagesProps {
-  images?: ImageItem[];
+  tour: Tour;
 }
 
-const SingleTourImages = ({ images = [] }: SingleTourImagesProps) => {
+const SingleTourImages = ({ tour }: SingleTourImagesProps) => {
   const [mainIdx, setMainIdx] = useState(0);
-  const [mainImage, setMainImage] = useState(images[0]);
+  const [mainImage, setMainImage] = useState(tour.images?.[0]);
 
   useEffect(() => {
-    setMainImage(images[mainIdx]);
-  }, [mainIdx]);
-  
-  if (!images.length) return <div className="w-full h-[300px] sm:h-[400px] md:h-[520px] bg-muted rounded-xl border border-border" />;
+    setMainImage(tour.images?.[mainIdx]);
+  }, [mainIdx, tour.images]);
+
+  if (!tour.images?.length) return <div className="w-full h-[300px] sm:h-[400px] md:h-[520px] bg-muted rounded-xl border border-border" />;
 
   return (
     <div className="mb-6">
       <div className="relative w-full h-[300px] sm:h-[400px] md:h-[520px] mb-2 border border-border rounded-xl overflow-hidden">
         <Image 
-          src={mainImage.image.url || ""} 
+          src={typeof mainImage?.image === "object" && mainImage?.image.url ? mainImage.image.url : ""} 
           fill 
           priority 
-          alt={typeof mainImage.image === "object" && mainImage.image.alt ? mainImage.image.alt : "Tour image"} 
+          alt={typeof mainImage?.image === "object" && mainImage?.image.alt ? mainImage?.image.alt : "Tour image"} 
           className="object-cover object-center" 
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
-          onError={() => setMainImage(images[0])} 
+          onError={() => setMainImage(tour.images?.[0])} 
         />
       </div>
       <div className="flex gap-2 overflow-x-auto pb-2">
-        {images.map((img: ImageItem, idx: number) => (
+        {tour.images?.map((img, idx: number) => (
           <button 
             key={img.id || idx} 
             onClick={() => setMainIdx(idx)} 
@@ -47,7 +39,7 @@ const SingleTourImages = ({ images = [] }: SingleTourImagesProps) => {
             type="button"
           >
             <Image 
-              src={img.image.url || ""} 
+              src={typeof img.image === "object" && img.image.url ? img.image.url : ""} 
               fill 
               priority 
               alt={typeof img.image === "object" && img.image.alt ? img.image.alt : `Thumbnail ${idx + 1}`} 

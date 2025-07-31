@@ -48,25 +48,13 @@ const PageClient = ({ tours, tourTypes, _locale }: PageClientProps) => {
     <section className="min-h-screen py-6 sm:py-8 md:py-10">
       <div className="container">
         <div className="mb-6 sm:mb-8 border-b border-copy-light pb-4 sm:pb-6">
-          <h2 className="text-copy text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 sm:mb-4">
-            {t("pages.tours.title")}
-          </h2>
-          <p className="text-copy-light text-sm sm:text-base font-normal leading-tight">
-            {t("pages.tours.subtitle")}
-          </p>
+          <h2 className="text-copy text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 sm:mb-4">{t("pages.tours.title")}</h2>
+          <p className="text-copy-light text-sm sm:text-base font-normal leading-tight">{t("pages.tours.subtitle")}</p>
         </div>
-        
-        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
+
+        <div className="flex flex-col-reverse lg:flex-row gap-6 sm:gap-8">
           <div className="lg:w-1/4 order-2 lg:order-1">
-            <ToursFilter 
-              tourTypes={tourTypes} 
-              selectedTypes={selectedTypes} 
-              setSelectedTypes={setSelectedTypes} 
-              priceRange={priceRange} 
-              setPriceRange={setPriceRange} 
-              durationRange={durationRange} 
-              setDurationRange={setDurationRange} 
-            />
+            <ToursFilter tourTypes={tourTypes} selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} priceRange={priceRange} setPriceRange={setPriceRange} durationRange={durationRange} setDurationRange={setDurationRange} />
           </div>
 
           <div className="lg:w-3/4 order-1 lg:order-2">
@@ -78,12 +66,8 @@ const PageClient = ({ tours, tourTypes, _locale }: PageClientProps) => {
               </div>
             ) : (
               <div className="text-center py-8 sm:py-12">
-                <h3 className="text-lg sm:text-xl font-semibold text-copy mb-2 sm:mb-3">
-                  {t("pages.tours.noTours")}
-                </h3>
-                <p className="text-copy-light text-sm sm:text-base">
-                  {t("pages.tours.tryAdjustingFilters")}
-                </p>
+                <h3 className="text-lg sm:text-xl font-semibold text-copy mb-2 sm:mb-3">{t("pages.tours.noTours")}</h3>
+                <p className="text-copy-light text-sm sm:text-base">{t("pages.tours.tryAdjustingFilters")}</p>
               </div>
             )}
           </div>
