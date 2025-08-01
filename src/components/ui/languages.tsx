@@ -19,7 +19,11 @@ export const LanguagesButton = () => {
   };
 
   useEffect(() => {
-    window.innerWidth < 768 ? setPath("bottom") : setPath("left");
+    if (window.innerWidth < 768) {
+      setPath("bottom");
+    } else {
+      setPath("left");
+    }
   }, [language]);
 
   return (

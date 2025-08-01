@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { User, Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { Button } from "./button";
 import { Input } from "./input";
 import { Label } from "./label";
@@ -22,7 +22,7 @@ interface ApplyTourProps {
   locale?: string;
 }
 
-export const ApplyTour = ({ open, setOpen, tour, locale = "en" }: ApplyTourProps) => {
+export const ApplyTour = ({ open, setOpen, tour, locale: _locale = "en" }: ApplyTourProps) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
     firstName: "",
