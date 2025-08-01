@@ -149,13 +149,13 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
 
   return (
     <Dialog open={open} onOpenChange={handleDialogChange}>
-      <DialogContent className="w-[96%] sm:max-w-[500px] bg-background border border-border rounded-[16px!important] mx-auto">
+      <DialogContent className="w-[96%] sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-background border border-border rounded-[16px!important] mx-auto my-4">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-copy">{t("pages.review.title")}</DialogTitle>
           <DialogDescription className="text-copy-light text-sm font-normal leading-tight">{t("pages.review.subtitle")}</DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-sm font-medium text-gray-700">
               {t("pages.review.form.name")} *
@@ -217,7 +217,7 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
                 }
               }}
               placeholder={t("pages.review.form.commentPlaceholder")}
-              className={`min-h-[120px] border-border rounded-[10px] resize-none ${formData.comment.length >= 500 ? "border-red-500" : ""}`}
+              className={`min-h-[100px] sm:min-h-[120px] border-border rounded-[10px] resize-none ${formData.comment.length >= 500 ? "border-red-500" : ""}`}
               required
               disabled={isSubmitting}
             />

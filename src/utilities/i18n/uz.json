@@ -261,5 +261,8 @@
       "apply": "Filtrlarni qo'llash",
       "reset": "Qayta o'rnatish"
     }
+  },
+  "footer": {
+    "followUs": "Bizni kuzatib boring"
   }
 }

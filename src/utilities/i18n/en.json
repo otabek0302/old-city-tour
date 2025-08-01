@@ -50,6 +50,27 @@
         "cta": "Start Your Journey"
       }
     },
+    "applyTour": {
+      "title": "Apply for Tour",
+      "subtitle": "Apply for",
+      "form": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "country": "Country",
+        "phone": "Phone Number",
+        "email": "Email Address",
+        "firstNamePlaceholder": "Enter your first name",
+        "lastNamePlaceholder": "Enter your last name",
+        "countryPlaceholder": "Select your country",
+        "phonePlaceholder": "+1 (555) 123-4567",
+        "emailPlaceholder": "your.email@example.com",
+        "submit": "Apply for Tour",
+        "submitting": "Submitting...",
+        "cancel": "Cancel"
+      },
+      "success": "Tour application submitted successfully! We'll contact you soon.",
+      "error": "Failed to submit application. Please try again."
+    },
     "tours": {
       "title": "Our Tours",
       "subtitle": "Discover amazing destinations with our expert guides",
@@ -261,5 +282,8 @@
       "apply": "Apply Filters",
       "reset": "Reset"
     }
+  },
+  "footer": {
+    "followUs": "Follow us"
   }
 }

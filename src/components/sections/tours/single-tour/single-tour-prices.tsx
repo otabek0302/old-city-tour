@@ -2,6 +2,8 @@ import { Calendar, DollarSign, Users, Clock } from "lucide-react";
 import { Tour } from "@/payload-types";
 import { useTranslation } from "@/providers/i18n";
 import { Button } from "@/components/ui/button";
+import { ApplyTour } from "@/components/ui/apply-tour";
+import { useState } from "react";
 import Link from "next/link";
 
 interface SingleTourPricesProps {
@@ -10,6 +12,7 @@ interface SingleTourPricesProps {
 
 const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
   const { t } = useTranslation();
+  const [applyTourOpen, setApplyTourOpen] = useState(false);
 
   if (!tour.booking_pricing || tour.booking_pricing.length === 0) {
     return (
@@ -104,8 +107,13 @@ const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
             </div>
 
             <div className="space-y-3">
-              <Button variant="primary" size="lg" className="w-full rounded-xl" asChild>
-                <Link href="/contact-us">{t("pages.tours.bookNow")}</Link>
+              <Button 
+                variant="primary" 
+                size="lg" 
+                className="w-full rounded-xl" 
+                onClick={() => setApplyTourOpen(true)}
+              >
+                {t("pages.tours.bookNow")}
               </Button>
 
               <Button variant="outline" size="lg" className="w-full rounded-xl border-primary text-primary hover:bg-primary hover:text-primary-foreground" asChild>
@@ -125,6 +133,12 @@ const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
           </div>
         </div>
       </div>
+
+      <ApplyTour 
+        open={applyTourOpen} 
+        setOpen={setApplyTourOpen} 
+        tour={tour}
+      />
     </div>
   );
 };
