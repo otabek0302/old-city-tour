@@ -47,7 +47,13 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
     <Card className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
       <div className="p-2 flex flex-col lg:flex-row">
         <div className="lg:w-2/5 h-72 relative border border-border rounded-xl overflow-hidden">
-          <Image src={typeof tour.images?.[0]?.image === "object" && tour.images?.[0]?.image?.url ? tour.images[0].image.url : ""} alt={tour.title || t("pages.tours.tourImage")} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+          {tour.images?.[0]?.image && typeof tour.images[0].image === 'object' && 'url' in tour.images[0].image && tour.images[0].image.url ? (
+            <Image src={tour.images[0].image.url} alt={tour.title || t("pages.tours.tourImage")} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+          ) : (
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500 text-sm">No image available</span>
+            </div>
+          )}
         </div>
 
         <div className="lg:w-3/5 p-6">

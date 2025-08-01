@@ -12,7 +12,6 @@ interface CityPageProps {
 
 const CityPage = ({ city, tours }: CityPageProps) => {
   const { t } = useTranslation();
-
   return (
     <section className="min-h-screen py-6 sm:py-8 md:py-10">
       <div className="container">
