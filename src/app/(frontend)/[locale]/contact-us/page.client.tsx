@@ -56,12 +56,12 @@ const ContactUsPageClient = ({ heading, subheading, form_info, contact_info }: C
       // Format the message for Telegram
       const text = `🆕 New Contact Form Submission
 
-                    👤 Name: ${formData.name}
-                    📧 Email: ${formData.email}
-                    📞 Phone: ${formData.phone || "Not provided"}
-                    📝 Subject: ${formData.subject}
-                    💬 Message: ${formData.message}
-                    ⏰ Submitted at: ${new Date().toLocaleString()}`;
+👤 Name: ${formData.name}
+📧 Email: ${formData.email}
+📞 Phone: ${formData.phone || "Not provided"}
+📝 Subject: ${formData.subject}
+💬 Message: ${formData.message}
+⏰ Submitted at: ${new Date().toLocaleString()}`;
 
       const response = await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
         method: "POST",
