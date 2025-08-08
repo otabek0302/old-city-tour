@@ -1,4 +1,4 @@
-import { cleanLocalizedData } from "@/utilities/cleanLocalizedData";
+
 import HotelsPageClient from "./page.client";
 
 async function getHotels(locale: string) {
@@ -12,7 +12,7 @@ async function getHotels(locale: string) {
     const hotels = data.docs || [];
 
     // Clean the localized data for each hotel
-    return hotels.map((hotel: any) => cleanLocalizedData(hotel, locale));
+    return hotels.map((hotel: any) => hotel);
   } catch (_error) {
     return [];
   }

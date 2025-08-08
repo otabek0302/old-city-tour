@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "@/providers/i18n";
 
 interface Review {
   id: number;
@@ -36,6 +37,7 @@ const truncateText = (text: string, maxLength: number = 120): string => {
 };
 
 const SingleTourReviews = ({ tour }: SingleTourReviewsProps) => {
+  const { t } = useTranslation();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,7 +73,7 @@ const SingleTourReviews = ({ tour }: SingleTourReviewsProps) => {
   if (loading) {
     return (
       <div className="mb-8">
-        <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Reviews</h2>
+        <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6 capitalize">{t("pages.tours.reviews")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="bg-background border border-primary rounded-xl p-6">
@@ -100,7 +102,7 @@ const SingleTourReviews = ({ tour }: SingleTourReviewsProps) => {
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Reviews</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.reviews")}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((review, index) => (

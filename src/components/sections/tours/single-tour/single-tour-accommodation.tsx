@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Tour } from "@/payload-types";
+import { useTranslation } from "@/providers/i18n";
 
 interface SingleTourAccommodationProps {
   tour: Tour;
@@ -14,6 +15,7 @@ const getCityName = (city: number | any): string => {
 };
 
 const SingleTourAccommodation = ({ tour }: SingleTourAccommodationProps) => {
+  const { t } = useTranslation();
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   if (!tour.accommodation || tour.accommodation.length === 0) {
@@ -22,7 +24,7 @@ const SingleTourAccommodation = ({ tour }: SingleTourAccommodationProps) => {
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Accommodation</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.accommodation")}</h2>
 
       <div className="space-y-2">
         {tour.accommodation.map((item, index) => {
@@ -35,7 +37,7 @@ const SingleTourAccommodation = ({ tour }: SingleTourAccommodationProps) => {
                 <div className="flex items-center gap-2">
                   <span className="text-copy font-bold text-base">{cityName}</span>
                   <span className="text-copy-light">•</span>
-                  <span className="text-primary font-medium">{item.nights} Nights</span>
+                  <span className="text-primary font-medium">{item.nights} {t("pages.tours.nights")}</span>
                 </div>
 
                 <button onClick={() => setExpandedItem(isExpanded ? null : item.id || index.toString())} className="text-primary hover:text-primary-dark transition-colors">
@@ -55,22 +57,22 @@ const SingleTourAccommodation = ({ tour }: SingleTourAccommodationProps) => {
                           <div className="space-y-1 text-sm">
                             {hotel.address && (
                               <p className="text-copy-light">
-                                <span className="font-medium">Address:</span> {hotel.address}
+                                <span className="font-medium">{t("pages.tours.address")}:</span> {hotel.address}
                               </p>
                             )}
                             {hotel.phone && (
                               <p className="text-copy-light">
-                                <span className="font-medium">Phone:</span> {hotel.phone}
+                                <span className="font-medium">{t("pages.tours.phone")}:</span> {hotel.phone}
                               </p>
                             )}
                             {hotel.website && (
                               <p className="text-copy-light">
-                                <span className="font-medium">Website:</span> {hotel.website}
+                                <span className="font-medium">{t("pages.tours.website")}:</span> {hotel.website}
                               </p>
                             )}
                             {hotel.rating && (
                               <p className="text-copy-light">
-                                <span className="font-medium">Rating:</span> {hotel.rating} stars
+                                <span className="font-medium">{t("pages.tours.rating")}:</span> {hotel.rating} {t("pages.tours.stars")}
                               </p>
                             )}
                           </div>

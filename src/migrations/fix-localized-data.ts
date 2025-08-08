@@ -1,3 +1,4 @@
+import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
 import { getPayload, Payload } from 'payload'
 import config from '../payload.config'
 
@@ -17,7 +18,7 @@ const cleanObject = (obj: any, locale: string): any => {
   if (obj == null || typeof obj !== 'object') return obj
   const cleaned: any = {}
   for (const key of Object.keys(obj)) {
-    const val = (obj as any)[key]
+    const val = obj[key]
     if (typeof val === 'string') {
       cleaned[key] = cleanField(val, locale)
     } else if (Array.isArray(val)) {
@@ -35,66 +36,25 @@ const migrateCollection = async (payload: Payload, collectionSlug: 'cities' | 't
     limit: 9999,
     depth: 0,
   })
+
   for (const doc of docs.docs) {
     let patched = false
     const patch: any = {}
-    
-    // Handle cities collection
-    if (collectionSlug === 'cities') {
-      const cityDoc = doc as any
-      for (const locale of locales) {
-        if (cityDoc.name && typeof cityDoc.name === 'object') {
-          const cleanedName = cleanObject(cityDoc.name, locale)
-          if (cleanedName !== cityDoc.name) {
-            patch.name = cleanedName
-            patched = true
-          }
-        }
-        if (cityDoc.description && typeof cityDoc.description === 'object') {
-          const cleaned = cleanObject(cityDoc.description, locale)
-          if (cleaned !== cityDoc.description) {
-            patch.description = cleaned
-            patched = true
-          }
-        }
-        if (cityDoc.link && typeof cityDoc.link === 'object') {
-          const cleaned = cleanObject(cityDoc.link, locale)
-          if (cleaned !== cityDoc.link) {
-            patch.link = cleaned
+
+    for (const locale of locales) {
+      const fieldsToClean = ['name', 'description', 'link', 'title', 'duration']
+      for (const field of fieldsToClean) {
+        const fieldValue = (doc as any)[field]
+        if (fieldValue && typeof fieldValue === 'object') {
+          const cleaned = cleanObject(fieldValue, locale)
+          if (cleaned !== fieldValue) {
+            patch[field] = cleaned
             patched = true
           }
         }
       }
     }
-    
-    // Handle tours collection
-    if (collectionSlug === 'tours') {
-      const tourDoc = doc as any
-      for (const locale of locales) {
-        if (tourDoc.title && typeof tourDoc.title === 'object') {
-          const cleaned = cleanObject(tourDoc.title, locale)
-          if (cleaned !== tourDoc.title) {
-            patch.title = cleaned
-            patched = true
-          }
-        }
-        if (tourDoc.description && typeof tourDoc.description === 'object') {
-          const cleaned = cleanObject(tourDoc.description, locale)
-          if (cleaned !== tourDoc.description) {
-            patch.description = cleaned
-            patched = true
-          }
-        }
-        if (tourDoc.duration && typeof tourDoc.duration === 'object') {
-          const cleaned = cleanObject(tourDoc.duration, locale)
-          if (cleaned !== tourDoc.duration) {
-            patch.duration = cleaned
-            patched = true
-          }
-        }
-      }
-    }
-    
+
     if (patched) {
       await payload.update({
         collection: collectionSlug,
@@ -106,26 +66,24 @@ const migrateCollection = async (payload: Payload, collectionSlug: 'cities' | 't
   }
 }
 
-export const handler = async () => {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  await migrateCollection(payload, 'cities')
-  await migrateCollection(payload, 'tours')
-  // Add others as needed
-
-  await payload.destroy()
+export async function up({ payload }: MigrateUpArgs): Promise<void> {
+  console.log('🔧 Fixing localized data...')
+  
+  if (!payload) {
+    const payloadInstance = await getPayload({ config })
+    await migrateCollection(payloadInstance, 'cities')
+    await migrateCollection(payloadInstance, 'tours')
+    await payloadInstance.destroy()
+  } else {
+    await migrateCollection(payload, 'cities')
+    await migrateCollection(payload, 'tours')
+  }
+  
+  console.log('✅ Localized data fixed successfully!')
 }
 
-// Run the migration if this file is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  handler()
-    .then(() => {
-      console.log('Migration completed successfully')
-      process.exit(0)
-    })
-    .catch((error) => {
-      console.error('Migration failed:', error)
-      process.exit(1)
-    })
+export async function down({ payload }: MigrateDownArgs): Promise<void> {
+  console.log('🔄 Reverting localized data changes...')
+  // This migration is not reversible as it cleans up data
+  console.log('⚠️ This migration cannot be reverted')
 }

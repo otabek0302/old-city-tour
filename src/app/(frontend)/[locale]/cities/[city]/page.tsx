@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import CityPage from "./page.client";
 
 import { generateMeta } from "@/utilities/generateMeta";
-import { cleanLocalizedData } from "@/utilities/cleanLocalizedData";
+
 
 const getCity = async (slug: string, locale: string) => {
   try {
@@ -20,7 +20,7 @@ const getCity = async (slug: string, locale: string) => {
 
     // Clean the localized data to prevent double-encoded JSON strings
     if (city) {
-      return cleanLocalizedData(city, locale);
+      return city;
     }
 
     return city;
@@ -43,7 +43,7 @@ async function getTours(cityId: number, locale: string) {
     console.log("Tours API data:", data);
     const tours = data.docs || [];
 
-    return tours.map((tour: any) => cleanLocalizedData(tour, locale));
+    return tours.map((tour: any) => tour);
   } catch (error) {
     console.log("Tours API fetch error:", error);
     return [];

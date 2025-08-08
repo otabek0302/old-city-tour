@@ -122,12 +122,12 @@ const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
             </div>
 
             <div className="bg-background border border-border rounded-xl p-4">
-              <h4 className="text-copy font-semibold mb-2">Important Notes:</h4>
+              <h4 className="text-copy font-semibold mb-2">{t("pages.tours.importantNotes")}:</h4>
               <ul className="text-copy-light text-sm space-y-1">
-                <li>Prices are per person</li>
-                <li>Child prices apply to ages 2-12</li>
-                <li>Infants under 2 travel free</li>
-                <li>Prices may vary based on availability</li>
+                <li>{t("pages.tours.pricesPerPerson")}</li>
+                <li>{t("pages.tours.childPricesAges")}</li>
+                <li>{t("pages.tours.infantsFree")}</li>
+                <li>{t("pages.tours.pricesMayVary")}</li>
               </ul>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Menu as MenuIcon } from "lucide-react";
+import { useLanguage } from "@/providers/language";
 
 interface Navigation {
   label: string;
@@ -13,14 +14,16 @@ interface Navigation {
 
 export const Menu = ({ navigations }: { navigations: Navigation[] }) => {
   const pathname = usePathname();
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Ensure URLs are absolute paths
+  // Ensure URLs are absolute paths with locale
   const getAbsoluteUrl = (url: string) => {
     if (url.startsWith("/")) {
-      return url;
+      // If it's already an absolute path, add locale prefix
+      return `/${language}${url}`;
     }
-    return `/${url}`;
+    return `/${language}/${url}`;
   };
 
   const handleLinkClick = () => {

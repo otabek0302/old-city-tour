@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
+import { fillLocalizedHook } from '@/utilities/fillLocalizedHook'
 import {
     MetaDescriptionField,
     MetaImageField,
@@ -114,5 +115,25 @@ export const Posts: CollectionConfig = {
         },
         ...slugField(),
     ],
+    hooks: {
+        beforeValidate: [
+            fillLocalizedHook(['content'])
+        ],
+        beforeDelete: [
+            async ({ req, id }) => {
+                try {
+                    console.log(`Starting beforeDelete hook for post ID: ${id}`)
+                    
+                    // Currently no direct relationships to posts in content blocks
+                    // This hook is ready for future relationships if needed
+                    
+                    console.log(`Successfully completed beforeDelete hook for post ID: ${id}`)
+                } catch (error) {
+                    console.error(`Error in beforeDelete hook for post ID ${id}:`, error)
+                    throw error
+                }
+            },
+        ],
+    },
     timestamps: true,
 }

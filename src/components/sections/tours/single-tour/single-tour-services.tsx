@@ -1,4 +1,5 @@
 import { Check, X } from "lucide-react";
+import { useTranslation } from "@/providers/i18n";
 
 interface ServiceItem {
   title: string;
@@ -17,6 +18,8 @@ interface SingleTourServicesProps {
 }
 
 const SingleTourServices = ({ tour }: SingleTourServicesProps) => {
+  const { t } = useTranslation();
+  
   if (!tour.services) {
     return null;
   }
@@ -25,14 +28,14 @@ const SingleTourServices = ({ tour }: SingleTourServicesProps) => {
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Services</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.services")}</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <div className="bg-background border border-primary rounded-xl p-6">
           <h3 className="text-green-600 font-bold text-lg mb-4 flex items-center gap-2">
             <Check className="w-5 h-5" />
-            Price includes:
+            {t("pages.tours.priceIncludes")}:
           </h3>
 
           {included && included.length > 0 ? (
@@ -45,14 +48,14 @@ const SingleTourServices = ({ tour }: SingleTourServicesProps) => {
               ))}
             </ul>
           ) : (
-            <p className="text-copy-light text-sm">No included services listed.</p>
+            <p className="text-copy-light text-sm">{t("pages.tours.noIncludedServices")}</p>
           )}
         </div>
 
         <div className="bg-background border border-primary rounded-xl p-6">
           <h3 className="text-red-600 font-bold text-lg mb-4 flex items-center gap-2">
             <X className="w-5 h-5" />
-            Price doesn&apos;t include:
+            {t("pages.tours.priceDoesntInclude")}:
           </h3>
 
           {notIncluded && notIncluded.length > 0 ? (
@@ -65,7 +68,7 @@ const SingleTourServices = ({ tour }: SingleTourServicesProps) => {
               ))}
             </ul>
           ) : (
-            <p className="text-copy-light text-sm">No excluded services listed.</p>
+            <p className="text-copy-light text-sm">{t("pages.tours.noExcludedServices")}</p>
           )}
         </div>
       </div>

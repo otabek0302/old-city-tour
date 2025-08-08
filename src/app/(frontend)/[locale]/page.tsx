@@ -1,6 +1,6 @@
 import HomePageClient from "./page.client";
 
-import { cleanLocalizedData } from "@/utilities/cleanLocalizedData";
+
 
 const getSections = async (locale: string) => {
   try {
@@ -16,7 +16,7 @@ const getSections = async (locale: string) => {
 
     // Clean the localized data to prevent double-encoded JSON strings
     if (home) {
-      return cleanLocalizedData(home, locale);
+      return home;
     }
 
     return home;

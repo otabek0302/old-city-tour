@@ -15,10 +15,11 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
   const checkBoxField: CheckboxField = {
     name: 'slugLock',
     type: 'checkbox',
-    defaultValue: true,
+    defaultValue: false,
     admin: {
-      hidden: true,
+      hidden: false,
       position: 'sidebar',
+      description: 'Lock to prevent auto-generation',
     },
     ...checkboxOverrides,
   }
@@ -28,14 +29,11 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
     name: 'slug',
     type: 'text',
     index: true,
-    label: 'Slug',
-    ...(slugOverrides || {}),
-    hooks: {
-      // Kept this in for hook or API based updates
-      beforeValidate: [formatSlugHook(fieldToUse)],
-    },
+    label: 'Slug (URL)',
+    required: true,
     admin: {
       position: 'sidebar',
+      description: 'Write in English for all languages (e.g., "samarkand-bukhara-tour")',
       ...(slugOverrides?.admin || {}),
       components: {
         Field: {
@@ -46,6 +44,11 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
           },
         },
       },
+    },
+    ...(slugOverrides || {}),
+    hooks: {
+      // Only auto-generate if not locked and no value exists
+      beforeValidate: [formatSlugHook(fieldToUse)],
     },
   }
 

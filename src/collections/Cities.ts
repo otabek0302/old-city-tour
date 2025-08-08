@@ -75,7 +75,7 @@ export const Cities: CollectionConfig = {
       async ({ req, id }) => {
         try {
           console.log(`Starting beforeDelete hook for city ID: ${id}`)
-          
+
           // 1. Handle Tours collection - cities field
           const toursWithCities = await req.payload.find({
             collection: 'tours',
@@ -90,12 +90,12 @@ export const Cities: CollectionConfig = {
 
           for (const tour of toursWithCities.docs) {
             if (tour.cities && Array.isArray(tour.cities)) {
-              const updatedCities = tour.cities.filter((city: any) => city.id !== id)
+              const updatedCities = tour.cities.filter((city: any) => String(city.id) !== String(id))
               console.log(`Updating tour ${tour.id}, removing city ${id} from cities field`)
-              
+
               // Extract just the city IDs for database update
               const cityIds = updatedCities.map((city: any) => city.id)
-              
+
               // Use raw database update to bypass validation
               await req.payload.db.updateOne({
                 collection: 'tours',
@@ -122,18 +122,18 @@ export const Cities: CollectionConfig = {
 
           for (const tour of toursWithLocations.docs) {
             if (tour.locations && Array.isArray(tour.locations)) {
-              const updatedLocations = tour.locations.filter((location: any) => 
-                location.from?.id !== id && location.to?.id !== id
+              const updatedLocations = tour.locations.filter((location: any) =>
+                String(location.from?.id) !== String(id) && String(location.to?.id) !== String(id)
               )
               console.log(`Updating tour ${tour.id}, removing city ${id} from locations`)
-              
+
               // Process locations to extract just IDs for relationships
               const processedLocations = updatedLocations.map((location: any) => ({
                 ...location,
                 from: location.from?.id || location.from,
                 to: location.to?.id || location.to,
               }))
-              
+
               await req.payload.db.updateOne({
                 collection: 'tours',
                 where: { id: { equals: tour.id } },
@@ -158,16 +158,16 @@ export const Cities: CollectionConfig = {
 
           for (const tour of toursWithAccommodation.docs) {
             if (tour.accommodation && Array.isArray(tour.accommodation)) {
-              const updatedAccommodation = tour.accommodation.filter((acc: any) => acc.city?.id !== id)
+              const updatedAccommodation = tour.accommodation.filter((acc: any) => String(acc.city?.id) !== String(id))
               console.log(`Updating tour ${tour.id}, removing city ${id} from accommodation`)
-              
+
               // Process accommodation to extract just IDs for relationships
               const processedAccommodation = updatedAccommodation.map((acc: any) => ({
                 ...acc,
                 city: acc.city?.id || acc.city,
                 hotel: Array.isArray(acc.hotel) ? acc.hotel.map((h: any) => h.id || h) : acc.hotel,
               }))
-              
+
               await req.payload.db.updateOne({
                 collection: 'tours',
                 where: { id: { equals: tour.id } },
@@ -178,36 +178,7 @@ export const Cities: CollectionConfig = {
             }
           }
 
-          // 3.5. Additional cleanup - find all tours and check for any remaining accommodation references
-          console.log(`Performing additional cleanup for any remaining accommodation references to city ${id}`)
-          const allTours = await req.payload.find({
-            collection: 'tours',
-            limit: 1000, // Get all tours to check
-          })
 
-          for (const tour of allTours.docs) {
-            if (tour.accommodation && Array.isArray(tour.accommodation)) {
-              const hasCityReference = tour.accommodation.some((acc: any) => acc.city?.id === id)
-              if (hasCityReference) {
-                console.log(`Found additional accommodation reference in tour ${tour.id}, cleaning up`)
-                const updatedAccommodation = tour.accommodation.filter((acc: any) => acc.city?.id !== id)
-                
-                const processedAccommodation = updatedAccommodation.map((acc: any) => ({
-                  ...acc,
-                  city: acc.city?.id || acc.city,
-                  hotel: Array.isArray(acc.hotel) ? acc.hotel.map((h: any) => h.id || h) : acc.hotel,
-                }))
-                
-                await req.payload.db.updateOne({
-                  collection: 'tours',
-                  where: { id: { equals: tour.id } },
-                  data: {
-                    accommodation: processedAccommodation,
-                  },
-                })
-              }
-            }
-          }
 
           // 4. Handle Hotels collection
           const hotels = await req.payload.find({
@@ -222,11 +193,16 @@ export const Cities: CollectionConfig = {
           console.log(`Found ${hotels.docs.length} hotels referencing city ${id}`)
 
           for (const hotel of hotels.docs) {
-            console.log(`Deleting hotel ${hotel.id} that references city ${id}`)
-            await req.payload.delete({
-              collection: 'hotels',
-              id: hotel.id,
-            })
+            console.log(`🗑️ Deleting hotel ${hotel.id} (${hotel.name}) that references city ${id}`)
+            try {
+              await req.payload.delete({
+                collection: 'hotels',
+                id: hotel.id,
+              })
+              console.log(`  ✅ Successfully deleted hotel ${hotel.id}`)
+            } catch (err) {
+              console.warn(`⚠️ Failed to delete hotel ${hotel.id}:`, err)
+            }
           }
 
           // 5. Handle Home collection - recommended cities blocks
@@ -241,7 +217,7 @@ export const Cities: CollectionConfig = {
               let hasChanges = false
               const updatedSections = home.sections.map((section: any) => {
                 if (section.blockType === 'recommended-cities' && section.cities) {
-                  const updatedCities = section.cities.filter((city: any) => city.id !== id)
+                  const updatedCities = section.cities.filter((city: any) => String(city.id) !== String(id))
                   if (updatedCities.length !== section.cities.length) {
                     hasChanges = true
                     console.log(`Updating home page ${home.id}, removing city ${id} from recommended-cities block`)
@@ -275,7 +251,7 @@ export const Cities: CollectionConfig = {
             let hasChanges = false
             const updatedSections = aboutUsGlobal.sections.map((section: any) => {
               if (section.blockType === 'recommended-cities' && section.cities) {
-                const updatedCities = section.cities.filter((city: any) => city.id !== id)
+                const updatedCities = section.cities.filter((city: any) => String(city.id) !== String(id))
                 if (updatedCities.length !== section.cities.length) {
                   hasChanges = true
                   console.log(`Updating about-us global, removing city ${id} from recommended-cities block`)
@@ -298,43 +274,8 @@ export const Cities: CollectionConfig = {
             }
           }
 
-          // 7. Additional safety check - delete any remaining foreign key references
-          console.log(`Performing final safety check for city ID: ${id}`)
-          
-          // Final verification - check if there are any remaining references
-          console.log(`Performing final verification for city ID: ${id}`)
-          
-          const remainingTours = await req.payload.find({
-            collection: 'tours',
-            where: {
-              or: [
-                { 'cities.id': { equals: id } },
-                { 'locations.from.id': { equals: id } },
-                { 'locations.to.id': { equals: id } },
-                { 'accommodation.city.id': { equals: id } },
-              ],
-            },
-            limit: 1,
-          })
 
-          if (remainingTours.docs.length > 0) {
-            console.log(`WARNING: Found ${remainingTours.docs.length} tours still referencing city ${id}`)
-            throw new Error(`Cannot delete city ${id} - still referenced by ${remainingTours.docs.length} tours`)
-          }
 
-          const remainingHotels = await req.payload.find({
-            collection: 'hotels',
-            where: {
-              'city.id': { equals: id },
-            },
-            limit: 1,
-          })
-
-          if (remainingHotels.docs.length > 0) {
-            console.log(`WARNING: Found ${remainingHotels.docs.length} hotels still referencing city ${id}`)
-            throw new Error(`Cannot delete city ${id} - still referenced by ${remainingHotels.docs.length} hotels`)
-          }
-          
           console.log(`Successfully completed beforeDelete hook for city ID: ${id}`)
         } catch (error) {
           console.error(`Error in beforeDelete hook for city ID ${id}:`, error)

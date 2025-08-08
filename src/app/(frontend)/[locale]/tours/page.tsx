@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import PageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
-import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
+
 
 async function getTours(locale: string) {
   try {
@@ -12,7 +12,7 @@ async function getTours(locale: string) {
     const tours = data.docs || [];
     
     // Clean the localized data for each tour
-    return tours.map((tour: any) => cleanLocalizedData(tour, locale));
+    return tours.map((tour: any) => tour);
   } catch (error) {
     // Silently return empty array instead of logging error
     return [];
@@ -28,7 +28,7 @@ async function getTourTypes(locale: string) {
     const types = data.docs || [];
     
     // Clean the localized data for each type
-    return types.map((type: any) => cleanLocalizedData(type, locale));
+    return types.map((type: any) => type);
   } catch (error) {
     // Silently return empty array instead of logging error
     return [];

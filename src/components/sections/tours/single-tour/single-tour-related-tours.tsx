@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/providers/i18n";
 
 interface City {
   id: number;
@@ -90,6 +91,7 @@ const getTourType = (tour: any): string => {
 };
 
 const SingleTourRelatedTours = ({ tour }: SingleTourRelatedToursProps) => {
+  const { t } = useTranslation();
   const [relatedTours, setRelatedTours] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -145,7 +147,7 @@ const SingleTourRelatedTours = ({ tour }: SingleTourRelatedToursProps) => {
   if (loading) {
     return (
       <div className="mb-8">
-        <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Related Tours</h2>
+        <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.relatedTours")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((card) => (
             <div key={card} className="bg-background border border-border rounded-xl overflow-hidden animate-pulse">
@@ -168,7 +170,7 @@ const SingleTourRelatedTours = ({ tour }: SingleTourRelatedToursProps) => {
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Related Tours</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.relatedTours")}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedTours.map((tour) => (
@@ -191,7 +193,7 @@ const SingleTourRelatedTours = ({ tour }: SingleTourRelatedToursProps) => {
 
                 <div className="flex items-center justify-between">
                   <span className="text-primary font-bold text-sm">${tour.price?.toLocaleString()}</span>
-                  <span className="text-copy-light text-xs">per adult</span>
+                  <span className="text-copy-light text-xs">{t("pages.tours.perAdult")}</span>
                 </div>
               </div>
             </div>

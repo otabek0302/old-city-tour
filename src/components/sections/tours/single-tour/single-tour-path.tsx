@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, Plane, Train, Bus } from "lucide-react";
+import { useTranslation } from "@/providers/i18n";
 
 interface City {
   name: string;
@@ -57,6 +58,7 @@ const formatDate = (dateString?: string | null): string => {
 };
 
 const SingleTourPath = ({ tour }: SingleTourPathProps) => {
+  const { t } = useTranslation();
   const [expandedLocation, setExpandedLocation] = useState<string | null>(null);
 
   if (!tour.locations || tour.locations.length === 0) {
@@ -65,7 +67,7 @@ const SingleTourPath = ({ tour }: SingleTourPathProps) => {
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Travel Path</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.travelPath")}</h2>
       <div className="space-y-4">
         {tour.locations.map((location, index) => {
           const fromCity = getCityName(location.from);
@@ -103,7 +105,7 @@ const SingleTourPath = ({ tour }: SingleTourPathProps) => {
 
               <div className="border-t border-border pt-4">
                 <button onClick={() => setExpandedLocation(isExpanded ? null : location.id || index.toString())} className="flex justify-between items-center w-full text-left">
-                  <span className="text-copy font-medium">More detail</span>
+                  <span className="text-copy font-medium">{t("pages.tours.moreDetail")}</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
                 </button>
 
@@ -112,31 +114,31 @@ const SingleTourPath = ({ tour }: SingleTourPathProps) => {
                     <div className="space-y-2 text-sm">
                       {location.transport && (
                         <p className="flex items-center justify-between gap-2">
-                          <span className="font-medium">Transport:</span>
+                          <span className="font-medium">{t("pages.tours.transport")}:</span>
                           <span className="text-copy-light">{location.transport}</span>
                         </p>
                       )}
                       {location.date && (
                         <p className="flex items-center justify-between gap-2">
-                          <span className="font-medium">Date:</span>
+                          <span className="font-medium">{t("pages.tours.date")}:</span>
                           <span className="text-copy-light">{formatDate(location.date)}</span>
                         </p>
                       )}
                       {location.fromTime && (
                         <p className="flex items-center justify-between gap-2">
-                          <span className="font-medium">Departure Time:</span>
+                          <span className="font-medium">{t("pages.tours.departureTime")}:</span>
                           <span className="text-copy-light">{location.fromTime}</span>
                         </p>
                       )}
                       {location.toTime && (
                         <p className="flex items-center justify-between gap-2">
-                          <span className="font-medium">Arrival Time:</span>
+                          <span className="font-medium">{t("pages.tours.arrivalTime")}:</span>
                           <span className="text-copy-light">{location.toTime}</span>
                         </p>
                       )}
                       {location.duration && (
                         <p className="flex items-center justify-between gap-2">
-                          <span className="font-medium">Duration:</span>
+                          <span className="font-medium">{t("pages.tours.duration")}:</span>
                           <span className="text-copy-light">{location.duration}</span>
                         </p>
                       )}

@@ -39,13 +39,11 @@ export const Reviews: CollectionConfig = {
                         {
                             name: 'name',
                             type: 'text',
-                            localized: true,
                             required: true,
                         },
                         {
                             name: 'comment',
                             type: 'textarea',
-                            localized: true,
                             required: true,
                         },
                     ],

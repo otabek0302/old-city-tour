@@ -3,6 +3,8 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { slugField } from '@/fields/slug'
+import { fillLocalizedHook } from '@/utilities/fillLocalizedHook'
+
 import {
     MetaDescriptionField,
     MetaImageField,
@@ -195,5 +197,66 @@ export const Hotels: CollectionConfig = {
         },
         ...slugField('name'),
     ],
+    hooks: {
+        beforeValidate: [
+            fillLocalizedHook(['features', 'policies'])
+        ],
+        beforeDelete: [
+            async ({ req, id }) => {
+                try {
+                    console.log(`Starting beforeDelete hook for hotel ID: ${id}`)
+                    
+                    // Handle Tours collection - accommodation array
+                    const toursWithAccommodation = await req.payload.find({
+                        collection: 'tours',
+                        where: {
+                            'accommodation.hotel.id': {
+                                equals: id,
+                            },
+                        },
+                    })
+
+                    console.log(`Found ${toursWithAccommodation.docs.length} tours with accommodation referencing hotel ${id}`)
+
+                    for (const tour of toursWithAccommodation.docs) {
+                        if (tour.accommodation && Array.isArray(tour.accommodation)) {
+                            const updatedAccommodation = tour.accommodation.map((acc: any) => {
+                                if (acc.hotel && Array.isArray(acc.hotel)) {
+                                    const updatedHotels = acc.hotel.filter((hotel: any) => String(hotel.id) !== String(id))
+                                    return {
+                                        ...acc,
+                                        hotel: updatedHotels,
+                                    }
+                                }
+                                return acc
+                            })
+                            
+                            console.log(`Updating tour ${tour.id}, removing hotel ${id} from accommodation`)
+                            
+                            // Process accommodation to extract just IDs for relationships
+                            const processedAccommodation = updatedAccommodation.map((acc: any) => ({
+                                ...acc,
+                                city: acc.city?.id || acc.city,
+                                hotel: Array.isArray(acc.hotel) ? acc.hotel.map((h: any) => h.id || h) : acc.hotel,
+                            }))
+                            
+                            await req.payload.db.updateOne({
+                                collection: 'tours',
+                                where: { id: { equals: tour.id } },
+                                data: {
+                                    accommodation: processedAccommodation,
+                                },
+                            })
+                        }
+                    }
+                    
+                    console.log(`Successfully completed beforeDelete hook for hotel ID: ${id}`)
+                } catch (error) {
+                    console.error(`Error in beforeDelete hook for hotel ID ${id}:`, error)
+                    throw error
+                }
+            },
+        ],
+    },
     timestamps: true,
 } 

@@ -8,7 +8,7 @@ import { Textarea } from "./textarea";
 import { Label } from "./label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./dialog";
-import { cleanLocalizedData } from "@/utilities/cleanLocalizedData";
+
 import { toast } from "sonner";
 import { useTranslation } from "@/providers/i18n";
 
@@ -52,7 +52,7 @@ export const AddReview = ({ open, setOpen, locale = "en" }: AddReviewProps) => {
         const data = await res.json();
         const toursArray = Array.isArray(data) ? data : data.docs || data.data || [];
 
-        const cleanedTours = toursArray.map((tour: any) => cleanLocalizedData(tour, locale));
+        const cleanedTours = toursArray.map((tour: any) => tour);
         setTours(cleanedTours);
       } catch (error) {
         console.error("Error fetching tours:", error);

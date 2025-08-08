@@ -9,6 +9,8 @@ interface ItineraryItem {
   id?: string | null;
 }
 
+import { useTranslation } from "@/providers/i18n";
+
 interface SingleTourItineraryProps {
   tour: {
     itinerary?: ItineraryItem[] | null;
@@ -16,13 +18,15 @@ interface SingleTourItineraryProps {
 }
 
 const SingleTourItinerary = ({ tour }: SingleTourItineraryProps) => {
+  const { t } = useTranslation();
+  
   if (!tour.itinerary || tour.itinerary.length === 0) {
     return null;
   }
 
   return (
     <div className="mb-8">
-      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">Itinerary</h2>
+      <h2 className="text-copy text-lg md:text-2xl font-bold leading-normal mb-6">{t("pages.tours.itinerary")}</h2>
 
       <div className="relative">
         <div className="absolute left-6 top-6 bottom-6 w-px border-l-2 border-dotted border-primary"></div>

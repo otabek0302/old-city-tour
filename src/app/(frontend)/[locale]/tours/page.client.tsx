@@ -14,34 +14,64 @@ interface PageClientProps {
 }
 
 const PageClient = ({ tours, tourTypes, _locale }: PageClientProps) => {
+  console.log("tours", tours);
   const { t } = useTranslation();
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  const [durationRange, setDurationRange] = useState<[number, number]>([3, 21]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]); // Increased max price
+  const [durationRange, setDurationRange] = useState<[number, number]>([1, 30]); // Increased duration range
 
   const filteredTours = useMemo(() => {
-    return tours.filter((tour) => {
+    console.log("🔍 Filtering tours:", {
+      totalTours: tours.length,
+      selectedTypes,
+      priceRange,
+      durationRange
+    });
+
+    const filtered = tours.filter((tour) => {
+      console.log("🔍 Checking tour:", tour.id, tour.title);
+      
+      // Type filter
       if (selectedTypes.length > 0 && tour.type) {
         const tourType = typeof tour.type === "string" ? tour.type : (tour.type as any).id?.toString() || tour.type;
-        if (!selectedTypes.includes(tourType)) return false;
+        console.log("🔍 Tour type:", tourType, "Selected types:", selectedTypes);
+        if (!selectedTypes.includes(tourType)) {
+          console.log("❌ Tour filtered out by type");
+          return false;
+        }
       }
 
+      // Price filter
       if (tour.price && (tour.price < priceRange[0] || tour.price > priceRange[1])) {
+        console.log("❌ Tour filtered out by price:", tour.price, "Range:", priceRange);
         return false;
       }
 
+      // Duration filter
       if (tour.duration) {
         const durationMatch = tour.duration.match(/(\d+)/);
         if (durationMatch) {
           const duration = parseInt(durationMatch[1]);
           if (duration < durationRange[0] || duration > durationRange[1]) {
+            console.log("❌ Tour filtered out by duration:", duration, "Range:", durationRange);
             return false;
           }
         }
       }
 
+      console.log("✅ Tour passed all filters");
       return true;
     });
+
+    console.log("🔍 Filtered tours result:", filtered.length);
+    
+    // Temporary: Show all tours if filtered result is empty
+    if (filtered.length === 0 && tours.length > 0) {
+      console.log("⚠️ No tours passed filters, showing all tours temporarily");
+      return tours;
+    }
+    
+    return filtered;
   }, [tours, selectedTypes, priceRange, durationRange]);
 
   return (

@@ -41,10 +41,6 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
             },
             defaultValue: 'custom',
             options: [
-              // {
-              //   label: 'Internal link',
-              //   value: 'reference',
-              // },
               {
                 label: 'Custom URL',
                 value: 'custom',
@@ -68,22 +64,9 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
   }
 
   const linkTypes: Field[] = [
-    // {
-    //   name: 'reference',
-    //   type: 'relationship',
-    //   admin: {
-    //     condition: (_, siblingData) => siblingData?.type === 'reference',
-    //   },
-    //   label: 'Document to link to',
-    //   relationTo: ['pages', 'posts'],
-    //   required: true,
-    // },
     {
       name: 'url',
       type: 'text',
-      // admin: {
-      //   condition: (_, siblingData) => siblingData?.type === 'custom',
-      // },
       label: 'Custom URL',
       required: true,
     },

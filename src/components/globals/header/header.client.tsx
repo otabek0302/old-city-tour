@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { LanguagesButton } from "@/components/ui/languages";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Menu } from "@/components/ui/menu";
+import { useLanguage } from "@/providers/language";
 
 interface Navigation {
   label: string;
@@ -25,6 +26,7 @@ interface HeaderData {
 
 const Header = ({ data }: { data: HeaderData }) => {
   const pathname = usePathname();
+  const { language } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const isHomeLanguagePath = ["/ru", "/en", "/uz"].includes(pathname);
@@ -54,9 +56,10 @@ const Header = ({ data }: { data: HeaderData }) => {
 
   const getAbsoluteUrl = (url: string) => {
     if (url.startsWith("/")) {
-      return url;
+      // If it's already an absolute path, add locale prefix
+      return `/${language}${url}`;
     }
-    return `/${url}`;
+    return `/${language}/${url}`;
   };
 
   return (

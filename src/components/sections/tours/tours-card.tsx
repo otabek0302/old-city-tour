@@ -43,10 +43,6 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
   const departureDates = getDepartureDates();
   const rating = getRating();
 
-  if (!tour.title) {
-    return null;
-  }
-
   return (
     <Card className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
       <div className="p-2 flex flex-col lg:flex-row">

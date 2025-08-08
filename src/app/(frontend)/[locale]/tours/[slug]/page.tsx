@@ -2,11 +2,13 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import SingleTourPageClient from "./page.client";
 import { generateMeta } from '@/utilities/generateMeta'
-import { cleanLocalizedData } from '@/utilities/cleanLocalizedData'
+
 
 async function getTour(slug: string, locale: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    
+    // Search for tour by slug with locale parameter for localized data
     const res = await fetch(`${baseUrl}/api/tours?where[slug][equals]=${encodeURIComponent(slug)}&locale=${locale}`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
@@ -14,7 +16,7 @@ async function getTour(slug: string, locale: string) {
     
     // Clean the localized data to prevent double-encoded JSON strings
     if (tour) {
-      return cleanLocalizedData(tour, locale);
+      return tour;
     }
     
     return tour;

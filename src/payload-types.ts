@@ -182,11 +182,10 @@ export interface Tour {
     | {
         from: number | City;
         to: number | City;
-        transport?: string | null;
-        date?: string | null;
-        fromTime?: string | null;
-        toTime?: string | null;
-        duration?: string | null;
+        transport: string;
+        fromTime: string;
+        toTime: string;
+        duration: string;
         id?: string | null;
       }[]
     | null;
@@ -198,6 +197,9 @@ export interface Tour {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Please fill all languages — otherwise default values will be used from English.
+   */
   services?: {
     included?:
       | {
@@ -217,7 +219,7 @@ export interface Tour {
         day: string;
         activities?:
           | {
-              activity?: string | null;
+              activity: string;
               id?: string | null;
             }[]
           | null;
@@ -247,7 +249,13 @@ export interface Tour {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -259,7 +267,13 @@ export interface Tour {
 export interface Type {
   id: number;
   title: string;
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -282,7 +296,13 @@ export interface City {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -359,7 +379,13 @@ export interface Hotel {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -489,7 +515,13 @@ export interface Review {
   tour: number | Tour;
   name: string;
   comment: string;
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -523,7 +555,13 @@ export interface Post {
     image?: (number | null) | Media;
     description?: string | null;
   };
-  slug?: string | null;
+  /**
+   * Write in English for all languages (e.g., "samarkand-bukhara-tour")
+   */
+  slug: string;
+  /**
+   * Lock to prevent auto-generation
+   */
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -653,7 +691,6 @@ export interface ToursSelect<T extends boolean = true> {
         from?: T;
         to?: T;
         transport?: T;
-        date?: T;
         fromTime?: T;
         toTime?: T;
         duration?: T;
