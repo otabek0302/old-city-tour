@@ -62,6 +62,7 @@
       "rating": "Reyting",
       "perAdult": "kattalar uchun",
       "days": "kun",
+      "nights": "tun",
       "reviews": "tafsilotlar",
       "min": "Min",
       "max": "Maks",
@@ -104,7 +105,10 @@
       "phone": "Telefon",
       "website": "Veb-sayt",
       "stars": "yulduz",
-      "relatedTours": "O'xshash turlar"
+      "relatedTours": "O'xshash turlar",
+      "tourDate": "Tur sana",
+      "tourDatePlaceholder": "Tur sana tanlang",
+      "noDatesAvailable": "Bu tur uchun aniq sanalar mavjud emas. Iltimos, mavjudlikni tekshirish uchun biz bilan bog'laning."
     },
     "cities": {
       "title": "Bizning shaharlar",

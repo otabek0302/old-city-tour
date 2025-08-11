@@ -1,10 +1,13 @@
+"use client";
+
+import Link from "next/link";
+
 import { Calendar, DollarSign, Users, Clock } from "lucide-react";
 import { Tour } from "@/payload-types";
 import { useTranslation } from "@/providers/i18n";
 import { Button } from "@/components/ui/button";
 import { ApplyTour } from "@/components/ui/apply-tour";
 import { useState } from "react";
-import Link from "next/link";
 
 interface SingleTourPricesProps {
   tour: Tour;
@@ -100,19 +103,14 @@ const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
               <h4 className="text-primary-foreground font-semibold mb-2">{t("pages.tours.pricePerAdult")}</h4>
               <div className="flex items-center justify-between">
                 <span className="text-primary-foreground text-sm">
-                  {tour.duration} {t("pages.tours.days")}
+                  {tour.duration_days} {t("pages.tours.days")}
                 </span>
                 <span className="text-primary-foreground text-2xl font-bold">${tour.price?.toLocaleString() || "0"}</span>
               </div>
             </div>
 
             <div className="space-y-3">
-              <Button 
-                variant="primary" 
-                size="lg" 
-                className="w-full rounded-xl" 
-                onClick={() => setApplyTourOpen(true)}
-              >
+              <Button variant="primary" size="lg" className="w-full rounded-xl" onClick={() => setApplyTourOpen(true)}>
                 {t("pages.tours.bookNow")}
               </Button>
 
@@ -134,11 +132,7 @@ const SingleTourPrices = ({ tour }: SingleTourPricesProps) => {
         </div>
       </div>
 
-      <ApplyTour 
-        open={applyTourOpen} 
-        setOpen={setApplyTourOpen} 
-        tour={tour}
-      />
+      <ApplyTour open={applyTourOpen} setOpen={setApplyTourOpen} tour={tour} />
     </div>
   );
 };

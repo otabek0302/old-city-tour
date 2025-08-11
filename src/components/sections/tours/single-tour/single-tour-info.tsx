@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { Tour } from "@/payload-types";
+import { useTranslation } from "@/providers/i18n";
 
 interface TourInfoProps {
   tour: Tour;
@@ -22,15 +23,21 @@ const getRating = (reviews?: any[]) => {
 };
 
 const SingleTourInfo = ({ tour }: TourInfoProps) => {
+  const { t } = useTranslation();
+  
   const cities = tour.cities?.map((c) => (typeof c === "object" && c.name ? c.name : "")).join(", ");
-  const rating = getRating([]); // Reviews are not part of the Tour type, using default rating
+  const rating = getRating([]);
 
   return (
     <div className="mb-8">
       <div className="mb-4">
         {tour.title && <h1 className="text-primary text-lg md:text-3xl font-bold leading-normal mb-2">{tour.title}</h1>}
         <div className="flex flex-wrap items-center gap-4 text-copy-light text-sm font-medium mb-2">
-          {tour.duration && <span className="italic font-semibold">{tour.duration}</span>}
+          {tour.duration_days && (
+            <span className="italic font-semibold lowercase">
+              {tour.duration_days} {t("pages.tours.days")} / {tour.duration_nights} {t("pages.tours.nights")}
+            </span>
+          )}
           <span className="text-copy-light text-sm font-medium">|</span>
           {tour.type && <span className="italic font-semibold">{typeof tour.type === "object" && tour.type.title ? tour.type.title : ""}</span>}
           <span className="text-copy-light text-sm font-medium">|</span>

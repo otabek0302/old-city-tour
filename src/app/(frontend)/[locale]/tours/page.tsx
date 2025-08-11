@@ -6,7 +6,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 async function getTours(locale: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/tours?locale=${locale}&limit=100`, { cache: "no-store" });
+    const res = await fetch(`${baseUrl}/api/tours?locale=${locale}&limit=100&depth=2`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
     const tours = data.docs || [];
@@ -22,7 +22,7 @@ async function getTours(locale: string) {
 async function getTourTypes(locale: string) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/types?locale=${locale}&limit=100`, { cache: "no-store" });
+    const res = await fetch(`${baseUrl}/api/types?locale=${locale}&limit=100&depth=1`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
     const types = data.docs || [];

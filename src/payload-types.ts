@@ -173,7 +173,8 @@ export interface User {
 export interface Tour {
   id: number;
   title: string;
-  duration: string;
+  duration_days: number;
+  duration_nights: number;
   price: number;
   description: string;
   type: number | Type;
@@ -680,7 +681,8 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ToursSelect<T extends boolean = true> {
   title?: T;
-  duration?: T;
+  duration_days?: T;
+  duration_nights?: T;
   price?: T;
   description?: T;
   type?: T;

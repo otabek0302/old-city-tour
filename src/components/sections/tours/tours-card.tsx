@@ -47,7 +47,7 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
     <Card className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
       <div className="p-2 flex flex-col lg:flex-row">
         <div className="lg:w-2/5 h-72 relative border border-border rounded-xl overflow-hidden">
-          {tour.images?.[0]?.image && typeof tour.images[0].image === 'object' && 'url' in tour.images[0].image && tour.images[0].image.url ? (
+          {tour.images?.[0]?.image && typeof tour.images[0].image === "object" && "url" in tour.images[0].image && tour.images[0].image.url ? (
             <Image src={tour.images[0].image.url} alt={tour.title || t("pages.tours.tourImage")} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -89,7 +89,7 @@ const ToursCard: React.FC<TourCardProps> = ({ tour }) => {
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4 text-secondary" />
                   <span className="text-copy-light text-xs">
-                    {tour.duration || ""} {t("pages.tours.days")}
+                    {tour.duration_days || ""} {t("pages.tours.days")} / {tour.duration_nights || ""} {t("pages.tours.nights")}
                   </span>
                 </div>
               </div>

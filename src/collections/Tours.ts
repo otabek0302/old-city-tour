@@ -36,12 +36,21 @@ export const Tours: CollectionConfig = {
               type: 'row',
               fields: [
                 {
-                  name: 'duration',
-                  type: 'text',
-                  label: 'Tour Duration',
+                  name: 'duration_days',
+                  type: 'number',
+                  label: 'Tour Duration (Days)',
                   required: true,
                   admin: {
-                    width: '50%',
+                    width: '33%',
+                  },
+                },
+                {
+                  name: 'duration_nights',
+                  type: 'number',
+                  label: 'Tour Duration (Nights)',
+                  required: true,
+                  admin: {
+                    width: '33%',
                   },
                 },
                 {
@@ -50,7 +59,7 @@ export const Tours: CollectionConfig = {
                   label: 'Tour Price',
                   required: true,
                   admin: {
-                    width: '50%',
+                    width: '33%',
                   },
                 }
               ],

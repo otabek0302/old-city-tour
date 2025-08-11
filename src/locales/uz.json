@@ -90,7 +90,9 @@
       "phone": "Telefon",
       "website": "Veb-sayt",
       "stars": "yulduz",
-      "relatedTours": "O'xshash turlar"
+      "relatedTours": "O'xshash turlar",
+      "resetFilters": "Filtrlarni qayta o'rnatish",
+      "tryAdjustingFilters": "Ko'proq natijalarni ko'rish uchun filtrlaringizni sozlang"
     },
     "cities": {
       "title": "Bizning shaharlar",

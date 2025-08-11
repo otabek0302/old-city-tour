@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslation } from "@/providers/i18n";
+import { Button } from "@/components/ui/button";
 
 interface TourFilterProps {
   tourTypes: Type[];
@@ -40,6 +41,12 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
     }
   };
 
+  const resetFilters = () => {
+    setSelectedTypes([]);
+    setPriceRange([0, 100000]);
+    setDurationRange([0, 100]);
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Filter By */}
@@ -56,7 +63,7 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
               <div key={type.id} className="flex items-center space-x-2">
                 <Checkbox id={type.id.toString()} className="w-5 h-5" checked={selectedTypes.includes(type.id.toString())} onCheckedChange={(checked) => handleTypeChange(type.id.toString(), checked as boolean)} />
                 <Label htmlFor={type.id.toString()} className="text-copy-lighter text-sm font-normal">
-                  {type.title}
+                  {typeof type.title === "string" ? type.title : (type.title as any)?.en || "Untitled"}
                 </Label>
               </div>
             ))}
@@ -79,13 +86,38 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
                 <Label htmlFor="min-price" className="text-copy-lighter text-sm font-normal">
                   {t("pages.tours.min")}
                 </Label>
-                <Input id="min-price" type="number" value={priceRange[0]} onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])} placeholder="0$" className="rounded-xl text-sm" />
+                <Input
+                  id="min-price"
+                  type="number"
+                  value={priceRange[0] || ""}
+                  onChange={(e) => {
+                    const value = Math.max(0, parseInt(e.target.value) || 0);
+                    if (value <= priceRange[1]) {
+                      setPriceRange([value, priceRange[1]]);
+                    }
+                  }}
+                  placeholder="0"
+                  className="rounded-xl text-sm"
+                  min={0}
+                  max={priceRange[1]}
+                />
               </div>
               <div className="flex-1">
                 <Label htmlFor="max-price" className="text-copy-lighter text-sm font-normal">
                   {t("pages.tours.max")}
                 </Label>
-                <Input id="max-price" type="number" value={priceRange[1]} onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 0])} placeholder="0$" className="rounded-xl text-sm" />
+                <Input
+                  id="max-price"
+                  type="number"
+                  value={priceRange[1] || ""}
+                  onChange={(e) => {
+                    const value = Math.max(priceRange[0], parseInt(e.target.value) || 0);
+                    setPriceRange([priceRange[0], value]);
+                  }}
+                  placeholder="0"
+                  className="rounded-xl text-sm"
+                  min={priceRange[0]}
+                />
               </div>
             </div>
           </CardContent>
@@ -107,18 +139,50 @@ const ToursFilter: React.FC<TourFilterProps> = ({ tourTypes, selectedTypes, setS
                 <Label htmlFor="min-length" className="text-copy-lighter text-sm font-normal">
                   {t("pages.tours.min")}
                 </Label>
-                <Input id="min-length" type="number" value={durationRange[0]} onChange={(e) => setDurationRange([parseInt(e.target.value) || 0, durationRange[1]])} placeholder="0" className="rounded-xl text-sm" />
+                <Input
+                  id="min-length"
+                  type="number"
+                  value={durationRange[0] || ""}
+                  onChange={(e) => {
+                    const value = Math.max(0, parseInt(e.target.value) || 0);
+                    if (value <= durationRange[1]) {
+                      setDurationRange([value, durationRange[1]]);
+                    }
+                  }}
+                  placeholder="0"
+                  className="rounded-xl text-sm"
+                  min={0}
+                  max={durationRange[1]}
+                />
               </div>
               <div className="flex-1">
                 <Label htmlFor="max-length" className="text-copy-lighter text-sm font-normal">
                   {t("pages.tours.max")}
                 </Label>
-                <Input id="max-length" type="number" value={durationRange[1]} onChange={(e) => setDurationRange([durationRange[0], parseInt(e.target.value) || 0])} placeholder="0" className="rounded-xl text-sm" />
+                <Input
+                  id="max-length"
+                  type="number"
+                  value={durationRange[1] || ""}
+                  onChange={(e) => {
+                    const value = Math.max(durationRange[0], parseInt(e.target.value) || 0);
+                    setDurationRange([durationRange[0], value]);
+                  }}
+                  placeholder="0"
+                  className="rounded-xl text-sm"
+                  min={durationRange[0]}
+                />
               </div>
             </div>
           </CardContent>
         )}
       </Card>
+
+      {/* Reset Button */}
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" onClick={resetFilters} className="bg-primary-light text-primary-foreground hover:bg-primary-dark transition-colors duration-200">
+          {t("components.filters.reset") || "Reset Filters"}
+        </Button>
+      </div>
     </div>
   );
 };

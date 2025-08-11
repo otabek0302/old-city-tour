@@ -90,7 +90,9 @@
       "phone": "Телефон",
       "website": "Веб-сайт",
       "stars": "звезд",
-      "relatedTours": "Похожие туры"
+      "relatedTours": "Похожие туры",
+      "resetFilters": "Сбросить фильтры",
+      "tryAdjustingFilters": "Попробуйте изменить фильтры, чтобы увидеть больше результатов"
     },
     "cities": {
       "title": "Наши города",

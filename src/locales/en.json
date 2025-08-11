@@ -90,7 +90,9 @@
       "phone": "Phone",
       "website": "Website",
       "stars": "stars",
-      "relatedTours": "Related Tours"
+      "relatedTours": "Related Tours",
+      "resetFilters": "Reset Filters",
+      "tryAdjustingFilters": "Try adjusting your filters to see more results"
     },
     "cities": {
       "title": "Our Cities",
